@@ -114,6 +114,14 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
 
   // If successfully registered, show confirmation screen and payment button
   if (successResult) {
+    let isFreeEvent = false;
+    if (selectedEvent?.price) {
+      const lowerPrice = selectedEvent.price.toLowerCase().trim();
+      if (lowerPrice === "gratis" || lowerPrice === "free" || lowerPrice === "0") {
+        isFreeEvent = true;
+      }
+    }
+
     return (
       <div className="w-full relative z-10 pt-32 pb-24 min-h-[80svh] flex flex-col justify-center items-center">
         <Container>
@@ -136,7 +144,9 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
             </div>
             
             <p className="text-white/80 leading-relaxed mb-6">
-              Data Anda telah dicatat di sistem kami. Langkah selanjutnya adalah menyelesaikan pembayaran.
+              {isFreeEvent 
+                ? "Data Anda telah dicatat di sistem kami. Silakan tekan tombol di bawah untuk menyelesaikan pendaftaran." 
+                : "Data Anda telah dicatat di sistem kami. Langkah selanjutnya adalah menyelesaikan pembayaran."}
             </p>
 
             {paymentError && (
@@ -154,7 +164,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   : "bg-brand-primary text-brand-secondary hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(245,183,22,0.4)]"
               }`}
             >
-              {isPaying ? "Memproses..." : "Lanjutkan"}
+              {isPaying ? "Memproses..." : (isFreeEvent ? "Selesaikan Pendaftaran" : "Lanjutkan")}
             </button>
           </div>
         </Container>

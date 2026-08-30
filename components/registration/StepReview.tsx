@@ -18,7 +18,11 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-8">
         <h2 className="font-heading text-3xl font-bold text-white mb-3">Tinjau Pendaftaran</h2>
-        <p className="text-white/70">Periksa kembali data Anda sebelum melanjutkan ke pembayaran.</p>
+        <p className="text-white/70">
+          {event.price?.toLowerCase() === 'gratis' 
+            ? "Periksa kembali data Anda sebelum mengonfirmasi pendaftaran." 
+            : "Periksa kembali data Anda sebelum melanjutkan ke pembayaran."}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -132,7 +136,9 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
           className="w-full sm:w-auto px-10 relative overflow-hidden group"
         >
           <span className="relative z-10 flex items-center gap-2">
-            {isSubmitting ? "Memproses..." : "Lanjut ke Pembayaran"}
+            {isSubmitting 
+              ? "Memproses..." 
+              : (event.price?.toLowerCase() === 'gratis' ? "Daftar Sekarang" : "Lanjut ke Pembayaran")}
           </span>
           <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
         </Button>
