@@ -1,6 +1,6 @@
 "use client";
 
-import { DIVISIONS as STATIC_DIVISIONS, CommitteeMember } from "@/data/committee";
+import { DIVISIONS as STATIC_DIVISIONS, STEERING_COMMITTEE, ORGANIZING_COMMITTEE_CORE, CommitteeMember } from "@/data/committee";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { UserCircle2 } from "lucide-react";
 import Image from "next/image";
@@ -89,14 +89,35 @@ export function CommitteeGrid() {
             division_id: d.division_id
           }));
 
-          // Distribute into SC, OC, and Divisions
-          setScMembers(formattedData.filter((m: any) => m.division_id === 'sc'));
-          setOcMembers(formattedData.filter((m: any) => m.division_id === 'oc'));
+          // Sort using static data as a reference to preserve the exact original custom order
+          const scList = formattedData.filter((m: any) => m.division_id === 'sc');
+          scList.sort((a, b) => {
+            const indexA = STEERING_COMMITTEE.findIndex(s => s.name === a.name);
+            const indexB = STEERING_COMMITTEE.findIndex(s => s.name === b.name);
+            return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+          });
+          setScMembers(scList);
 
-          const newDivisions = STATIC_DIVISIONS.map(div => ({
-            ...div,
-            members: formattedData.filter((m: any) => m.division_id === div.id)
-          }));
+          const ocList = formattedData.filter((m: any) => m.division_id === 'oc');
+          ocList.sort((a, b) => {
+            const indexA = ORGANIZING_COMMITTEE_CORE.findIndex(s => s.name === a.name);
+            const indexB = ORGANIZING_COMMITTEE_CORE.findIndex(s => s.name === b.name);
+            return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+          });
+          setOcMembers(ocList);
+
+          const newDivisions = STATIC_DIVISIONS.map(div => {
+            const divMembers = formattedData.filter((m: any) => m.division_id === div.id);
+            divMembers.sort((a, b) => {
+              const indexA = div.members.findIndex(s => s.name === a.name);
+              const indexB = div.members.findIndex(s => s.name === b.name);
+              return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+            });
+            return {
+              ...div,
+              members: divMembers
+            };
+          });
           setDivisionsData(newDivisions);
         }
       } catch (err) {
