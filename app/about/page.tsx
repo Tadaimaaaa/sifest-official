@@ -4,6 +4,7 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { Section } from "@/components/layout/Section";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { CommitteeGrid } from "@/components/about/CommitteeGrid";
+import { PhilosophySection } from "@/components/about/PhilosophySection";
 import Image from "next/image";
 import React from "react";
 
@@ -66,6 +67,8 @@ export default function AboutPage() {
             </div>
           </div>
         </GlassCard>
+        
+        <PhilosophySection />
       </Section>
 
       {/* Committee Section */}
