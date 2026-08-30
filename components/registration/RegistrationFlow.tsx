@@ -210,6 +210,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               {currentStep === 2 && (
                 <StepParticipantData
                   data={draft.participant}
+                  eventSlug={draft.eventSlug}
                   onUpdate={handleParticipantUpdate}
                   onNext={nextStep}
                   onBack={prevStep}

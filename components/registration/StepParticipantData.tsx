@@ -6,12 +6,13 @@ import { AlertCircle } from "lucide-react";
 
 interface StepParticipantDataProps {
   data: ParticipantData;
+  eventSlug: string;
   onUpdate: (data: ParticipantData) => void;
   onNext: () => void;
   onBack: () => void;
 }
 
-export function StepParticipantData({ data, onUpdate, onNext, onBack }: StepParticipantDataProps) {
+export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack }: StepParticipantDataProps) {
   const [errors, setErrors] = useState<Partial<Record<keyof ParticipantData, string>>>({});
 
   const validate = () => {
@@ -64,17 +65,29 @@ export function StepParticipantData({ data, onUpdate, onNext, onBack }: StepPart
       </div>
 
       <GlassCard variant="medium" className="p-6 md:p-8 space-y-6">
-        {/* Full Name */}
+        {/* Full Name / Team Name */}
         <div className="space-y-2">
           <label htmlFor="fullName" className="block text-sm font-medium text-white/90">
-            Nama Lengkap <span className="text-status-warning">*</span>
+            {eventSlug === 'turnamen-futsal' || eventSlug === 'turnamen-esport-mlbb' 
+              ? "Nama Tim & Nama Kapten" 
+              : eventSlug === 'open-bazaar'
+                ? "Nama Brand / Usaha & Penanggung Jawab"
+                : eventSlug === 'seminar-nasional'
+                  ? "Nama Lengkap (Untuk Sertifikat)"
+                  : "Nama Lengkap Peserta"} <span className="text-status-warning">*</span>
           </label>
           <input
             id="fullName"
             type="text"
             value={data.fullName}
             onChange={(e) => onUpdate({ ...data, fullName: e.target.value })}
-            placeholder="Masukkan nama lengkap Anda"
+            placeholder={
+              eventSlug === 'turnamen-futsal' || eventSlug === 'turnamen-esport-mlbb' 
+                ? "Contoh: Tim Garuda - Budi Santoso"
+                : eventSlug === 'open-bazaar'
+                  ? "Contoh: Sate Taichan Senayan - Siti"
+                  : "Masukkan nama lengkap Anda"
+            }
             className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
           />
           {errors.fullName && (
@@ -127,14 +140,20 @@ export function StepParticipantData({ data, onUpdate, onNext, onBack }: StepPart
         {/* Institution */}
         <div className="space-y-2">
           <label htmlFor="institution" className="block text-sm font-medium text-white/90">
-            Asal Institusi / Sekolah <span className="text-status-warning">*</span>
+            {eventSlug === 'open-bazaar' 
+              ? "Kategori Usaha (F&B, Fashion, dll)" 
+              : "Asal Institusi / Sekolah / Kampus"} <span className="text-status-warning">*</span>
           </label>
           <input
             id="institution"
             type="text"
             value={data.institution}
             onChange={(e) => onUpdate({ ...data, institution: e.target.value })}
-            placeholder="Universitas / SMA / Instansi"
+            placeholder={
+              eventSlug === 'open-bazaar' 
+                ? "Contoh: Makanan & Minuman" 
+                : "Universitas / SMA / Instansi"
+            }
             className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
           />
           {errors.institution && (
