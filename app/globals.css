@@ -180,61 +180,67 @@
   .animate-spin-slow-reverse { animation: spin-slow-reverse 25s linear infinite; }
   .animate-marquee { animation: marquee 30s linear infinite; }
 
-  /* FAIRY ANIMATIONS */
-  @keyframes flutter {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scaleX(1); }
-    25% { transform: translateY(-3px) rotate(-15deg) scaleX(0.7); }
-    50% { transform: translateY(0px) rotate(0deg) scaleX(1); }
-    75% { transform: translateY(3px) rotate(15deg) scaleX(0.7); }
+  /* ANDROID TV INTRO ANIMATIONS */
+  @keyframes orb-container {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
+    15% { transform: translate(-50%, -50%) scale(1) rotate(90deg); opacity: 1; }
+    75% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 1; filter: blur(0px); }
+    90% { transform: translate(-50%, -50%) scale(0.1) rotate(540deg); opacity: 1; filter: blur(5px); }
+    100% { transform: translate(-50%, -50%) scale(0) rotate(720deg); opacity: 0; }
   }
 
-  .animate-flutter {
+  @keyframes orb-bounce {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(var(--tx), var(--ty)) scale(1.5); }
+  }
+
+  .intro-orbs-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    animation: orb-container 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .intro-orb {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    top: 38px;
+    left: 38px;
+    animation: orb-bounce 0.8s ease-in-out infinite alternate;
+  }
+
+  .orb-1 { background-color: #3b82f6; --tx: -35px; --ty: -35px; box-shadow: 0 0 20px #3b82f6; }
+  .orb-2 { background-color: #f5b716; --tx: 35px; --ty: -35px; box-shadow: 0 0 20px #f5b716; }
+  .orb-3 { background-color: #06b6d4; --tx: -35px; --ty: 35px; box-shadow: 0 0 20px #06b6d4; }
+  .orb-4 { background-color: #ffffff; --tx: 35px; --ty: 35px; box-shadow: 0 0 20px #ffffff; }
+
+  @keyframes text-reveal-wave {
+    0% { opacity: 0; transform: scaleX(0.2) scaleY(0); filter: blur(20px); }
+    40% { opacity: 1; transform: scaleX(1.3) scaleY(1.3); filter: blur(0px); text-shadow: 0 0 50px currentColor; }
+    100% { opacity: 1; transform: scaleX(1) scaleY(1); filter: blur(0px); color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+  }
+
+  .tv-letter {
+    opacity: 0;
     display: inline-block;
-    animation: flutter 0.2s ease-in-out infinite;
+    animation: text-reveal-wave 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     transform-origin: center;
   }
-  @keyframes fly-fairy {
-    0% { transform: translate(-200vw, -200vh) scale(1) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 10px #F5B716); }
-    10% { transform: translate(-50%, -150%) scale(2) rotate(15deg); opacity: 1; filter: drop-shadow(0 0 20px #F5B716); }
-    20% { transform: translate(-45%, 0%) scale(2) rotate(-10deg); filter: drop-shadow(0 0 30px #F5B716); }
-    30% { transform: translate(-30%, -30%) scale(2) rotate(20deg); }
-    40% { transform: translate(-10%, 10%) scale(2) rotate(-15deg); }
-    50% { transform: translate(10%, -20%) scale(2) rotate(10deg); }
-    60% { transform: translate(30%, 20%) scale(2) rotate(-20deg); }
-    70% { transform: translate(45%, 0%) scale(2) rotate(15deg); }
-    80% { transform: translate(0%, -50%) scale(3) rotate(360deg); filter: drop-shadow(0 0 50px #F5B716); }
-    100% { transform: translate(200vw, -200vh) scale(0) rotate(720deg); opacity: 0; filter: drop-shadow(0 0 0px transparent); }
-  }
 
-  .animate-fairy {
-    animation: fly-fairy 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    pointer-events: none;
-    display: inline-block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 50;
-  }
-
-  @keyframes letter-pop {
-    0% { opacity: 0; transform: scale(0) translateY(20px); filter: blur(10px); }
-    40% { opacity: 1; transform: scale(1.3) translateY(-10px); filter: blur(0px); text-shadow: 0 0 20px #F5B716, 0 0 40px #F5B716; color: #F5B716; }
-    100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-  }
-
-  .fairy-letter {
-    opacity: 0; 
-    display: inline-block;
-    animation: letter-pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  }
-
-  .delay-s1 { animation-delay: 0.8s; }
-  .delay-i  { animation-delay: 1.2s; }
-  .delay-space { animation-delay: 1.4s; }
-  .delay-f  { animation-delay: 1.6s; }
-  .delay-e  { animation-delay: 2.0s; }
-  .delay-s2 { animation-delay: 2.4s; }
-  .delay-t  { animation-delay: 2.8s; }
+  /* Wait 2.2s for orbs to collapse before revealing text in a wave */
+  .delay-tv-s1 { animation-delay: 2.20s; color: #3b82f6; }
+  .delay-tv-i  { animation-delay: 2.25s; color: #f5b716; }
+  .delay-tv-sp { animation-delay: 2.30s; }
+  .delay-tv-f  { animation-delay: 2.35s; color: #06b6d4; }
+  .delay-tv-e  { animation-delay: 2.40s; color: #ffffff; }
+  .delay-tv-s2 { animation-delay: 2.45s; color: #3b82f6; }
+  .delay-tv-t  { animation-delay: 2.50s; color: #f5b716; }
 
   /* Transitions (Micro & Standard) */
   .transition-micro {
