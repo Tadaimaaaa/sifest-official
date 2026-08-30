@@ -200,7 +200,7 @@ export function CommitteeModal({ isOpen, onClose, member, onSuccess }: Committee
                   </div>
                 ) : previewUrl ? (
                   <div className="group relative w-full h-full">
-                    <Image src={previewUrl} alt="Preview" fill className="object-cover" />
+                    <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <p className="text-white font-medium flex items-center gap-2">
                         <ImageIcon size={18} /> Ganti Foto
