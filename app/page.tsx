@@ -25,7 +25,7 @@ export default function Home() {
         <EventGrid events={OFFICIAL_EVENTS} />
       </Section>
 
-      <Section id="about" title="APA ITU SI FEST?">
+      <Section id="about" title="MENGENAL LEBIH JAUH SI FEST">
         <AboutSection />
       </Section>
 

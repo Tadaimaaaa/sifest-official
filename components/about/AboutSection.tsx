@@ -1,5 +1,6 @@
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MonitorPlay, Trophy, Globe, Zap, Network, Users } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 export function AboutSection() {
@@ -12,11 +13,15 @@ export function AboutSection() {
         <div className="absolute inset-0 rounded-full bg-brand-primary/20 blur-[80px] mix-blend-screen animate-pulse-glow" />
         
         {/* Central Core */}
-        <div className="relative z-10 w-40 h-40 rounded-full border border-white/30 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl flex flex-col items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] group transition-all duration-500 hover:scale-110 cursor-pointer">
+        <div className="relative z-10 w-40 h-40 rounded-full border border-white/30 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl flex flex-col items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] group transition-all duration-500 hover:scale-110 cursor-pointer p-4">
           <div className="absolute inset-0 rounded-full bg-brand-accent/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <span className="font-heading text-xl font-bold text-white text-center leading-tight drop-shadow-md">
-            Sinergi<br/>Inovasi
-          </span>
+          <Image 
+            src="/logo-sifest.png"
+            alt="SI FEST Logo"
+            width={120}
+            height={120}
+            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.6)] transition-all duration-500"
+          />
         </div>
 
         {/* Orbit Ring 1 (Inner) */}
