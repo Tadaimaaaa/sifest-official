@@ -12,8 +12,8 @@ export function Timeline() {
         <div className="relative z-10 flex flex-col items-center gap-4">
           {/* Massive Glowing Headline */}
           <div className="flex flex-col items-center mb-4 md:mb-8 relative">
-            <h2 className="text-5xl md:text-7xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-brand-accent via-yellow-300 to-[#ff9900] drop-shadow-[0_0_30px_rgba(245,183,22,0.6)] animate-pulse tracking-wider">
-              SAVE THE DATE
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-brand-accent via-yellow-300 to-[#ff9900] drop-shadow-[0_0_30px_rgba(245,183,22,0.6)] animate-pulse tracking-wider text-center">
+              MARK THE DATE
             </h2>
             <div className="flex items-center gap-4 mt-4 text-white/80">
               <div className="h-[2px] w-12 md:w-24 bg-gradient-to-r from-transparent to-brand-accent/70 rounded-full"></div>
