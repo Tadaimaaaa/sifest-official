@@ -54,7 +54,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="timeline" title="TANDAI KALENDER ANDA">
+      <Section id="timeline">
         <Timeline />
       </Section>
 
