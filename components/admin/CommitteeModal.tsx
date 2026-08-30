@@ -71,7 +71,7 @@ export function CommitteeModal({ isOpen, onClose, member }: CommitteeModalProps)
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-slate-50">
-          <h2 className="text-2xl font-heading font-bold text-slate-900">
+          <h2 className="text-2xl font-bold text-slate-900">
             {member ? "Edit Data Panitia" : "Tambah Panitia Baru"}
           </h2>
           <button 

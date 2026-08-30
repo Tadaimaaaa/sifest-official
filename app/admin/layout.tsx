@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Mobile Topbar */}
       <div className="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between z-20 relative">
-        <div className="font-heading font-bold text-xl text-brand-primary tracking-widest">SI FEST ADMIN</div>
+        <div className="font-bold text-xl text-brand-primary tracking-widest">SI FEST ADMIN</div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-slate-100 rounded-lg border border-slate-200 text-slate-700">
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -42,7 +42,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         flex flex-col
       `}>
         <div className="p-6 hidden md:block">
-          <div className="font-heading font-black text-2xl tracking-widest flex flex-col">
+          <div className="font-black text-2xl tracking-widest flex flex-col">
             <span className="text-brand-primary">SI FEST</span>
             <span className="text-slate-400 text-sm tracking-widest">DASHBOARD</span>
           </div>

@@ -4,7 +4,7 @@ export default function AdminDashboardOverview() {
   return (
     <div className="space-y-8 animate-fade-in-up">
       <div>
-        <h1 className="text-3xl font-heading font-bold text-slate-900">Dashboard Overview</h1>
+        <h1 className="text-3xl font-bold text-slate-900">Dashboard Overview</h1>
         <p className="text-slate-500 mt-1">Selamat datang di pusat kendali SI FEST 2026.</p>
       </div>
 
@@ -18,7 +18,7 @@ export default function AdminDashboardOverview() {
             <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-full">+12%</span>
           </div>
           <p className="text-slate-500 text-sm mb-1">Total Panitia Aktif</p>
-          <h3 className="text-3xl font-heading font-bold text-slate-900">128</h3>
+          <h3 className="text-3xl font-bold text-slate-900">128</h3>
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-500/50 transition-all group">
@@ -29,7 +29,7 @@ export default function AdminDashboardOverview() {
             <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded-full">+45%</span>
           </div>
           <p className="text-slate-500 text-sm mb-1">Kunjungan Web Bulan Ini</p>
-          <h3 className="text-3xl font-heading font-bold text-slate-900">4.2K</h3>
+          <h3 className="text-3xl font-bold text-slate-900">4.2K</h3>
         </div>
         
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all group">
@@ -39,7 +39,7 @@ export default function AdminDashboardOverview() {
             </div>
           </div>
           <p className="text-slate-500 text-sm mb-1">Pendaftar Lomba (External)</p>
-          <h3 className="text-3xl font-heading font-bold text-slate-900">85</h3>
+          <h3 className="text-3xl font-bold text-slate-900">85</h3>
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-purple-500/50 transition-all group">
@@ -49,7 +49,7 @@ export default function AdminDashboardOverview() {
             </div>
           </div>
           <p className="text-slate-500 text-sm mb-1">Status Server & Database</p>
-          <h3 className="text-2xl font-heading font-bold text-green-600 mt-2 flex items-center gap-2">
+          <h3 className="text-2xl font-bold text-green-600 mt-2 flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" /> Optimal
           </h3>
         </div>

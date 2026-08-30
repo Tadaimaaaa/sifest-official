@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
             <div className="absolute inset-0 bg-brand-accent/10 rounded-2xl group-hover:bg-brand-accent/20 transition-colors" />
             <ShieldCheck className="w-10 h-10 text-brand-primary relative z-10" />
           </div>
-          <h1 className="text-3xl font-heading font-bold text-slate-900 mb-2">Sistem Akses Terbatas</h1>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Sistem Akses Terbatas</h1>
           <p className="text-slate-500 text-sm">Masuk untuk mengelola konfigurasi SI FEST</p>
         </div>
 
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                 <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <span className="font-heading font-bold tracking-wide">AUTENTIKASI</span>
+                  <span className="font-bold tracking-wide">AUTENTIKASI</span>
                   <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
                 </>
               )}

@@ -33,7 +33,7 @@ export default function CommitteeCMSPage() {
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-heading font-bold text-slate-900">Manajemen Panitia</h1>
+          <h1 className="text-3xl font-bold text-slate-900">Manajemen Panitia</h1>
           <p className="text-slate-500 mt-1">Kelola data dan struktur kepanitiaan SI FEST 2026</p>
         </div>
         <button 
