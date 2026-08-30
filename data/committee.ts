@@ -13,17 +13,17 @@ export interface Division {
 }
 
 export const STEERING_COMMITTEE: CommitteeMember[] = [
+  { id: "sc-3", name: "Angelicca Rehuel Saphira", nim: "23101152610165", role: "Sekretaris Umum" },
   { id: "sc-1", name: "Farras Amar Zaim Fasha Khoeroni", nim: "23101152610332", role: "Bupati" },
   { id: "sc-2", name: "Ahlazzikri Azamuddin", nim: "23101152610322", role: "Wakil Bupati" },
-  { id: "sc-3", name: "Angelicca Rehuel Saphira", nim: "23101152610165", role: "Sekretaris Umum" },
   { id: "sc-4", name: "Fasya Maida Elvina", nim: "24101152610012", role: "Bendahara Umum" }
 ];
 
 export const ORGANIZING_COMMITTEE_CORE: CommitteeMember[] = [
-  { id: "oc-1", name: "Neil Firdaus", nim: "24101152610176", role: "Penanggung Jawab Proker" },
-  { id: "oc-2", name: "Dilan Afri Jones", nim: "22101152610011", role: "Ketua Pelaksana Proker" },
-  { id: "oc-3", name: "Helsi Serlina Aprila Saputri", nim: "24101152610054", role: "Sekretaris" },
   { id: "oc-4", name: "Zhara Delvia Putri", nim: "24101152610261", role: "Bendahara 1" },
+  { id: "oc-2", name: "Dilan Afri Jones", nim: "22101152610011", role: "Ketua Pelaksana Proker" },
+  { id: "oc-1", name: "Neil Firdaus", nim: "24101152610176", role: "Penanggung Jawab Proker" },
+  { id: "oc-3", name: "Helsi Serlina Aprila Saputri", nim: "24101152610054", role: "Sekretaris" },
   { id: "oc-5", name: "Fachratun Rahima", nim: "25101152610292", role: "Bendahara 2" }
 ];
 
