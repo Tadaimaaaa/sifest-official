@@ -36,40 +36,36 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Visi Misi Section */}
-      <Section id="vision" className="pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-5xl mx-auto">
-          <GlassCard variant="medium" className="p-8 md:p-12 border-brand-accent/20 hover:border-brand-accent/50 transition-colors">
-            <div className="w-14 h-14 rounded-2xl bg-brand-accent/20 flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-accent"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+      {/* Latar Belakang Section */}
+      <Section id="history" className="pt-0">
+        <GlassCard variant="medium" className="p-8 md:p-12 lg:p-16 max-w-5xl mx-auto border-brand-accent/20 hover:border-brand-accent/50 transition-colors relative overflow-hidden group">
+          {/* Decorative background glow */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[80px] -z-10 group-hover:bg-brand-accent/20 transition-colors duration-500" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-blue-500/20 transition-colors duration-500" />
+          
+          <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-start relative z-10">
+            <div className="md:w-1/3 shrink-0 sticky top-24">
+              <div className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
+                <span className="text-brand-accent font-semibold tracking-widest uppercase text-sm shadow-sm">Awal Mula</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white leading-tight">
+                Latar Belakang <br className="hidden md:block" /> Terciptanya <br className="hidden lg:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-yellow-300">SI FEST</span>
+              </h2>
             </div>
-            <h3 className="text-3xl font-heading font-bold text-white mb-4">Visi Kami</h3>
-            <p className="text-white/70 leading-relaxed text-lg">
-              Menjadi wadah utama yang menginspirasi, menghubungkan, dan mendorong inovasi mahasiswa Sistem Informasi serta generasi muda di bidang teknologi dan industri kreatif tingkat nasional.
-            </p>
-          </GlassCard>
-
-          <GlassCard variant="medium" className="p-8 md:p-12 border-blue-500/20 hover:border-blue-500/50 transition-colors">
-            <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+            
+            <div className="md:w-2/3 space-y-6 text-white/70 leading-relaxed text-base md:text-lg">
+              <p>
+                Sebagai salah satu himpunan mahasiswa paling progresif di Universitas Putra Indonesia &quot;YPTK&quot; Padang, <strong className="text-white">Himpunan Mahasiswa Jurusan Sistem Informasi (HMJ SI)</strong> selalu dituntut untuk berinovasi dan memberikan ruang nyata bagi penyaluran minat serta bakat para mahasiswa.
+              </p>
+              <p>
+                Dari keresahan akan perlunya panggung kolaborasi masif yang mampu meleburkan teknologi, semangat kompetitif, dan solidaritas keagamaan, tercetuslah sebuah ide besar untuk menciptakan <strong className="text-brand-accent font-medium">program kerja baru berskala besar</strong> yang belum pernah direalisasikan sebelumnya.
+              </p>
+              <p>
+                Melalui <strong className="text-white">SI FEST (Sistem Informasi Festival) 2026</strong>, kami menembus batasan lama. Acara ini bukan sekadar rentetan perlombaan biasa, melainkan sebuah perayaan kreativitas dan arena pembuktian bagi talenta digital masa depan. SI FEST adalah wujud nyata dedikasi kami dalam mencetak generasi unggul yang siap berdaya saing tinggi.
+              </p>
             </div>
-            <h3 className="text-3xl font-heading font-bold text-white mb-4">Misi Kami</h3>
-            <ul className="text-white/70 leading-relaxed text-lg space-y-3 list-none">
-              <li className="flex items-start gap-3">
-                <span className="text-blue-400 mt-1">✦</span>
-                Mengadakan kompetisi yang memacu kolaborasi kreatif.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-400 mt-1">✦</span>
-                Menyediakan seminar dari pakar industri teknologi terkini.
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-blue-400 mt-1">✦</span>
-                Membangun jaringan solidaritas antar mahasiswa dan praktisi.
-              </li>
-            </ul>
-          </GlassCard>
-        </div>
+          </div>
+        </GlassCard>
       </Section>
 
       {/* Committee Section */}
