@@ -181,6 +181,18 @@
   .animate-marquee { animation: marquee 30s linear infinite; }
 
   /* FAIRY ANIMATIONS */
+  @keyframes flutter {
+    0%, 100% { transform: translateY(0px) rotate(0deg) scaleX(1); }
+    25% { transform: translateY(-3px) rotate(-15deg) scaleX(0.7); }
+    50% { transform: translateY(0px) rotate(0deg) scaleX(1); }
+    75% { transform: translateY(3px) rotate(15deg) scaleX(0.7); }
+  }
+
+  .animate-flutter {
+    display: inline-block;
+    animation: flutter 0.2s ease-in-out infinite;
+    transform-origin: center;
+  }
   @keyframes fly-fairy {
     0% { transform: translate(-200vw, -200vh) scale(1) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 10px #F5B716); }
     10% { transform: translate(-50%, -150%) scale(2) rotate(15deg); opacity: 1; filter: drop-shadow(0 0 20px #F5B716); }

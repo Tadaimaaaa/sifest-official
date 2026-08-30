@@ -13,8 +13,9 @@ export function Hero() {
           <Countdown targetDate="2026-11-02T08:00:00+07:00" />
           
           <h1 className="relative font-heading text-6xl font-bold tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl text-glow leading-[1.1] mb-6">
-            {/* The Magic Fairy */}
-            <div className="animate-fairy text-4xl sm:text-5xl md:text-6xl absolute drop-shadow-2xl">🧚‍♂️</div>
+            <div className="animate-fairy text-4xl sm:text-5xl md:text-6xl absolute drop-shadow-2xl">
+              <div className="animate-flutter">🧚‍♂️</div>
+            </div>
             
             {/* The Spelled Letters */}
             <span className="fairy-letter delay-s1">S</span>
