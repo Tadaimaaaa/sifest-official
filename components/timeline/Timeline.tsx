@@ -1,4 +1,5 @@
 import { GlassCard } from "@/components/ui/GlassCard";
+import { Trophy, Gamepad2, Sparkles, BookOpen, Rocket } from "lucide-react";
 import React from "react";
 
 export function Timeline() {
@@ -11,14 +12,31 @@ export function Timeline() {
         <div className="relative z-10 flex flex-col items-center gap-4">
           <div className="text-brand-accent font-semibold tracking-widest uppercase text-sm">Save the Date</div>
           
-          <div className="my-12 w-full max-w-2xl relative group cursor-default" style={{ perspective: "2000px" }}>
+          <div className="my-16 w-full max-w-lg relative group cursor-default" style={{ perspective: "2000px" }}>
+            {/* Floating Animated Elements */}
+            <div className="absolute -left-12 md:-left-20 top-10 animate-bounce text-brand-accent drop-shadow-[0_0_15px_rgba(245,183,22,0.5)] z-20" style={{ animationDelay: '0.2s', animationDuration: '3s' }}>
+              <Trophy size={48} className="opacity-80 transform -rotate-12" />
+            </div>
+            <div className="absolute -right-8 md:-right-16 top-32 animate-bounce text-blue-400 drop-shadow-[0_0_15px_rgba(96,165,250,0.5)] z-20" style={{ animationDelay: '0.5s', animationDuration: '3.5s' }}>
+              <Gamepad2 size={56} className="opacity-80 transform rotate-12" />
+            </div>
+            <div className="absolute -left-4 md:-left-12 bottom-16 animate-bounce text-purple-400 drop-shadow-[0_0_15px_rgba(192,132,252,0.5)] z-20" style={{ animationDelay: '0.1s', animationDuration: '4s' }}>
+              <BookOpen size={42} className="opacity-80 transform -rotate-6" />
+            </div>
+            <div className="absolute right-4 md:-right-4 -top-8 animate-bounce text-yellow-300 drop-shadow-[0_0_15px_rgba(253,224,71,0.5)] z-20" style={{ animationDelay: '0.7s', animationDuration: '2.5s' }}>
+              <Sparkles size={36} className="opacity-90 transform rotate-45" />
+            </div>
+            <div className="absolute left-1/3 -bottom-14 animate-bounce text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)] z-20" style={{ animationDelay: '0.4s', animationDuration: '3.2s' }}>
+              <Rocket size={44} className="opacity-80 transform rotate-12" />
+            </div>
+
             {/* 3D Calendar Card */}
             <div 
-              className="relative z-10 w-full rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-4 md:p-8 pb-10 text-center transition-all duration-700 border border-white/20 group-hover:scale-[1.02]"
+              className="relative z-10 w-full rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-4 sm:p-6 pb-8 text-center transition-all duration-700 border border-white/20 group-hover:scale-[1.05] group-hover:rotate-y-[-5deg]"
               style={{ 
-                transform: "rotateX(30deg) rotateY(-15deg) rotateZ(5deg)",
+                transform: "rotateX(25deg) rotateY(-10deg) rotateZ(3deg)",
                 transformStyle: "preserve-3d",
-                boxShadow: "-15px 25px 0px rgba(255,255,255,0.05), -25px 40px 40px rgba(0,0,0,0.5)"
+                boxShadow: "-10px 20px 0px rgba(255,255,255,0.05), -20px 30px 40px rgba(0,0,0,0.5)"
               }}
             >
               
@@ -29,16 +47,16 @@ export function Timeline() {
               <div className="absolute -top-6 right-[15%] w-5 h-14 bg-gradient-to-b from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/20" style={{ transform: "translateZ(20px)" }}></div>
               
               {/* Header block (Month & Year) */}
-              <div className="absolute top-0 left-0 w-full h-16 md:h-20 bg-brand-primary/40 rounded-t-3xl flex items-center justify-center border-b border-white/10 shadow-inner" style={{ transform: "translateZ(5px)" }}>
-                <span className="text-white font-bold tracking-widest uppercase text-xl md:text-2xl mt-2 drop-shadow-md">November 2026</span>
+              <div className="absolute top-0 left-0 w-full h-14 sm:h-16 bg-brand-primary/40 rounded-t-3xl flex items-center justify-center border-b border-white/10 shadow-inner" style={{ transform: "translateZ(5px)" }}>
+                <span className="text-white font-bold tracking-widest uppercase text-lg sm:text-xl mt-2 drop-shadow-md">November 2026</span>
               </div>
               
               {/* Grid */}
-              <div className="mt-16 md:mt-20 pt-4" style={{ transformStyle: "preserve-3d" }}>
-                <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4 text-white/50 font-bold text-xs md:text-base uppercase" style={{ transform: "translateZ(10px)" }}>
+              <div className="mt-14 sm:mt-16 pt-4" style={{ transformStyle: "preserve-3d" }}>
+                <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-3 text-white/50 font-bold text-[10px] sm:text-xs md:text-sm uppercase" style={{ transform: "translateZ(10px)" }}>
                   <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
                 </div>
-                <div className="grid grid-cols-7 gap-2 md:gap-4 text-white/90 font-semibold text-lg md:text-2xl" style={{ transformStyle: "preserve-3d" }}>
+                <div className="grid grid-cols-7 gap-1 sm:gap-2 text-white/90 font-semibold text-sm sm:text-base md:text-lg" style={{ transformStyle: "preserve-3d" }}>
                   {Array.from({ length: 30 }).map((_, i) => {
                     const day = i + 1;
                     const isEventDay = day >= 2 && day <= 6;
