@@ -10,7 +10,17 @@ export function Timeline() {
         <div className="absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-brand-accent/20 blur-3xl"></div>
         
         <div className="relative z-10 flex flex-col items-center gap-4">
-          <div className="text-brand-accent font-semibold tracking-widest uppercase text-sm">Save the Date</div>
+          {/* Massive Glowing Headline */}
+          <div className="flex flex-col items-center mb-4 md:mb-8 relative">
+            <h2 className="text-5xl md:text-7xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-brand-accent via-yellow-300 to-[#ff9900] drop-shadow-[0_0_30px_rgba(245,183,22,0.6)] animate-pulse tracking-wider">
+              SAVE THE DATE
+            </h2>
+            <div className="flex items-center gap-4 mt-4 text-white/80">
+              <div className="h-[2px] w-12 md:w-24 bg-gradient-to-r from-transparent to-brand-accent/70 rounded-full"></div>
+              <span className="tracking-[0.4em] uppercase text-xs md:text-sm font-bold text-brand-accent/90">SI FEST 2026</span>
+              <div className="h-[2px] w-12 md:w-24 bg-gradient-to-l from-transparent to-brand-accent/70 rounded-full"></div>
+            </div>
+          </div>
           
           <div className="my-16 w-full max-w-lg relative group cursor-default" style={{ perspective: "2000px" }}>
             {/* Floating Animated Elements */}
