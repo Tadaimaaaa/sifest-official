@@ -55,16 +55,19 @@ export default function AdminDashboardOverview() {
         </div>
       </div>
 
-      {/* Warning/Info Banner */}
-      <div className="bg-brand-primary/5 p-6 rounded-2xl border border-brand-primary/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      {/* System Status Banner */}
+      <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h4 className="text-lg font-bold text-brand-primary mb-1">Tahap 1 Selesai: Kerangka Dashboard Berhasil Dibangun</h4>
+          <h4 className="text-lg font-bold text-blue-900 mb-1 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+            Sistem Utama Online
+          </h4>
           <p className="text-slate-600 text-sm max-w-2xl">
-            Sistem Autentikasi dan navigasi Admin telah aktif. Langkah selanjutnya adalah membangun modul manajemen database untuk mengelola data panitia secara dinamis.
+            Database dan penyimpanan awan (Cloud Storage) telah terhubung secara penuh. Anda kini memiliki kontrol akses penuh untuk mengelola modul kepanitiaan dan fitur *website* lainnya.
           </p>
         </div>
-        <button className="px-5 py-2.5 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-colors shrink-0 shadow-md">
-          Lanjutkan ke Tahap 2
+        <button className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-50 transition-colors shrink-0 shadow-sm text-sm">
+          Lihat Log Server
         </button>
       </div>
 
