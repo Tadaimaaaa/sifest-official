@@ -43,8 +43,11 @@ export function Navbar() {
       >
         
         {/* Logo - Flex 1 (Left aligned) */}
-        <Link href="/" className="flex items-center gap-2 flex-1">
-          <span className="font-heading text-xl font-bold text-white text-glow tracking-wide">SI FEST</span>
+        <Link href="/" className="flex items-center gap-3 flex-1 group">
+          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 backdrop-blur-sm p-0.5 border border-white/20 group-hover:border-brand-accent/50 transition-colors">
+            <img src="/logo-sifest.png" alt="SI FEST Logo" className="w-full h-full object-contain" />
+          </div>
+          <span className="font-heading text-xl font-bold text-white text-glow tracking-wide hidden sm:block group-hover:text-brand-accent transition-colors">SI FEST</span>
         </Link>
 
         {/* Desktop Nav - Flex 1 (Centered) */}
