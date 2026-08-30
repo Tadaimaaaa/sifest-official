@@ -53,7 +53,7 @@ export default function AboutPage() {
               </h2>
             </div>
             
-            <div className="md:w-2/3 space-y-6 text-white/70 leading-relaxed text-base md:text-lg">
+            <div className="md:w-2/3 space-y-6 text-white/70 leading-relaxed text-base md:text-lg text-justify">
               <p>
                 Sebagai salah satu himpunan mahasiswa paling progresif di Universitas Putra Indonesia &quot;YPTK&quot; Padang, <strong className="text-white">Himpunan Mahasiswa Jurusan Sistem Informasi (HMJ SI)</strong> selalu dituntut untuk berinovasi dan memberikan ruang nyata bagi penyaluran minat serta bakat para mahasiswa.
               </p>
