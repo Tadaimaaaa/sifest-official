@@ -31,7 +31,7 @@ export function Hero() {
             <span className="tv-letter delay-tv-t">T</span>
             <br className="hidden sm:block" />
             
-            <span className="text-brand-accent block sm:inline mt-2 sm:mt-0 tv-letter delay-tv-t" style={{ animationDelay: '2.8s' }}>2026</span>
+            <span className="text-brand-accent block sm:inline mt-2 sm:mt-0 tv-letter tv-letter-accent delay-tv-t" style={{ animationDelay: '2.8s' }}>2026</span>
           </h1>
           
           <div className="mb-8 w-full">
