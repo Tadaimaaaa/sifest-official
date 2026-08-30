@@ -8,6 +8,7 @@ import { Timeline } from "@/components/timeline/Timeline";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BackgroundAmbience } from "@/components/layout/BackgroundAmbience";
+import { AboutSection } from "@/components/about/AboutSection";
 import { OFFICIAL_EVENTS } from "@/data/events";
 import Link from "next/link";
 import React from "react";
@@ -25,33 +26,7 @@ export default function Home() {
       </Section>
 
       <Section id="about" title="APA ITU SI FEST?">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            {/* Visual Decorative Element for About */}
-            <div className="relative aspect-square w-full max-w-md mx-auto">
-              <div className="absolute inset-0 rounded-full bg-brand-primary/30 blur-3xl mix-blend-screen animate-pulse-glow" />
-              <div className="absolute inset-10 rounded-full border border-white/20 glass-medium shadow-2xl backdrop-blur-2xl flex items-center justify-center p-8">
-                <p className="font-heading text-4xl text-center text-white text-glow leading-tight">
-                  Sinergi <br/> Inovasi
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <GlassCard variant="light">
-              <h3 className="font-heading text-2xl font-bold text-white mb-4">HMJ Sistem Informasi</h3>
-              <p className="text-white/80 leading-relaxed text-lg">
-                SI FEST (Sistem Informasi Festival) adalah acara tahunan terbesar yang diselenggarakan oleh Himpunan Mahasiswa Jurusan Sistem Informasi Universitas Putra Indonesia &quot;YPTK&quot; Padang.
-              </p>
-            </GlassCard>
-            <GlassCard variant="light">
-              <h3 className="font-heading text-2xl font-bold text-white mb-4">Menyatukan Teknologi, Merangkul Keberagaman</h3>
-              <p className="text-white/80 leading-relaxed text-lg">
-                Festival ini bertujuan untuk mewadahi minat, bakat, dan kreativitas generasi muda di bidang teknologi, olahraga, e-sport, dan keagamaan.
-              </p>
-            </GlassCard>
-          </div>
-        </div>
+        <AboutSection />
       </Section>
 
       <Section id="timeline">
