@@ -1,10 +1,11 @@
 "use client";
 
-import { STEERING_COMMITTEE, ORGANIZING_COMMITTEE_CORE, DIVISIONS, CommitteeMember } from "@/data/committee";
+import { DIVISIONS as STATIC_DIVISIONS, CommitteeMember } from "@/data/committee";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { UserCircle2 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const MemberCard = ({ member, index, variant = "blue" }: { member: CommitteeMember, index: number, variant?: "gold" | "blue" }) => {
   const isGold = variant === "gold";
@@ -29,7 +30,7 @@ const MemberCard = ({ member, index, variant = "blue" }: { member: CommitteeMemb
         `} />
         <div className="w-full h-full bg-[#0a1128] rounded-full flex items-center justify-center overflow-hidden relative z-10">
           {member.image ? (
-            <Image src={member.image} alt={member.name} width={96} height={96} className="w-full h-full object-cover" />
+            <Image src={member.image} alt={member.name} fill sizes="96px" className="object-cover" />
           ) : (
             <UserCircle2 size={48} className={`text-white/20 transition-colors duration-500 ${isGold ? 'group-hover:text-brand-accent' : 'group-hover:text-blue-500'}`} />
           )}
@@ -56,40 +57,104 @@ const MemberCard = ({ member, index, variant = "blue" }: { member: CommitteeMemb
 };
 
 export function CommitteeGrid() {
-  const [activeTab, setActiveTab] = useState(DIVISIONS[0].id);
-  const activeDivision = DIVISIONS.find(d => d.id === activeTab) || DIVISIONS[0];
+  const [activeTab, setActiveTab] = useState(STATIC_DIVISIONS[0].id);
+  
+  // Data States
+  const [scMembers, setScMembers] = useState<CommitteeMember[]>([]);
+  const [ocMembers, setOcMembers] = useState<CommitteeMember[]>([]);
+  const [divisionsData, setDivisionsData] = useState(STATIC_DIVISIONS);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchDatabaseMembers = async () => {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('committee_members')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Map database rows to CommitteeMember interface
+          const formattedData = data.map((d: any) => ({
+            id: d.id,
+            name: d.name,
+            nim: d.nim,
+            role: d.role,
+            image: d.image_url,
+            division_id: d.division_id
+          }));
+
+          // Distribute into SC, OC, and Divisions
+          setScMembers(formattedData.filter((m: any) => m.division_id === 'sc'));
+          setOcMembers(formattedData.filter((m: any) => m.division_id === 'oc'));
+
+          const newDivisions = STATIC_DIVISIONS.map(div => ({
+            ...div,
+            members: formattedData.filter((m: any) => m.division_id === div.id)
+          }));
+          setDivisionsData(newDivisions);
+        }
+      } catch (err) {
+        console.error("Failed to fetch committee members:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDatabaseMembers();
+  }, []);
+
+  const activeDivision = divisionsData.find(d => d.id === activeTab) || divisionsData[0];
+
+  if (isLoading) {
+    return (
+      <div className="mt-12 flex flex-col items-center justify-center py-20 text-brand-accent">
+        <div className="w-12 h-12 border-4 border-white/10 border-t-brand-accent rounded-full animate-spin mb-4" />
+        <p className="font-medium animate-pulse">Mensinkronisasi Data dengan Database...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-12 space-y-20">
       
       {/* Steering Committee Section */}
-      <div>
-        <div className="text-center mb-10">
-          <h3 className="text-3xl font-heading font-bold text-white mb-2">Steering Committee</h3>
-          <p className="text-brand-accent font-medium">Badan Pengarah & Penasihat</p>
+      {scMembers.length > 0 && (
+        <div className="animate-fade-in-up">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-heading font-bold text-white mb-2">Steering Committee</h3>
+            <p className="text-brand-accent font-medium">Badan Pengarah & Penasihat</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {scMembers.map((member, i) => (
+              <MemberCard key={member.id} member={member} index={i} variant="gold" />
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STEERING_COMMITTEE.map((member, i) => (
-            <MemberCard key={member.id} member={member} index={i} variant="gold" />
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Organizing Committee Core Section */}
-      <div>
-        <div className="text-center mb-10">
-          <h3 className="text-3xl font-heading font-bold text-white mb-2">Organizing Committee</h3>
-          <p className="text-blue-400 font-medium">Pengurus Inti Pelaksana</p>
+      {ocMembers.length > 0 && (
+        <div className="animate-fade-in-up">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-heading font-bold text-white mb-2">Organizing Committee</h3>
+            <p className="text-blue-400 font-medium">Pengurus Inti Pelaksana</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {ocMembers.map((member, i) => (
+              <MemberCard key={member.id} member={member} index={i} variant="blue" />
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {ORGANIZING_COMMITTEE_CORE.map((member, i) => (
-            <MemberCard key={member.id} member={member} index={i} variant="blue" />
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Divisions & Events Tabs */}
-      <div>
+      <div className="animate-fade-in-up">
         <div className="text-center mb-10">
           <h3 className="text-3xl font-heading font-bold text-white mb-2">Divisi & Event</h3>
           <p className="text-white/60 font-medium max-w-2xl mx-auto">Motor penggerak operasional SI FEST 2026</p>
@@ -100,33 +165,44 @@ export function CommitteeGrid() {
             
             {/* Tabs Navigation */}
             <div className="lg:w-1/4 shrink-0 flex flex-row lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
-              {DIVISIONS.map((div) => (
+              {divisionsData.map((div) => (
                 <button
                   key={div.id}
                   onClick={() => setActiveTab(div.id)}
-                  className={`text-left px-5 py-3 rounded-xl transition-all duration-300 font-medium whitespace-nowrap lg:whitespace-normal
+                  className={`text-left px-5 py-3 rounded-xl transition-all duration-300 font-medium whitespace-nowrap lg:whitespace-normal flex justify-between items-center
                     ${activeTab === div.id 
                       ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
                       : 'text-white/50 hover:bg-white/5 hover:text-white'}
                   `}
                 >
-                  {div.name}
+                  <span>{div.name}</span>
+                  {div.members.length > 0 && (
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${activeTab === div.id ? 'bg-blue-500/20' : 'bg-white/10'}`}>
+                      {div.members.length}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
 
             {/* Tab Content */}
-            <div className="lg:w-3/4">
+            <div className="lg:w-3/4 min-h-[300px]">
               <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
                 <h4 className="text-2xl font-bold text-white font-heading">{activeDivision.name}</h4>
                 <span className="text-sm text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">{activeDivision.members.length} Personel</span>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {activeDivision.members.map((member, i) => (
-                  <MemberCard key={member.id} member={member} index={i} variant="blue" />
-                ))}
-              </div>
+              {activeDivision.members.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {activeDivision.members.map((member, i) => (
+                    <MemberCard key={member.id} member={member} index={i} variant="blue" />
+                  ))}
+                </div>
+              ) : (
+                <div className="w-full h-48 flex items-center justify-center border border-dashed border-white/10 rounded-2xl">
+                  <p className="text-white/40">Belum ada panitia di divisi ini.</p>
+                </div>
+              )}
             </div>
             
           </div>
