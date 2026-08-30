@@ -8,7 +8,6 @@ import { SponsorModal } from "@/components/admin/SponsorModal";
 export default function SponsorsAdmin() {
   const [sponsors, setSponsors] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterTier, setFilterTier] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,9 +35,7 @@ export default function SponsorsAdmin() {
   }, []);
 
   const filteredSponsors = sponsors.filter(s => {
-    const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTier = filterTier === "all" || s.tier === filterTier;
-    return matchesSearch && matchesTier;
+    return s.name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   const handleEdit = (sponsor: any) => {
@@ -102,19 +99,6 @@ export default function SponsorsAdmin() {
             className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all text-sm"
           />
         </div>
-        <select 
-          value={filterTier}
-          onChange={(e) => setFilterTier(e.target.value)}
-          className="w-full sm:w-48 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all text-sm text-slate-700 appearance-none"
-        >
-          <option value="all">Semua Kategori</option>
-          <option value="Platinum">Platinum</option>
-          <option value="Gold">Gold</option>
-          <option value="Silver">Silver</option>
-          <option value="Media Partner">Media Partner</option>
-          <option value="Community Partner">Community Partner</option>
-        </select>
-      </div>
 
       {/* Table */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -123,7 +107,6 @@ export default function SponsorsAdmin() {
             <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
               <tr>
                 <th className="px-6 py-4">Logo Mitra</th>
-                <th className="px-6 py-4">Kategori</th>
                 <th className="px-6 py-4 text-right">Aksi</th>
               </tr>
             </thead>
@@ -159,11 +142,6 @@ export default function SponsorsAdmin() {
                           <div className="font-semibold text-slate-900">{sponsor.name}</div>
                         </div>
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
-                        {sponsor.tier}
-                      </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

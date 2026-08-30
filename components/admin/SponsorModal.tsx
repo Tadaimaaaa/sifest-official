@@ -25,18 +25,15 @@ export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorMod
 
   // Form states
   const [name, setName] = useState("");
-  const [tier, setTier] = useState("Media Partner");
 
   // Reset form when opened
   useEffect(() => {
     if (isOpen) {
       if (sponsor) {
         setName(sponsor.name || "");
-        setTier(sponsor.tier || "Media Partner");
         setPreviewUrl(sponsor.logo_url || null);
       } else {
         setName("");
-        setTier("Media Partner");
         setPreviewUrl(null);
       }
       setFileToUpload(null);
@@ -117,7 +114,7 @@ export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorMod
       // 2. Save data to database
       const payload = {
         name,
-        tier,
+        tier: "Sponsor", // Default fallback since DB requires it
         logo_url: finalImageUrl
       };
 
@@ -213,7 +210,7 @@ export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorMod
             </div>
 
             {/* Data Input */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Nama Mitra</label>
                 <input 
@@ -223,21 +220,6 @@ export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorMod
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all"
                   placeholder="Cth: PT Telekomunikasi"
                 />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Kategori / Tingkatan</label>
-                <select 
-                  value={tier}
-                  onChange={(e) => setTier(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 appearance-none focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 focus:outline-none transition-all"
-                >
-                  <option value="Platinum">Platinum Sponsor</option>
-                  <option value="Gold">Gold Sponsor</option>
-                  <option value="Silver">Silver Sponsor</option>
-                  <option value="Media Partner">Media Partner</option>
-                  <option value="Community Partner">Community Partner</option>
-                </select>
               </div>
             </div>
 
