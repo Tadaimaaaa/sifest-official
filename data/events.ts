@@ -30,6 +30,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "26 Oktober 2026",
     time: "08:00 - 12:00 WIB",
     location: "UPI Convention Center, Padang",
+    price: "Rp 50.000",
   },
   {
     id: "evt-02",
@@ -42,6 +43,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "Trophy",
     date: "27 - 28 Oktober 2026",
     location: "Sport Center UPI YPTK Padang",
+    price: "Rp 250.000 / Tim",
   },
   {
     id: "evt-03",
@@ -53,6 +55,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     description: "Bersiaplah untuk pertempuran epik! Turnamen Mobile Legends: Bang Bang SI FEST 2026 mencari tim esports terbaik. Buktikan sinergi dan inovasi strategimu di Land of Dawn.",
     icon: "Gamepad2",
     date: "29 Oktober 2026",
+    price: "Rp 100.000 / Tim",
   },
   {
     id: "evt-04",
@@ -65,6 +68,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "BookOpen",
     date: "27 Oktober 2026",
     location: "Masjid Raya UPI YPTK",
+    price: "Gratis",
   },
   {
     id: "evt-05",
@@ -77,5 +81,6 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "Store",
     date: "26 - 30 Oktober 2026",
     location: "Plaza UPI YPTK Padang",
+    price: "Gratis",
   },
 ];
