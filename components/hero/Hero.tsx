@@ -12,8 +12,20 @@ export function Hero() {
         <div className="mx-auto text-center max-w-4xl">
           <Countdown targetDate="2026-11-02T08:00:00+07:00" />
           
-          <h1 className="font-heading text-6xl font-bold tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl text-glow leading-[1.1] mb-6">
-            SI FEST <br className="hidden sm:block" />
+          <h1 className="relative font-heading text-6xl font-bold tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl text-glow leading-[1.1] mb-6">
+            {/* The Magic Fairy */}
+            <div className="animate-fairy text-4xl sm:text-5xl md:text-6xl absolute drop-shadow-2xl">🧚‍♂️</div>
+            
+            {/* The Spelled Letters */}
+            <span className="fairy-letter delay-s1">S</span>
+            <span className="fairy-letter delay-i">I</span>
+            <span className="fairy-letter delay-space ml-3 sm:ml-6"> </span>
+            <span className="fairy-letter delay-f">F</span>
+            <span className="fairy-letter delay-e">E</span>
+            <span className="fairy-letter delay-s2">S</span>
+            <span className="fairy-letter delay-t">T</span>
+            <br className="hidden sm:block" />
+            
             <span className="text-brand-accent block sm:inline mt-2 sm:mt-0">2026</span>
           </h1>
           
