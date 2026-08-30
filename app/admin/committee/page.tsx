@@ -83,12 +83,12 @@ export default function CommitteeCMSPage() {
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Manajemen Panitia</h1>
+          <h1 className="text-3xl font-semibold text-slate-900">Manajemen Panitia</h1>
           <p className="text-slate-500 mt-1">Kelola data dan struktur kepanitiaan SI FEST 2026</p>
         </div>
         <button 
           onClick={handleAdd}
-          className="px-5 py-2.5 bg-brand-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30"
+          className="px-5 py-2.5 bg-brand-primary text-white font-medium rounded-xl flex items-center justify-center gap-2 hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30"
         >
           <Plus size={20} /> Tambah Panitia
         </button>
@@ -164,7 +164,7 @@ export default function CommitteeCMSPage() {
                           {member.image_url ? (
                             <Image src={member.image_url} alt={member.name} fill sizes="40px" className="object-cover" />
                           ) : (
-                            <span className="text-slate-400 text-xs font-bold">{member.name.charAt(0)}</span>
+                            <span className="text-slate-400 text-xs font-semibold">{member.name.charAt(0)}</span>
                           )}
                         </div>
                         <span className="font-medium text-slate-900 group-hover:text-brand-primary transition-colors">

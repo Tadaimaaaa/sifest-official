@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
                   isActive 
-                  ? "bg-brand-primary/5 text-brand-primary border border-brand-primary/10 font-bold" 
+                  ? "bg-brand-primary/5 text-brand-primary border border-brand-primary/10 font-semibold" 
                   : "text-slate-500 hover:text-slate-900 hover:bg-slate-50 border border-transparent"
                 }`}
               >

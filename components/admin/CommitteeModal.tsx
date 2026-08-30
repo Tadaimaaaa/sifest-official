@@ -165,7 +165,7 @@ export function CommitteeModal({ isOpen, onClose, member, onSuccess }: Committee
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-slate-50">
-          <h2 className="text-2xl font-bold text-slate-900">
+          <h2 className="text-2xl font-semibold text-slate-900">
             {member ? "Edit Data Panitia" : "Tambah Panitia Baru"}
           </h2>
           <button onClick={onClose} className="p-2 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-slate-500 hover:text-slate-900 transition-colors">
@@ -291,7 +291,7 @@ export function CommitteeModal({ isOpen, onClose, member, onSuccess }: Committee
           <button 
             onClick={handleSave}
             disabled={isSaving}
-            className="px-6 py-3 rounded-xl font-bold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30 flex items-center justify-center min-w-[140px] disabled:opacity-70"
+            className="px-6 py-3 rounded-xl font-semibold bg-brand-primary text-white hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30 flex items-center justify-center min-w-[140px] disabled:opacity-70"
           >
             {isSaving ? (
                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
