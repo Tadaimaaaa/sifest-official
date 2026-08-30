@@ -22,14 +22,13 @@ export function PhilosophySection() {
         
         {/* Logo Display */}
         <div className="flex justify-center mb-16">
-          <div className="relative w-48 h-48 md:w-64 md:h-64 p-8 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.05)]">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/20 to-blue-500/20 rounded-full animate-pulse-glow" />
+          <div className="relative w-48 h-48 md:w-64 md:h-64 p-8 rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.2)]">
             <Image 
               src="/logo.png" 
               alt="Logo SI FEST" 
               width={200} 
               height={200}
-              className="w-full h-auto object-contain relative z-10 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+              className="w-full h-auto object-contain relative z-10"
             />
           </div>
         </div>
