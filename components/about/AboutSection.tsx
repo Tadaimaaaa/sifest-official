@@ -1,6 +1,7 @@
 import { GlassCard } from "@/components/ui/GlassCard";
 import { MonitorPlay, Trophy, Globe, Zap, Network, Users } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export function AboutSection() {
@@ -91,6 +92,21 @@ export function AboutSection() {
               </div>
             </div>
           </GlassCard>
+        </div>
+
+        {/* CTA Button to About Page */}
+        <div className="pt-6 lg:pt-8 flex justify-start pl-4 md:pl-0">
+          <Link href="/about" className="group/btn relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-brand-accent/50 rounded-xl overflow-hidden hover:bg-brand-accent/10 transition-all duration-300 hover:shadow-[0_0_20px_rgba(245,183,22,0.3)]">
+            {/* Hover shine effect */}
+            <div className="absolute inset-0 -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
+            
+            <span className="font-heading font-bold text-white tracking-wider group-hover/btn:text-brand-accent transition-colors duration-300">
+              KENALI SI FEST LEBIH JAUH
+            </span>
+            <div className="w-8 h-8 rounded-full bg-brand-accent/20 flex items-center justify-center group-hover/btn:bg-brand-accent group-hover/btn:text-white text-brand-accent transition-all duration-300 group-hover/btn:translate-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </Link>
         </div>
       </div>
 
