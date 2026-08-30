@@ -32,7 +32,7 @@ export function SponsorGrid() {
     <div className="relative w-full overflow-hidden py-10 flex border-y border-white/5 bg-white/5 backdrop-blur-sm">
       <div className="flex w-max animate-marquee gap-12 md:gap-24 items-center">
         {marqueeItems.map((sponsor, i) => (
-          <div key={`${sponsor.id}-${i}`} className="flex flex-col items-center justify-center shrink-0 w-32 md:w-48 h-24 md:h-32 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+          <div key={`${sponsor.id}-${i}`} className="flex flex-col items-center justify-center shrink-0 w-32 md:w-48 h-24 md:h-32 transition-transform hover:scale-110">
             {sponsor.logo_url ? (
               <img src={sponsor.logo_url} alt={sponsor.name} className="max-w-full max-h-full object-contain drop-shadow-md" />
             ) : (
