@@ -183,8 +183,8 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 PENDAFTARAN
               </span>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 text-glow">
-              DAFTAR SI FEST 2026
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 text-glow uppercase">
+              {selectedEvent ? `DAFTAR ${selectedEvent.title}` : "DAFTAR SI FEST 2026"}
             </h1>
             <p className="text-white/70 max-w-xl mx-auto">
               Lengkapi data di bawah ini untuk mengikuti kegiatan festival teknologi terbesar tahun ini.
