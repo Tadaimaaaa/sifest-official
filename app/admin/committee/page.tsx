@@ -36,11 +36,27 @@ export default function CommitteeCMSPage() {
     fetchMembers();
   }, []);
 
-  const filteredMembers = members.filter(m => {
-    const matchesSearch = m.name.toLowerCase().includes(searchQuery.toLowerCase()) || m.role.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesDivision = filterDivision === "all" || m.division_id === filterDivision;
-    return matchesSearch && matchesDivision;
-  });
+  const divisionOrder = [
+    "sc", "oc", "kesekretariatan", "acara-inti", "humas", 
+    "logistik", "medis", "pubdok", "mtq", "bazar", 
+    "futsal", "seminar", "esport"
+  ];
+
+  const filteredMembers = members
+    .filter(m => {
+      const matchesSearch = m.name.toLowerCase().includes(searchQuery.toLowerCase()) || m.role.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesDivision = filterDivision === "all" || m.division_id === filterDivision;
+      return matchesSearch && matchesDivision;
+    })
+    .sort((a, b) => {
+      const indexA = divisionOrder.indexOf(a.division_id);
+      const indexB = divisionOrder.indexOf(b.division_id);
+      const posA = indexA === -1 ? 999 : indexA;
+      const posB = indexB === -1 ? 999 : indexB;
+      
+      if (posA !== posB) return posA - posB;
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
 
   const handleEdit = (member: any) => {
     setSelectedMember(member);
