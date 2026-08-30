@@ -168,12 +168,17 @@
     from { transform: rotate(360deg); }
     to { transform: rotate(0deg); }
   }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
   
   .animate-float { animation: float 6s ease-in-out infinite; }
   .animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
   .animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
   .animate-spin-slow { animation: spin-slow 20s linear infinite; }
   .animate-spin-slow-reverse { animation: spin-slow-reverse 25s linear infinite; }
+  .animate-marquee { animation: marquee 30s linear infinite; }
 
   /* Transitions (Micro & Standard) */
   .transition-micro {

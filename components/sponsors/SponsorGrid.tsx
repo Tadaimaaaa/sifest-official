@@ -1,14 +1,47 @@
-import { GlassCard } from "@/components/ui/GlassCard";
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export function SponsorGrid() {
+  const [sponsors, setSponsors] = useState<any[]>([]);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchSponsors = async () => {
+      const { data } = await supabase.from('sponsors').select('*');
+      if (data) {
+        setSponsors(data);
+      }
+    };
+    fetchSponsors();
+  }, []);
+
+  if (sponsors.length === 0) {
+    return (
+      <div className="flex justify-center opacity-60">
+        <p className="text-white/40 font-medium">Mitra & Sponsor belum tersedia</p>
+      </div>
+    );
+  }
+
+  // Duplicate items to make the infinite marquee smooth
+  const marqueeItems = [...sponsors, ...sponsors, ...sponsors, ...sponsors];
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 opacity-60">
-      {[1, 2, 3, 4].map((i) => (
-        <GlassCard key={i} variant="light" className="flex h-32 items-center justify-center p-0">
-          <span className="text-white/40 font-medium">Sponsor Logo</span>
-        </GlassCard>
-      ))}
+    <div className="relative w-full overflow-hidden py-10 flex border-y border-white/5 bg-white/5 backdrop-blur-sm">
+      <div className="flex w-max animate-marquee gap-12 md:gap-24 items-center">
+        {marqueeItems.map((sponsor, i) => (
+          <div key={`${sponsor.id}-${i}`} className="flex flex-col items-center justify-center shrink-0 w-32 md:w-48 h-24 md:h-32 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+            {sponsor.logo_url ? (
+              <img src={sponsor.logo_url} alt={sponsor.name} className="max-w-full max-h-full object-contain drop-shadow-md" />
+            ) : (
+              <span className="text-white font-bold whitespace-nowrap text-xl">{sponsor.name}</span>
+            )}
+          </div>
+        ))}
+      </div>
+      
     </div>
   );
 }
