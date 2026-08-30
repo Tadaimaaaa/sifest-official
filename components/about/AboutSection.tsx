@@ -64,9 +64,9 @@ export function AboutSection() {
                 <Network size={28} className="sm:w-8 sm:h-8" />
               </div>
               <div>
-                <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-brand-accent transition-colors duration-300">HMJ Sistem Informasi</h3>
+                <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-brand-accent transition-colors duration-300">Program Kerja Baru HMJ SI</h3>
                 <p className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
-                  SI FEST (Sistem Informasi Festival) adalah acara tahunan prestisius persembahan Himpunan Mahasiswa Jurusan Sistem Informasi Universitas Putra Indonesia &quot;YPTK&quot; Padang.
+                  SI FEST (Sistem Informasi Festival) merupakan terobosan dan <strong className="text-brand-accent font-semibold">program kerja baru</strong> persembahan Himpunan Mahasiswa Jurusan Sistem Informasi Universitas Putra Indonesia &quot;YPTK&quot; Padang.
                 </p>
               </div>
             </div>

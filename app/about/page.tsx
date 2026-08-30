@@ -30,8 +30,8 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-7xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/50 mb-6 drop-shadow-sm leading-tight">
             Mengenal Lebih Jauh <br className="hidden md:block"/> SI FEST 2026
           </h1>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Menyatukan ribuan talenta digital muda dalam perayaan teknologi terbesar Himpunan Mahasiswa Jurusan Sistem Informasi.
+          <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+            SI FEST (Sistem Informasi Festival) adalah <strong className="text-white">program kerja terbaru</strong> dari Himpunan Mahasiswa Jurusan Sistem Informasi. Sebuah terobosan inovatif untuk menyatukan ribuan talenta digital muda dalam satu perayaan teknologi terbesar.
           </p>
         </div>
       </div>
