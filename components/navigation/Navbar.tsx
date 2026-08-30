@@ -9,29 +9,14 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Deteksi apakah sudah di-scroll dari atas
-      setIsScrolled(currentScrollY > 20);
-
-      // Deteksi arah scroll: sembunyikan saat scroll ke bawah, tampilkan saat scroll ke atas
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false); // Scroll ke bawah
-      } else {
-        setIsVisible(true);  // Scroll ke atas
-      }
-      
-      setLastScrollY(currentScrollY);
+      setIsScrolled(window.scrollY > 20);
     };
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const navLinks = [
     { name: "Beranda", href: "/" },
@@ -44,16 +29,16 @@ export function Navbar() {
   return (
     <nav 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-transform duration-300 ease-in-out",
-        isVisible ? "translate-y-0" : "-translate-y-full"
+        "fixed left-0 right-0 z-50 mx-auto transition-all duration-500 ease-in-out",
+        isScrolled ? "top-4 max-w-5xl px-4" : "top-0 w-full max-w-7xl px-4 sm:px-8 py-4"
       )}
     >
       <div 
         className={cn(
-          "flex w-full items-center justify-between transition-all duration-300 px-4 sm:px-8 max-w-7xl mx-auto",
+          "flex w-full items-center justify-between transition-all duration-500",
           isScrolled 
-            ? "glass-strong h-16 shadow-lg border-b border-white/10 rounded-b-2xl mt-0" 
-            : "h-24 bg-transparent border-b border-transparent mt-2"
+            ? "glass-strong h-16 rounded-[var(--radius-pill)] px-6 md:px-8 shadow-lg border-white/10" 
+            : "h-16 bg-transparent px-2 md:px-4 border-transparent"
         )}
       >
         
