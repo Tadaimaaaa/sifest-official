@@ -14,31 +14,31 @@ export function Timeline() {
           <div className="my-12 w-full max-w-2xl relative group cursor-default" style={{ perspective: "2000px" }}>
             {/* 3D Calendar Card */}
             <div 
-              className="relative z-10 w-full rounded-3xl bg-gradient-to-br from-white to-slate-100 p-4 md:p-8 pb-10 text-center transition-all duration-700 border-2 border-slate-200 group-hover:scale-[1.02]"
+              className="relative z-10 w-full rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-4 md:p-8 pb-10 text-center transition-all duration-700 border border-white/20 group-hover:scale-[1.02]"
               style={{ 
                 transform: "rotateX(30deg) rotateY(-15deg) rotateZ(5deg)",
                 transformStyle: "preserve-3d",
-                boxShadow: "-15px 25px 0px #cbd5e1, -25px 40px 40px rgba(0,0,0,0.4)"
+                boxShadow: "-15px 25px 0px rgba(255,255,255,0.05), -25px 40px 40px rgba(0,0,0,0.5)"
               }}
             >
               
               {/* Calendar rings */}
-              <div className="absolute -top-6 left-[15%] w-5 h-14 bg-gradient-to-b from-slate-200 to-slate-500 rounded-full shadow-lg border-2 border-slate-600" style={{ transform: "translateZ(20px)" }}></div>
-              <div className="absolute -top-6 left-[35%] w-5 h-14 bg-gradient-to-b from-slate-200 to-slate-500 rounded-full shadow-lg border-2 border-slate-600" style={{ transform: "translateZ(20px)" }}></div>
-              <div className="absolute -top-6 right-[35%] w-5 h-14 bg-gradient-to-b from-slate-200 to-slate-500 rounded-full shadow-lg border-2 border-slate-600" style={{ transform: "translateZ(20px)" }}></div>
-              <div className="absolute -top-6 right-[15%] w-5 h-14 bg-gradient-to-b from-slate-200 to-slate-500 rounded-full shadow-lg border-2 border-slate-600" style={{ transform: "translateZ(20px)" }}></div>
+              <div className="absolute -top-6 left-[15%] w-5 h-14 bg-gradient-to-b from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/20" style={{ transform: "translateZ(20px)" }}></div>
+              <div className="absolute -top-6 left-[35%] w-5 h-14 bg-gradient-to-b from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/20" style={{ transform: "translateZ(20px)" }}></div>
+              <div className="absolute -top-6 right-[35%] w-5 h-14 bg-gradient-to-b from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/20" style={{ transform: "translateZ(20px)" }}></div>
+              <div className="absolute -top-6 right-[15%] w-5 h-14 bg-gradient-to-b from-slate-400 to-slate-600 rounded-full shadow-lg border border-white/20" style={{ transform: "translateZ(20px)" }}></div>
               
               {/* Header block (Month & Year) */}
-              <div className="absolute top-0 left-0 w-full h-16 md:h-20 bg-gradient-to-b from-red-600 to-red-800 rounded-t-3xl flex items-center justify-center border-b-4 border-red-900 shadow-inner" style={{ transform: "translateZ(5px)" }}>
+              <div className="absolute top-0 left-0 w-full h-16 md:h-20 bg-brand-primary/40 rounded-t-3xl flex items-center justify-center border-b border-white/10 shadow-inner" style={{ transform: "translateZ(5px)" }}>
                 <span className="text-white font-bold tracking-widest uppercase text-xl md:text-2xl mt-2 drop-shadow-md">November 2026</span>
               </div>
               
               {/* Grid */}
               <div className="mt-16 md:mt-20 pt-4" style={{ transformStyle: "preserve-3d" }}>
-                <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4 text-slate-500 font-bold text-xs md:text-base uppercase" style={{ transform: "translateZ(10px)" }}>
+                <div className="grid grid-cols-7 gap-2 md:gap-4 mb-4 text-white/50 font-bold text-xs md:text-base uppercase" style={{ transform: "translateZ(10px)" }}>
                   <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
                 </div>
-                <div className="grid grid-cols-7 gap-2 md:gap-4 text-slate-800 font-semibold text-lg md:text-2xl" style={{ transformStyle: "preserve-3d" }}>
+                <div className="grid grid-cols-7 gap-2 md:gap-4 text-white/90 font-semibold text-lg md:text-2xl" style={{ transformStyle: "preserve-3d" }}>
                   {Array.from({ length: 30 }).map((_, i) => {
                     const day = i + 1;
                     const isEventDay = day >= 2 && day <= 6;
@@ -49,7 +49,7 @@ export function Timeline() {
                         className={`aspect-square flex items-center justify-center rounded-lg md:rounded-xl transition-all duration-300 ${
                           isEventDay 
                             ? "bg-gradient-to-br from-brand-accent to-[#e69b00] text-white shadow-[-6px_8px_0px_#996700,-10px_15px_20px_rgba(0,0,0,0.5)] border border-[#ffcd4d] z-20 group-hover:scale-110"
-                            : "bg-white border border-slate-200 shadow-sm"
+                            : "bg-white/5 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] hover:bg-white/10"
                         }`}
                         style={{
                           transform: isEventDay ? "translateZ(40px) translateX(-5px) translateY(-5px)" : "translateZ(10px)",
