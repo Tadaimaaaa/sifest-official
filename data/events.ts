@@ -20,6 +20,7 @@ export interface EventData {
   timeline?: { title: string; date: string }[];
   benefits?: string[];
   contacts?: { name: string; phone: string }[];
+  isSubEvent?: boolean;
 }
 
 export const OFFICIAL_EVENTS: EventData[] = [
@@ -158,7 +159,69 @@ export const OFFICIAL_EVENTS: EventData[] = [
     contacts: [
       { name: "Nayla", phone: "0812-6753-72371" },
       { name: "Ahda", phone: "0813-7480-0110" }
-    ]
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-03-efootball",
+    slug: "turnamen-esport-efootball",
+    title: "Turnamen E-Sport E-Football",
+    category: "E-Sport",
+    status: "Open",
+    shortDescription: "Tunjukkan skill dan strategi terbaikmu di lapangan virtual.",
+    description: "Bersiaplah untuk pertempuran epik! Turnamen E-Football SI FEST 2026 mencari pemain esports terbaik. Buktikan sinergi dan inovasi strategimu di lapangan hijau virtual.",
+    icon: "Gamepad2",
+    date: "03 - 05 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lantai 2 UPI Exhibition Hall",
+    price: "Rp 100.000 / Tim",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    requirements: [
+      "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
+      "Setiap pemain wajib menggunakan akun E-Football milik sendiri.",
+      "Dilarang menggunakan cheat, script, map hack, bug exploit, atau aplikasi ilegal.",
+      "Dilarang melakukan tindakan provokasi, penghinaan, atau tindakan yang mengganggu jalannya pertandingan.",
+      "Keterlambatan melewati batas waktu check-in dapat dikenakan WO.",
+      "Pergantian pemain hanya diperbolehkan sesuai ketentuan panitia.",
+      "Keputusan wasit/panitia terkait pertandingan bersifat final."
+    ],
+    registrationFlow: [
+      "Ketua tim membuat akun dan mendaftarkan skuad di website SI FEST.",
+      "Mengisi ID Server dan Nickname masing-masing pemain dengan benar.",
+      "Membayar biaya registrasi secara online.",
+      "Masuk ke grup WhatsApp peserta melalui tautan yang dikirimkan.",
+      "Menunggu jadwal drawing dan bracket dari panitia."
+    ],
+    timeline: [
+      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
+      { title: "Grand Final", date: "05 November 2026" }
+    ],
+    benefits: [
+      "Juara 1: Uang Tunai + Trophy + Sertifikat",
+      "Juara 2: Uang Tunai + Sertifikat",
+      "Juara 3: Uang Tunai + Sertifikat",
+      "MVP Final: Uang Tunai"
+    ],
+    contacts: [
+      { name: "Nayla", phone: "0812-6753-72371" },
+      { name: "Ahda", phone: "0813-7480-0110" }
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-03-parent",
+    slug: "turnamen-esport",
+    title: "Turnamen E-Sport",
+    category: "E-Sport",
+    status: "Open",
+    shortDescription: "Ajang kompetisi E-Sport bergengsi untuk MLBB dan E-Football.",
+    description: "Bersiaplah untuk pertempuran epik! Turnamen E-Sport SI FEST 2026 hadir dengan dua cabang game populer: Mobile Legends (MLBB) dan E-Football.",
+    icon: "Gamepad2",
+    date: "03 - 05 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lantai 2 UPI Exhibition Hall",
   },
   {
     id: "evt-04",

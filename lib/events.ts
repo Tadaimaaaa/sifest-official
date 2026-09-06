@@ -4,6 +4,10 @@ export function getAllEvents(): EventData[] {
   return OFFICIAL_EVENTS;
 }
 
+export function getMainEvents(): EventData[] {
+  return OFFICIAL_EVENTS.filter(event => !event.isSubEvent);
+}
+
 export function getEventBySlug(slug: string): EventData | undefined {
   return OFFICIAL_EVENTS.find((event) => event.slug === slug);
 }

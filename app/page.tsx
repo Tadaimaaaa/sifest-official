@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { BackgroundAmbience } from "@/components/layout/BackgroundAmbience";
 import { AboutSection } from "@/components/about/AboutSection";
-import { OFFICIAL_EVENTS } from "@/data/events";
+import { getMainEvents } from "@/lib/events";
 import Link from "next/link";
 import React from "react";
 
@@ -22,7 +22,7 @@ export default function Home() {
       <Hero />
 
       <Section id="events" title="JELAJAHI SI FEST">
-        <EventGrid events={OFFICIAL_EVENTS} />
+        <EventGrid events={getMainEvents()} />
       </Section>
 
       <Section id="about" title="MENGENAL LEBIH JAUH SI FEST">

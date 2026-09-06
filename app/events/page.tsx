@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/navigation/Navbar";
 import { Section } from "@/components/layout/Section";
 import { BackgroundAmbience } from "@/components/layout/BackgroundAmbience";
-import { getAllEvents } from "@/lib/events";
+import { getMainEvents } from "@/lib/events";
 import React from "react";
 import { Container } from "@/components/ui/Container";
 import { Sparkle } from "@/components/ui/Sparkle";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default function EventsIndexPage() {
-  const events = getAllEvents();
+  const events = getMainEvents();
 
   return (
     <main className="relative min-h-[100svh] w-full overflow-hidden bg-[#0A192F]/40">
