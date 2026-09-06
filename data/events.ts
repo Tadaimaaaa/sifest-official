@@ -150,10 +150,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
       { title: "Grand Final", date: "05 November 2026" }
     ],
     benefits: [
-      "Prize Pool: Rp 5.000.000,-",
-      "Juara 1: Uang Tunai + E-Certificate",
-      "Juara 2 & 3: Uang Tunai + E-Certificate",
-      "MVP Player: In-game Diamonds"
+      "Juara 1: Uang Tunai + Trophy + Sertifikat",
+      "Juara 2: Uang Tunai + Sertifikat",
+      "Juara 3: Uang Tunai + Sertifikat",
+      "MVP Final: Uang Tunai"
     ],
     contacts: [
       { name: "Nayla", phone: "0812-6753-72371" },
