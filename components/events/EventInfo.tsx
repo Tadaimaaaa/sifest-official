@@ -153,6 +153,9 @@ export function EventInfo({ event }: { event: EventData }) {
                     <p className="text-white/90 font-medium text-sm">{contact.name}</p>
                     <p className="text-sm text-white/50">{contact.phone}</p>
                   </div>
+                  <div className="ml-auto text-xs font-medium text-green-400 bg-green-500/10 px-2.5 py-1 rounded-full group-hover:bg-green-500 group-hover:text-white transition-colors">
+                    Chat WA
+                  </div>
                 </a>
               ))}
             </div>
