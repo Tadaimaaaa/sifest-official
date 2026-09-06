@@ -167,10 +167,14 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "Lantai 2 UPI Exhibition Hall (Ruang A & B)",
     price: "Gratis",
     requirements: [
-      "Terbuka untuk seluruh mahasiswa aktif UPI YPTK Padang",
-      "Peserta wajib mengenakan pakaian muslim/muslimah yang rapi dan sopan",
-      "Membawa perlengkapan ibadah dan Al-Qur'an masing-masing",
-      "Hadir 30 menit sebelum perlombaan dimulai"
+      "Peserta merupakan peserta yang telah terdaftar dalam MTQ SI-FEST 2026.",
+      "Peserta wajib memberikan data pendaftaran yang benar.",
+      "Peserta wajib mengikuti seluruh rangkaian kegiatan sesuai jadwal.",
+      "Peserta wajib hadir sesuai waktu yang telah ditentukan.",
+      "Peserta wajib menjaga ketertiban dan kondusivitas selama kegiatan berlangsung.",
+      "Peserta wajib menjaga nama baik MTQ SI-FEST 2026, panitia, dan institusi penyelenggara.",
+      "Peserta wajib mematuhi arahan panitia dan dewan juri selama kegiatan berlangsung.",
+      "Peserta wajib menjaga fasilitas dan perlengkapan yang digunakan selama kegiatan."
     ],
     registrationFlow: [
       "Peserta mendaftar melalui form pendaftaran di website SI FEST.",
