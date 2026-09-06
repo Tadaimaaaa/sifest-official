@@ -1,6 +1,6 @@
 import { EventData } from "@/data/events";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Calendar, Clock, MapPin, Tag, CheckCircle2, ListOrdered, Hourglass, Gift, Phone } from "lucide-react";
+import { Calendar, Clock, MapPin, Tag, CheckCircle2, Hourglass, Gift, Phone } from "lucide-react";
 import React from "react";
 
 export function EventInfo({ event }: { event: EventData }) {
@@ -37,27 +37,6 @@ export function EventInfo({ event }: { event: EventData }) {
             </div>
           )}
         </GlassCard>
-        {/* Registration Flow */}
-        {event.registrationFlow && event.registrationFlow.length > 0 && (
-          <GlassCard variant="light" className="p-8 md:p-10 mt-8">
-            <h2 className="font-heading text-3xl font-bold text-white mb-6 flex items-center gap-3">
-              <ListOrdered className="text-brand-accent" size={32} />
-              Alur Pendaftaran
-            </h2>
-            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/20 before:to-transparent">
-              {event.registrationFlow.map((step, i) => (
-                <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/50 bg-brand-primary text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-lg z-10">
-                    {i + 1}
-                  </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                    <p className="text-white/80">{step}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        )}
 
         {/* Benefits */}
         {event.benefits && event.benefits.length > 0 && (
