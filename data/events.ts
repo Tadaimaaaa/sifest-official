@@ -31,6 +31,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08:00 - 12:00 WIB",
     location: "UPI Convention Center, Padang",
     price: "Rp 50.000",
+    requirements: [
+      "Terbuka untuk Mahasiswa dan Pelajar Umum",
+      "Wajib membawa E-Ticket (QR Code) saat registrasi ulang",
+      "Mengenakan pakaian bebas, rapi, dan sopan (bersepatu)",
+      "Mendapatkan e-certificate dan snack box"
+    ]
   },
   {
     id: "evt-02",
@@ -44,6 +50,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "27 - 28 Oktober 2026",
     location: "Sport Center UPI YPTK Padang",
     price: "Rp 250.000 / Tim",
+    requirements: [
+      "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
+      "Pemain wajib melampirkan Kartu Tanda Mahasiswa (KTM) atau Kartu Pelajar yang aktif",
+      "Setiap tim wajib mengikuti Technical Meeting sebelum pertandingan",
+      "Melunasi biaya pendaftaran sebelum tenggat waktu"
+    ]
   },
   {
     id: "evt-03",
@@ -56,6 +68,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "Gamepad2",
     date: "29 Oktober 2026",
     price: "Rp 100.000 / Tim",
+    requirements: [
+      "Satu tim terdiri dari 5 pemain inti dan maksimal 1 pemain cadangan",
+      "Akun Mobile Legends minimal level 20 dan memiliki setidaknya 15 hero",
+      "Wajib menggunakan device dan koneksi internet masing-masing peserta",
+      "Dilarang keras menggunakan program ilegal, cheat, atau eksploitasi bug"
+    ]
   },
   {
     id: "evt-04",
@@ -69,6 +87,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "27 Oktober 2026",
     location: "Masjid Raya UPI YPTK",
     price: "Gratis",
+    requirements: [
+      "Terbuka untuk seluruh mahasiswa aktif UPI YPTK Padang",
+      "Peserta wajib mengenakan pakaian muslim/muslimah yang rapi dan sopan",
+      "Membawa perlengkapan ibadah dan Al-Qur'an masing-masing",
+      "Hadir 30 menit sebelum perlombaan dimulai"
+    ]
   },
   {
     id: "evt-05",
@@ -82,5 +106,11 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "26 - 30 Oktober 2026",
     location: "Plaza UPI YPTK Padang",
     price: "Gratis",
+    requirements: [
+      "Pendaftaran tenant terbuka untuk mahasiswa dan pelaku UMKM umum",
+      "Setiap tenant wajib menjaga kebersihan area masing-masing",
+      "Dilarang menjual produk yang melanggar norma, hukum, atau berbahaya",
+      "Mematuhi seluruh tata tertib yang ditetapkan oleh panitia SI FEST"
+    ]
   },
 ];
