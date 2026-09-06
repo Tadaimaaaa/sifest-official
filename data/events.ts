@@ -124,9 +124,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "Gamepad2",
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
-    location: "Lantai 2 UPI Exhibition Hall & Gamezone Padang",
+    location: "Lantai 2 UPI Exhibition Hall",
     price: "Rp 100.000 / Tim",
-    registrationCloseDate: "2026-10-15T23:59:59+07:00",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
       "Setiap pemain wajib menggunakan akun Mobile Legends milik sendiri.",
@@ -144,7 +144,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Menunggu jadwal drawing dan bracket dari panitia."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "1 Agustus - 15 Oktober 2026" },
+      { title: "Pendaftaran", date: "28 September - 28 Oktober 2026" },
       { title: "Technical Meeting & Drawing", date: "20 Oktober 2026" },
       { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
       { title: "Grand Final", date: "05 November 2026" }
