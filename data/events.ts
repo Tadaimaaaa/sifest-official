@@ -146,7 +146,6 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
       { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
-      { title: "Technical Meeting & Drawing", date: "20 Oktober 2026" },
       { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
       { title: "Grand Final", date: "05 November 2026" }
     ],
