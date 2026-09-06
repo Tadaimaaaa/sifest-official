@@ -145,7 +145,7 @@ export function EventInfo({ event }: { event: EventData }) {
             </h3>
             <div className="space-y-4">
               {event.contacts.map((contact, i) => (
-                <a key={i} href={`https://wa.me/${contact.phone.replace(/^0/, '62')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
+                <a key={i} href={`https://wa.me/${contact.phone.replace(/\D/g, '').replace(/^0/, '62')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
                   <div className="w-10 h-10 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <Phone size={18} />
                   </div>
