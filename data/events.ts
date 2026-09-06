@@ -72,13 +72,13 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ]
   },
   {
-    id: "evt-02",
-    slug: "turnamen-futsal",
-    title: "Turnamen Futsal",
+    id: "evt-02-slta",
+    slug: "turnamen-futsal-slta",
+    title: "Turnamen Futsal SLTA",
     category: "Sport",
     status: "Open",
-    shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar mahasiswa dan pelajar.",
-    description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk seluruh kalangan mahasiswa dan pelajar tingkat atas di Sumatera Barat.",
+    shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar pelajar SLTA.",
+    description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk pelajar tingkat atas di Sumatera Barat.",
     icon: "Trophy",
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
@@ -87,33 +87,90 @@ export const OFFICIAL_EVENTS: EventData[] = [
     registrationCloseDate: "2026-10-10T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
-      "Pemain wajib melampirkan Kartu Tanda Mahasiswa (KTM) atau Kartu Pelajar yang aktif",
+      "Pemain wajib melampirkan Kartu Pelajar yang aktif",
       "Setiap tim wajib mengikuti Technical Meeting sebelum pertandingan",
       "Melunasi biaya pendaftaran sebelum tenggat waktu"
     ],
     registrationFlow: [
-      "Perwakilan tim (Ketua/Manajer) mendaftar akun di website SI FEST.",
-      "Mendaftarkan anggota tim dan mengunggah dokumen persyaratan (KTM/Kartu Pelajar).",
-      "Melakukan pembayaran biaya pendaftaran tim.",
-      "Panitia memverifikasi dokumen dan pembayaran.",
-      "Tim yang lolos verifikasi akan diundang ke grup WhatsApp resmi."
+      "Perwakilan tim mengisi formulir pendaftaran di website SI FEST.",
+      "Mengunggah scan/foto identitas setiap anggota tim.",
+      "Melakukan pembayaran biaya registrasi ke rekening panitia.",
+      "Bergabung dengan grup komunikasi peserta setelah pembayaran diverifikasi.",
+      "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "1 Agustus - 10 Oktober 2026" },
-      { title: "Technical Meeting", date: "14 Oktober 2026" },
-      { title: "Babak Penyisihan", date: "03 - 05 November 2026" },
-      { title: "Semifinal & Final", date: "06 November 2026" }
+      { title: "Pendaftaran", date: "10 Agustus - 10 Oktober 2026" },
+      { title: "Technical Meeting", date: "15 Oktober 2026" },
+      { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
     ],
     benefits: [
-      "Juara 1: Uang Tunai + Trofi + Sertifikat",
-      "Juara 2: Uang Tunai + Trofi + Sertifikat",
-      "Juara 3: Uang Tunai + Trofi + Sertifikat",
+      "Total Hadiah Jutaan Rupiah",
+      "Piala Bergilir & Medali",
+      "Sertifikat Tingkat Provinsi",
       "Top Scorer: Plakat + Sertifikat"
     ],
     contacts: [
       { name: "Fio", phone: "082252888250" },
       { name: "Rindu", phone: "0821-7181-2343" }
-    ]
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-02-umum",
+    slug: "turnamen-futsal-umum",
+    title: "Turnamen Futsal UMUM",
+    category: "Sport",
+    status: "Open",
+    shortDescription: "Ajang kompetisi olahraga futsal bergengsi kategori Umum.",
+    description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk kalangan mahasiswa dan masyarakat umum di Sumatera Barat.",
+    icon: "Trophy",
+    date: "03 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lap. Futsal UPI \"YPTK\" Padang",
+    price: "Rp 300.000 / Tim",
+    registrationCloseDate: "2026-10-10T23:59:59+07:00",
+    requirements: [
+      "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
+      "Pemain wajib melampirkan KTP atau Kartu Tanda Mahasiswa yang aktif",
+      "Setiap tim wajib mengikuti Technical Meeting sebelum pertandingan",
+      "Melunasi biaya pendaftaran sebelum tenggat waktu"
+    ],
+    registrationFlow: [
+      "Perwakilan tim mengisi formulir pendaftaran di website SI FEST.",
+      "Mengunggah scan/foto identitas setiap anggota tim.",
+      "Melakukan pembayaran biaya registrasi ke rekening panitia.",
+      "Bergabung dengan grup komunikasi peserta setelah pembayaran diverifikasi.",
+      "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
+    ],
+    timeline: [
+      { title: "Pendaftaran", date: "10 Agustus - 10 Oktober 2026" },
+      { title: "Technical Meeting", date: "15 Oktober 2026" },
+      { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
+    ],
+    benefits: [
+      "Total Hadiah Jutaan Rupiah",
+      "Piala Bergilir & Medali",
+      "Sertifikat Tingkat Provinsi",
+      "Top Scorer: Plakat + Sertifikat"
+    ],
+    contacts: [
+      { name: "Fio", phone: "082252888250" },
+      { name: "Rindu", phone: "0821-7181-2343" }
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-02-parent",
+    slug: "turnamen-futsal",
+    title: "Turnamen Futsal",
+    category: "Sport",
+    status: "Open",
+    shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar mahasiswa dan pelajar.",
+    description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini dibagi menjadi dua kategori: Tingkat SLTA dan UMUM.",
+    icon: "Trophy",
+    date: "03 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lap. Futsal UPI \"YPTK\" Padang",
   },
   {
     id: "evt-03",
