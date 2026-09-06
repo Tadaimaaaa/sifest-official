@@ -36,10 +36,13 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "UPI Convention Center, Padang",
     price: "Rp 50.000",
     requirements: [
-      "Terbuka untuk Mahasiswa dan Pelajar Umum",
-      "Wajib membawa E-Ticket (QR Code) saat registrasi ulang",
-      "Mengenakan pakaian bebas, rapi, dan sopan (bersepatu)",
-      "Mendapatkan e-certificate dan snack box"
+      "Peserta merupakan peserta yang telah terdaftar dalam seminar SI-FEST 2026.",
+      "Peserta wajib memberikan data pendaftaran yang benar.",
+      "Peserta wajib mengikuti seluruh rangkaian kegiatan seminar.",
+      "Peserta wajib hadir sesuai waktu yang telah ditentukan.",
+      "Peserta wajib menjaga ketertiban selama kegiatan berlangsung.",
+      "Peserta wajib menjaga nama baik Seminar SI-FEST 2026, panitia, dan institusi penyelenggara.",
+      "Peserta wajib mematuhi arahan panitia selama kegiatan berlangsung."
     ],
     registrationFlow: [
       "Peserta membuat akun dan login di website resmi SI FEST.",
