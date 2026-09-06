@@ -65,8 +65,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Relasi & Ilmu Bermanfaat"
     ],
     contacts: [
-      { name: "Budi (Pendaftaran)", phone: "081234567890" },
-      { name: "Ani (Informasi Acara)", phone: "082198765432" }
+      { name: "Reifan", phone: "0857-0914-4442" },
+      { name: "Nabila", phone: "0812-7796-3005" }
     ]
   },
   {
@@ -109,8 +109,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Top Scorer: Plakat + Sertifikat"
     ],
     contacts: [
-      { name: "Doni (Pertandingan)", phone: "085211223344" },
-      { name: "Siti (Registrasi)", phone: "081399887766" }
+      { name: "Fio", phone: "082252888250" },
+      { name: "Rindu", phone: "0821-7181-2343" }
     ]
   },
   {
@@ -153,8 +153,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "MVP Player: In-game Diamonds"
     ],
     contacts: [
-      { name: "Raka (Turnamen)", phone: "089512345678" },
-      { name: "Dinda (Admin)", phone: "087711223344" }
+      { name: "Nayla", phone: "0812-6753-72371" },
+      { name: "Ahda", phone: "0813-7480-0110" }
     ]
   },
   {
@@ -201,8 +201,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Seluruh peserta mendapatkan E-Certificate"
     ],
     contacts: [
-      { name: "Fatih (Koordinator)", phone: "082233445566" },
-      { name: "Aisyah (Informasi)", phone: "085299887766" }
+      { name: "Alam", phone: "085766529316" },
+      { name: "Zaskia", phone: "0822-8548-9075" }
     ]
   },
   {
@@ -245,8 +245,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Sertifikat Partisipasi Tenant"
     ],
     contacts: [
-      { name: "Rina (Tenant Relation)", phone: "081244556677" },
-      { name: "Kevin (Operasional)", phone: "085233445566" }
+      { name: "Aqil", phone: "081266869460" },
+      { name: "Hanafi", phone: "0853-7931-8662" }
     ]
   },
 ];
