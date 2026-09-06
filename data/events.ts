@@ -14,6 +14,7 @@ export interface EventData {
   time?: string;
   location?: string;
   price?: string;
+  registrationCloseDate?: string;
   requirements?: string[];
   registrationFlow?: string[];
   timeline?: { title: string; date: string }[];
@@ -35,6 +36,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "UPI Exhibition Hall (Lt. 1)",
     price: "Rp 50.000",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam seminar SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
@@ -80,6 +82,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 250.000 / Tim",
+    registrationCloseDate: "2026-10-10T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
       "Pemain wajib melampirkan Kartu Tanda Mahasiswa (KTM) atau Kartu Pelajar yang aktif",
@@ -123,6 +126,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall & Gamezone Padang",
     price: "Rp 100.000 / Tim",
+    registrationCloseDate: "2026-10-15T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain inti dan maksimal 1 pemain cadangan",
       "Akun Mobile Legends minimal level 20 dan memiliki setidaknya 15 hero",
@@ -164,8 +168,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "BookOpen",
     date: "02 November 2026",
     time: "08.00 - 17.30 WIB",
-    location: "Lantai 2 UPI Exhibition Hall (Ruang A & B)",
+    location: "Lantai 2 UPI Exhibition Hall",
     price: "Gratis",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam MTQ SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
@@ -213,6 +218,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
     price: "Gratis",
+    registrationCloseDate: "2026-10-15T23:59:59+07:00",
     requirements: [
       "Pendaftaran tenant terbuka untuk mahasiswa dan pelaku UMKM umum",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
