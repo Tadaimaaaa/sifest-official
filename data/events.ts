@@ -128,10 +128,13 @@ export const OFFICIAL_EVENTS: EventData[] = [
     price: "Rp 100.000 / Tim",
     registrationCloseDate: "2026-10-15T23:59:59+07:00",
     requirements: [
-      "Satu tim terdiri dari 5 pemain inti dan maksimal 1 pemain cadangan",
-      "Akun Mobile Legends minimal level 20 dan memiliki setidaknya 15 hero",
-      "Wajib menggunakan device dan koneksi internet masing-masing peserta",
-      "Dilarang keras menggunakan program ilegal, cheat, atau eksploitasi bug"
+      "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
+      "Setiap pemain wajib menggunakan akun Mobile Legends milik sendiri.",
+      "Dilarang menggunakan cheat, script, map hack, bug exploit, atau aplikasi ilegal.",
+      "Dilarang melakukan tindakan provokasi, penghinaan, atau tindakan yang mengganggu jalannya pertandingan.",
+      "Keterlambatan melewati batas waktu check-in dapat dikenakan WO.",
+      "Pergantian pemain hanya diperbolehkan sesuai ketentuan panitia.",
+      "Keputusan wasit/panitia terkait pertandingan bersifat final."
     ],
     registrationFlow: [
       "Ketua tim membuat akun dan mendaftarkan skuad di website SI FEST.",
