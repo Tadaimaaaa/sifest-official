@@ -53,8 +53,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ],
     timeline: [
       { title: "Pendaftaran", date: "28 September - 28 Oktober 2026" },
-      { title: "Open Gate & Registrasi", date: "03 November 2026 (07.00 WIB)" },
-      { title: "Pelaksanaan Seminar", date: "03 November 2026 (08.00 WIB)" }
+      { title: "Open Gate & Registrasi", date: "03 November 2026" },
+      { title: "Pelaksanaan Seminar", date: "03 November 2026" }
     ],
     benefits: [
       "E-Certificate Tingkat Nasional",
