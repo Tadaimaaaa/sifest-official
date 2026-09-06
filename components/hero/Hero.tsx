@@ -46,7 +46,7 @@ export function Hero() {
             <div className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed text-center space-y-2">
               <p>
                 <span className="font-heading text-lg md:text-xl font-medium text-white text-glow animate-pulse-glow">
-                  Sinergi Inovasi: Menyatukan Teknologi, Merangkul Keberagaman.
+                  Sinergi Inovasi: Menautkan Teknologi, Merangkul Keberagaman.
                 </span>
               </p>
               <p className="text-white/95 font-medium">

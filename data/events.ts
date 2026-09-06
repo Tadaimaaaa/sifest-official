@@ -28,12 +28,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     title: "Seminar Nasional",
     category: "Seminar",
     status: "Open",
-    shortDescription: "Sinergi Inovasi: Menyatukan Teknologi, Merangkul Keberagaman.",
+    shortDescription: "Sinergi Inovasi: Menautkan Teknologi, Merangkul Keberagaman.",
     description: "Seminar Nasional SI FEST 2026 menghadirkan pakar teknologi terkemuka untuk membahas tren terkini dalam dunia Sistem Informasi dan bagaimana teknologi dapat menyatukan berbagai elemen masyarakat untuk mencapai masa depan yang inklusif.",
     icon: "GraduationCap",
-    date: "26 Oktober 2026",
-    time: "08:00 - 12:00 WIB",
-    location: "UPI Convention Center, Padang",
+    date: "03 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "UPI Exhibition Hall (Lt. 1)",
     price: "Rp 50.000",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam seminar SI-FEST 2026.",
@@ -54,8 +54,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran Gelombang 1", date: "1 - 30 Agustus 2026" },
       { title: "Pendaftaran Gelombang 2", date: "1 - 30 September 2026" },
-      { title: "Open Gate & Registrasi", date: "26 Oktober 2026 (07:00 WIB)" },
-      { title: "Pelaksanaan Seminar", date: "26 Oktober 2026 (08:00 WIB)" }
+      { title: "Open Gate & Registrasi", date: "26 Oktober 2026 (07.00 WIB)" },
+      { title: "Pelaksanaan Seminar", date: "03 November 2026 (08.00 WIB)" }
     ],
     benefits: [
       "E-Certificate Tingkat Nasional",
@@ -77,8 +77,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar mahasiswa dan pelajar.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk seluruh kalangan mahasiswa dan pelajar tingkat atas di Sumatera Barat.",
     icon: "Trophy",
-    date: "27 - 28 Oktober 2026",
-    location: "Sport Center UPI YPTK Padang",
+    date: "03 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 250.000 / Tim",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -96,8 +97,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran", date: "1 Agustus - 10 Oktober 2026" },
       { title: "Technical Meeting", date: "14 Oktober 2026" },
-      { title: "Babak Penyisihan", date: "27 Oktober 2026" },
-      { title: "Semifinal & Final", date: "28 Oktober 2026" }
+      { title: "Babak Penyisihan", date: "03 - 05 November 2026" },
+      { title: "Semifinal & Final", date: "06 November 2026" }
     ],
     benefits: [
       "Juara 1: Uang Tunai + Trofi + Sertifikat",
@@ -119,7 +120,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Tunjukkan skill dan strategi tim terbaikmu di arena Land of Dawn.",
     description: "Bersiaplah untuk pertempuran epik! Turnamen Mobile Legends: Bang Bang SI FEST 2026 mencari tim esports terbaik. Buktikan sinergi dan inovasi strategimu di Land of Dawn.",
     icon: "Gamepad2",
-    date: "29 Oktober 2026",
+    date: "03 - 05 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lantai 2 UPI Exhibition Hall & Gamezone Padang",
     price: "Rp 100.000 / Tim",
     requirements: [
       "Satu tim terdiri dari 5 pemain inti dan maksimal 1 pemain cadangan",
@@ -137,8 +140,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran", date: "1 Agustus - 15 Oktober 2026" },
       { title: "Technical Meeting & Drawing", date: "20 Oktober 2026" },
-      { title: "Babak Kualifikasi (Online)", date: "22 - 24 Oktober 2026" },
-      { title: "Grand Final (Offline)", date: "29 Oktober 2026" }
+      { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
+      { title: "Grand Final", date: "05 November 2026" }
     ],
     benefits: [
       "Prize Pool: Rp 5.000.000,-",
@@ -160,8 +163,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Meningkatkan nilai spiritualitas generasi muda melalui syiar Islam.",
     description: "Mengembangkan potensi dan bakat mahasiswa dalam bidang keagamaan. Lomba MTQ ini diharapkan dapat mencetak generasi yang tidak hanya unggul dalam IPTEK, tetapi juga IMTAQ.",
     icon: "BookOpen",
-    date: "27 Oktober 2026",
-    location: "Masjid Raya UPI YPTK",
+    date: "02 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Lantai 2 UPI Exhibition Hall (Ruang A & B)",
     price: "Gratis",
     requirements: [
       "Terbuka untuk seluruh mahasiswa aktif UPI YPTK Padang",
@@ -179,8 +183,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran", date: "1 September - 20 Oktober 2026" },
       { title: "Technical Meeting", date: "23 Oktober 2026" },
-      { title: "Pelaksanaan Lomba", date: "27 Oktober 2026" },
-      { title: "Pengumuman Juara", date: "27 Oktober 2026 (Sore)" }
+      { title: "Pelaksanaan Lomba", date: "02 November 2026" },
+      { title: "Pengumuman Juara", date: "06 November 2026 (Closing)" }
     ],
     benefits: [
       "Juara 1: Tabanas + Sertifikat + Trofi",
@@ -202,8 +206,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Eksplorasi ragam kuliner dan produk kreatif dari UMKM lokal.",
     description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
     icon: "Store",
-    date: "26 - 30 Oktober 2026",
-    location: "Plaza UPI YPTK Padang",
+    date: "02 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Halaman depan UPI Exhibition Hall",
     price: "Gratis",
     requirements: [
       "Pendaftaran tenant terbuka untuk mahasiswa dan pelaku UMKM umum",
@@ -222,7 +227,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       { title: "Pendaftaran & Kurasi", date: "1 - 15 Oktober 2026" },
       { title: "Pengumuman Lolos", date: "17 Oktober 2026" },
       { title: "Technical Meeting Tenant", date: "20 Oktober 2026" },
-      { title: "Pelaksanaan Bazaar", date: "26 - 30 Oktober 2026" }
+      { title: "Pelaksanaan Bazaar", date: "02 - 06 November 2026" }
     ],
     benefits: [
       "Fasilitas Stand (Meja & Kursi)",

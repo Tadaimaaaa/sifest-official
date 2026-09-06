@@ -85,7 +85,7 @@ export function AboutSection() {
                 <Users size={28} className="sm:w-8 sm:h-8" />
               </div>
               <div>
-                <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">Menyatukan Beragam Potensi</h3>
+                <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">Menautkan Beragam Potensi</h3>
                 <p className="text-white/70 leading-relaxed text-sm sm:text-base md:text-lg">
                   Wadah inovatif bagi minat, bakat, dan kreativitas talenta digital masa depan dalam bidang teknologi, olahraga kompetitif, e-sport, serta panggung kreativitas keagamaan.
                 </p>

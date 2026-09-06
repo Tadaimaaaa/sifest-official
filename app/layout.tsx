@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     template: "%s | SI FEST 2026",
     default: "SI FEST 2026 — Sistem Informasi Festival",
   },
-  description: "Official Website SI FEST 2026: Sinergi Inovasi: Menyatukan Teknologi, Merangkul Keberagaman. Universitas Putra Indonesia YPTK Padang.",
+  description: "Official Website SI FEST 2026: Sinergi Inovasi: Menautkan Teknologi, Merangkul Keberagaman. Universitas Putra Indonesia YPTK Padang.",
   openGraph: {
     title: "SI FEST 2026",
-    description: "Official Website SI FEST 2026: Sinergi Inovasi, Menyatukan Teknologi, Merangkul Keberagaman.",
+    description: "Official Website SI FEST 2026: Sinergi Inovasi, Menautkan Teknologi, Merangkul Keberagaman.",
     type: "website",
     locale: "id_ID",
     siteName: "SI FEST 2026",

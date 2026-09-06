@@ -12,7 +12,7 @@ export function Footer() {
               <span className="font-heading text-2xl font-bold text-white text-glow">SI FEST 2026</span>
             </Link>
             <p className="text-white/70 max-w-sm mb-6">
-              Sinergi Inovasi: Menyatukan Teknologi, Merangkul Keberagaman.
+              Sinergi Inovasi: Menautkan Teknologi, Merangkul Keberagaman.
               Situs Web Resmi Sistem Informasi Festival.
             </p>
             <p className="text-white/50 text-sm">
