@@ -21,6 +21,7 @@ export interface EventData {
   benefits?: string[];
   contacts?: { name: string; phone: string }[];
   isSubEvent?: boolean;
+  image?: string;
 }
 
 export const OFFICIAL_EVENTS: EventData[] = [
@@ -123,6 +124,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Tunjukkan skill dan strategi tim terbaikmu di arena Land of Dawn.",
     description: "Bersiaplah untuk pertempuran epik! Turnamen Mobile Legends: Bang Bang SI FEST 2026 mencari tim esports terbaik. Buktikan sinergi dan inovasi strategimu di Land of Dawn.",
     icon: "Gamepad2",
+    image: "/images/events/mlbb-logo.png",
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
@@ -171,6 +173,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Tunjukkan skill dan strategi terbaikmu di lapangan virtual.",
     description: "Bersiaplah untuk pertempuran epik! Turnamen E-Football SI FEST 2026 mencari pemain esports terbaik. Buktikan sinergi dan inovasi strategimu di lapangan hijau virtual.",
     icon: "Gamepad2",
+    image: "/images/events/efootball-logo.png",
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",

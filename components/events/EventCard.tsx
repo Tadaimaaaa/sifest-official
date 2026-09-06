@@ -3,6 +3,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { BookOpen, Gamepad2, GraduationCap, Store, Trophy } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 
 const IconMap: Record<string, React.ReactNode> = {
@@ -16,8 +17,12 @@ const IconMap: Record<string, React.ReactNode> = {
 export function EventCard({ event }: { event: EventData }) {
   return (
     <GlassCard variant="medium" interactive className="flex flex-col items-center text-center group">
-      <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-[var(--radius-pill)] glass-strong group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,183,22,0.3)] transition-all duration-300">
-        {IconMap[event.icon]}
+      <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-[var(--radius-pill)] glass-strong group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,183,22,0.3)] transition-all duration-300 overflow-hidden relative p-3">
+        {event.image ? (
+          <Image src={event.image} alt={event.title} fill className="object-contain p-2" />
+        ) : (
+          IconMap[event.icon]
+        )}
       </div>
       <div className="mb-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-brand-accent backdrop-blur-md">
         {event.category}
