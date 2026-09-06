@@ -52,7 +52,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Bergabung ke Grup WhatsApp peserta melalui tautan yang disediakan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "1 Agustus - 30 September 2026" },
+      { title: "Pendaftaran", date: "28 September - 28 Oktober 2026" },
       { title: "Open Gate & Registrasi", date: "03 November 2026 (07.00 WIB)" },
       { title: "Pelaksanaan Seminar", date: "03 November 2026 (08.00 WIB)" }
     ],
