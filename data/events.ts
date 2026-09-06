@@ -184,7 +184,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Mengambil nomor urut tampil saat hari H perlombaan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "1 September - 20 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
       { title: "Technical Meeting", date: "23 Oktober 2026" },
       { title: "Pelaksanaan Lomba", date: "02 November 2026" },
       { title: "Pengumuman Juara", date: "06 November 2026 (Closing)" }
