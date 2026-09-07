@@ -426,83 +426,85 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                       </div>
                     </div>
 
-                    {/* Upload Pas Foto */}
-                    <div className="w-full space-y-2 mt-4">
-                      <label className="block text-sm font-medium text-white/90">Pas Foto Pemain <span className="text-status-warning">*</span></label>
-                      <div className="flex items-center gap-4">
-                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.photoUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                          <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(idx, 'photoUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'photoUrl'} />
-                          {uploadingState?.idx === idx && uploadingState?.field === 'photoUrl' ? (
-                            <div className="flex items-center gap-2 text-brand-accent">
-                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                              <span className="text-sm">Mengunggah...</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-2 text-white/80">
-                              <UploadCloud size={18} />
-                              <span className="text-sm">{player.photoUrl ? 'Ganti Pas Foto' : 'Unggah Pas Foto'}</span>
-                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
+                      {/* Upload Pas Foto */}
+                      <div className="w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Pas Foto Pemain <span className="text-status-warning">*</span></label>
+                        <div className="flex flex-col gap-2">
+                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.photoUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(idx, 'photoUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'photoUrl'} />
+                            {uploadingState?.idx === idx && uploadingState?.field === 'photoUrl' ? (
+                              <div className="flex items-center gap-2 text-brand-accent">
+                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                                <span className="text-sm">Mengunggah...</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2 text-white/80">
+                                <UploadCloud size={18} />
+                                <span className="text-sm">{player.photoUrl ? 'Ganti Pas Foto' : 'Unggah Pas Foto'}</span>
+                              </div>
+                            )}
+                          </label>
+                          {player.photoUrl && (
+                            <a href={player.photoUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                              <FileImage size={16} /> Lihat Foto
+                            </a>
                           )}
-                        </label>
-                        {player.photoUrl && (
-                          <a href={player.photoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
-                            <FileImage size={16} /> Lihat Foto
-                          </a>
-                        )}
+                        </div>
+                        {errors[`players.${idx}.photoUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                       </div>
-                      {errors[`players.${idx}.photoUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
-                    </div>
 
-                    {/* Upload Kartu Tanda Pelajar */}
-                    <div className="w-full space-y-2 mt-4">
-                      <label className="block text-sm font-medium text-white/90">Kartu Tanda Pelajar <span className="text-status-warning">*</span></label>
-                      <div className="flex items-center gap-4">
-                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
-                          {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
-                            <div className="flex items-center gap-2 text-brand-accent">
-                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                              <span className="text-sm">Mengunggah...</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-2 text-white/80">
-                              <UploadCloud size={18} />
-                              <span className="text-sm">{player.studentCardUrl ? 'Ganti File KTP/KTS' : 'Unggah File KTP/KTS'}</span>
-                            </div>
+                      {/* Upload Kartu Tanda Pelajar */}
+                      <div className="w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Kartu Tanda Pelajar <span className="text-status-warning">*</span></label>
+                        <div className="flex flex-col gap-2">
+                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                            <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
+                            {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
+                              <div className="flex items-center gap-2 text-brand-accent">
+                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                                <span className="text-sm">Mengunggah...</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2 text-white/80">
+                                <UploadCloud size={18} />
+                                <span className="text-sm">{player.studentCardUrl ? 'Ganti KTP/KTS' : 'Unggah KTP/KTS'}</span>
+                              </div>
+                            )}
+                          </label>
+                          {player.studentCardUrl && (
+                            <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                              <FileImage size={16} /> Lihat KTP/KTS
+                            </a>
                           )}
-                        </label>
-                        {player.studentCardUrl && (
-                          <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
-                            <FileImage size={16} /> Lihat KTP/KTS
-                          </a>
-                        )}
+                        </div>
+                        {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                       </div>
-                      {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
-                    </div>
 
-                    {/* Upload Akta Kelahiran */}
-                    <div className="w-full space-y-2 mt-4">
-                      <label className="block text-sm font-medium text-white/90">Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
-                      <div className="flex items-center gap-4">
-                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
-                          {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
-                            <div className="flex items-center gap-2 text-brand-accent">
-                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                              <span className="text-sm">Mengunggah...</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-2 text-white/80">
-                              <UploadCloud size={18} />
-                              <span className="text-sm">{player.birthCertificateUrl ? 'Ganti File Akta' : 'Unggah File Akta'}</span>
-                            </div>
+                      {/* Upload Akta Kelahiran */}
+                      <div className="w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                        <div className="flex flex-col gap-2">
+                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                            <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
+                            {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
+                              <div className="flex items-center gap-2 text-brand-accent">
+                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                                <span className="text-sm">Mengunggah...</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-2 text-white/80">
+                                <UploadCloud size={18} />
+                                <span className="text-sm">{player.birthCertificateUrl ? 'Ganti Akta' : 'Unggah Akta'}</span>
+                              </div>
+                            )}
+                          </label>
+                          {player.birthCertificateUrl && (
+                            <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                              <FileImage size={16} /> Lihat Akta
+                            </a>
                           )}
-                        </label>
-                        {player.birthCertificateUrl && (
-                          <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
-                            <FileImage size={16} /> Lihat Akta
-                          </a>
-                        )}
+                        </div>
                       </div>
                     </div>
                   </div>
