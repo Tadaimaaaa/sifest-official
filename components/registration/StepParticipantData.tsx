@@ -372,12 +372,12 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     <div className="flex flex-col sm:flex-row gap-4 w-full">
                       <div className="flex-1 w-full space-y-2">
                         <label className="block text-sm font-medium text-white/90">Nama Lengkap <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.name} onChange={(e) => updatePlayer(idx, 'name', e.target.value)} placeholder="Nama Lengkap" className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        <input type="text" value={player.name} onChange={(e) => updatePlayer(idx, 'name', e.target.value)} placeholder="Nama Lengkap" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                         {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                       </div>
                       <div className="flex-1 w-full space-y-2">
                         <label className="block text-sm font-medium text-white/90">NISN <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.nisn} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder="00123..." className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        <input type="text" value={player.nisn} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder="00123..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                         {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                       </div>
                     </div>
@@ -385,7 +385,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     {idx === 0 && (
                       <div className="w-full sm:w-1/2 pr-0 sm:pr-2 space-y-2">
                         <label className="block text-sm font-medium text-white/90">No. WhatsApp <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Untuk grup WA)</span></label>
-                        <input type="tel" value={player.whatsapp || ''} onChange={(e) => updatePlayer(idx, 'whatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        <input type="tel" value={player.whatsapp || ''} onChange={(e) => updatePlayer(idx, 'whatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                         {errors[`players.0.whatsapp`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.0.whatsapp`]}</p>}
                       </div>
                     )}
@@ -393,7 +393,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     <div className="w-full space-y-2">
                       <label className="block text-sm font-medium text-white/90">Kartu Tanda Siswa (Opsional)</label>
                       <div className="flex items-center gap-4">
-                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-[#1e293b] hover:bg-white/10'}`}>
+                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
                           <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, e)} disabled={uploadingIdx === idx} />
                           {uploadingIdx === idx ? (
                             <div className="flex items-center gap-2 text-brand-accent">
