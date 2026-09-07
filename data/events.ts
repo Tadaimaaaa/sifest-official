@@ -85,7 +85,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 200.000 / Tim",
-    registrationCloseDate: "2026-10-10T23:59:59+07:00",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
       "Pemain wajib melampirkan Kartu Pelajar yang aktif",
@@ -100,8 +100,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "10 Agustus - 10 Oktober 2026" },
-      { title: "Technical Meeting", date: "15 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
       { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
     ],
     benefits: [
@@ -129,7 +129,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 300.000 / Tim",
-    registrationCloseDate: "2026-10-10T23:59:59+07:00",
+    registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
       "Pemain wajib melampirkan KTP atau Kartu Tanda Mahasiswa yang aktif",
@@ -144,8 +144,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "10 Agustus - 10 Oktober 2026" },
-      { title: "Technical Meeting", date: "15 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
       { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
     ],
     benefits: [
