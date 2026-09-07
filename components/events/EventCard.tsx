@@ -61,7 +61,7 @@ export function EventCard({ event }: { event: EventData }) {
       )}
       <Link href={`/events/${event.slug}`} className="w-full mt-auto">
         <Button variant="ghost" className="w-full border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium">
-          Detail Acara
+          Daftar Sekarang
         </Button>
       </Link>
     </GlassCard>
