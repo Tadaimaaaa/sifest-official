@@ -83,31 +83,31 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
         </p>
       </div>
 
-      {/* Ticket Container to be Captured */}
-      <div className="relative p-1 bg-gradient-to-br from-brand-accent/50 to-brand-primary/50 rounded-3xl shadow-[0_0_40px_rgba(245,183,22,0.15)]">
+      {/* Ticket Container to be Captured - use pure inline styles to avoid oklab css color parsing errors in html2canvas */}
+      <div style={{ position: 'relative', padding: '4px', background: 'linear-gradient(135deg, rgba(245,183,22,0.5), rgba(10,25,47,0.5))', borderRadius: '24px', boxShadow: '0 0 40px rgba(245,183,22,0.15)' }}>
         <div 
           ref={ticketRef}
-          className="bg-[#0f172a] rounded-[1.4rem] overflow-hidden relative"
+          style={{ background: '#0f172a', borderRadius: '20px', overflow: 'hidden', position: 'relative' }}
         >
           {/* Header */}
-          <div className="bg-[#1e293b] p-6 border-b border-white/10 flex justify-between items-center">
+          <div style={{ background: '#1e293b', padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <p className="text-brand-accent text-sm font-bold tracking-widest uppercase mb-1">E-Ticket SI FEST 2026</p>
-              <h3 className="text-white text-xl font-bold">{event.title}</h3>
+              <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>E-Ticket SI FEST 2026</p>
+              <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700, margin: 0 }}>{event.title}</h3>
             </div>
-            <div className="text-right">
-              <p className="text-white/50 text-xs uppercase tracking-wider mb-1">KODE REGISTRASI</p>
-              <p className="text-white font-mono font-bold text-lg bg-white/5 px-3 py-1 rounded-lg border border-white/10">
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>KODE REGISTRASI</p>
+              <p style={{ color: '#ffffff', fontFamily: 'monospace', fontWeight: 700, fontSize: '16px', background: 'rgba(255,255,255,0.05)', padding: '4px 12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', display: 'inline-block' }}>
                 {successResult.code}
               </p>
             </div>
           </div>
 
           {/* Body */}
-          <div className="p-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
+          <div style={{ padding: '32px', display: 'flex', flexDirection: 'row', gap: '32px', alignItems: 'flex-start' }}>
             
             {/* QR Code */}
-            <div className="bg-white p-4 rounded-2xl flex-shrink-0">
+            <div style={{ background: '#ffffff', padding: '16px', borderRadius: '16px', flexShrink: 0 }}>
               <QRCodeCanvas 
                 value={qrData}
                 size={140}
@@ -117,64 +117,60 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
             </div>
 
             {/* Info */}
-            <div className="flex-grow space-y-6 w-full text-left">
-              <div className="grid grid-cols-2 gap-4">
+            <div style={{ flexGrow: 1, width: '100%', textAlign: 'left' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
                 {isFutsal ? (
                   <>
-                    <div className="col-span-2 sm:col-span-1">
-                      <p className="text-white/50 text-xs uppercase mb-1">Nama Sekolah</p>
-                      <p className="text-white font-semibold text-lg leading-tight">{schoolName}</p>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Sekolah</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{schoolName}</p>
                     </div>
-                    <div className="col-span-2 sm:col-span-1">
-                      <p className="text-white/50 text-xs uppercase mb-1">Nama Pembina</p>
-                      <p className="text-white font-semibold text-lg leading-tight">{coachName}</p>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Pembina</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{coachName}</p>
                     </div>
-                    <div className="col-span-2">
-                      <p className="text-white/50 text-xs uppercase mb-1">Nama Kapten</p>
-                      <p className="text-white font-semibold text-lg leading-tight">{captainName}</p>
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Kapten</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="col-span-2 sm:col-span-1">
-                      <p className="text-white/50 text-xs uppercase mb-1">Peserta / Tim</p>
-                      <p className="text-white font-semibold text-lg leading-tight">{draft.participant.fullName}</p>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Peserta / Tim</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.fullName}</p>
                     </div>
-                    <div className="col-span-2 sm:col-span-1">
-                      <p className="text-white/50 text-xs uppercase mb-1">Asal Institusi</p>
-                      <p className="text-white font-semibold text-lg leading-tight">{draft.participant.institution}</p>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Asal Institusi</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.institution}</p>
                     </div>
                   </>
                 )}
               </div>
 
-              <div className="space-y-3 pt-4 border-t border-white/10">
-                <div className="flex items-center gap-3 text-white/80">
-                  <Calendar className="w-5 h-5 text-brand-accent flex-shrink-0" />
-                  <span className="text-sm">{event.date}</span>
+              <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.8)' }}>
+                  <Calendar style={{ width: '20px', height: '20px', color: '#f5b716', flexShrink: 0 }} />
+                  <span style={{ fontSize: '14px' }}>{event.date}</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/80">
-                  <Clock className="w-5 h-5 text-brand-accent flex-shrink-0" />
-                  <span className="text-sm">{event.time}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.8)' }}>
+                  <Clock style={{ width: '20px', height: '20px', color: '#f5b716', flexShrink: 0 }} />
+                  <span style={{ fontSize: '14px' }}>{event.time}</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/80">
-                  <MapPin className="w-5 h-5 text-brand-accent flex-shrink-0" />
-                  <span className="text-sm">{event.location}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.8)' }}>
+                  <MapPin style={{ width: '20px', height: '20px', color: '#f5b716', flexShrink: 0 }} />
+                  <span style={{ fontSize: '14px' }}>{event.location}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="bg-brand-primary/10 p-4 text-center border-t border-brand-primary/20">
-            <p className="text-brand-accent/80 text-xs font-medium">
+          <div style={{ background: 'rgba(10,25,47,0.4)', padding: '16px', textAlign: 'center', borderTop: '1px solid rgba(10,25,47,0.3)' }}>
+            <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 500 }}>
               *Harap simpan tiket ini dan bawa pada saat registrasi ulang di hari H.
             </p>
           </div>
-          
-          {/* Decorative cutouts */}
-          <div className="absolute top-[88px] -left-4 w-8 h-8 bg-[#0A192F] rounded-full border-r border-white/10"></div>
-          <div className="absolute top-[88px] -right-4 w-8 h-8 bg-[#0A192F] rounded-full border-l border-white/10"></div>
         </div>
       </div>
 

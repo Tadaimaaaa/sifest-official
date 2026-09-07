@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { EventData } from "@/data/events";
 import { RegistrationDraft, ParticipantData } from "@/lib/types/registration";
 import { StepIndicator } from "@/components/registration/StepIndicator";
@@ -35,6 +35,25 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [successResult, setSuccessResult] = useState<{ code: string; id: string } | null>(null);
+
+  // Persist draft and step to sessionStorage
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('sifest_reg_draft');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.draft) setDraft(parsed.draft);
+        if (parsed.step && parsed.step < 6) setCurrentStep(parsed.step);
+        if (parsed.successResult) setSuccessResult(parsed.successResult);
+      }
+    } catch (e) {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('sifest_reg_draft', JSON.stringify({ draft, step: currentStep, successResult }));
+    } catch (e) {}
+  }, [draft, currentStep, successResult]);
 
   // Derived state
   const selectedEvent = events.find((e) => e.slug === draft.eventSlug);
