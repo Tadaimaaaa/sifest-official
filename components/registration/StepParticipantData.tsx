@@ -64,7 +64,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack 
         <p className="text-white/70">Pastikan data yang Anda masukkan sudah benar dan dapat dihubungi.</p>
       </div>
 
-      <GlassCard variant="medium" className="p-6 md:p-8 space-y-6">
+      <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Full Name / Team Name */}
         <div className="space-y-2">
           <label htmlFor="fullName" className="block text-sm font-medium text-white/90">
