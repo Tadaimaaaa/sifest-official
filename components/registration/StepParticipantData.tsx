@@ -84,6 +84,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             if (!p.name?.trim()) { newErrors[`players.${idx}.name`] = "Nama pemain wajib diisi."; isValid = false; }
             if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NISN pemain wajib diisi."; isValid = false; }
             if (idx === 0 && !p.whatsapp?.trim()) { newErrors[`players.0.whatsapp`] = "No WhatsApp Kapten wajib diisi."; isValid = false; }
+            if (!p.photoUrl) { newErrors[`players.${idx}.photoUrl`] = "Pas Foto Pemain wajib diunggah."; isValid = false; }
+            if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Kartu Tanda Pelajar wajib diunggah."; isValid = false; }
+            if (!p.jerseyNumber?.trim()) { newErrors[`players.${idx}.jerseyNumber`] = "Nomor Punggung wajib diisi."; isValid = false; }
           }
         }
       }
@@ -129,7 +132,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     onUpdate({ ...data, metadata: { ...meta, players: newPlayers } });
   };
 
-  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'whatsapp' | 'studentCardUrl' | 'posisi', value: string) => {
+  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'whatsapp' | 'studentCardUrl' | 'posisi' | 'photoUrl' | 'birthCertificateUrl' | 'jerseyNumber', value: string) => {
     const meta = data.metadata;
     if (!meta) return;
     const newPlayers = [...meta.players];
@@ -138,9 +141,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
   };
 
   const supabase = createClient();
-  const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
+  const [uploadingState, setUploadingState] = useState<{ idx: number, field: string } | null>(null);
 
-  const handleFileUpload = async (idx: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (idx: number, field: 'studentCardUrl' | 'photoUrl' | 'birthCertificateUrl', e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -149,10 +152,11 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       return;
     }
 
-    setUploadingIdx(idx);
+    setUploadingState({ idx, field });
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `kts_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+      const prefix = field === 'photoUrl' ? 'foto' : field === 'birthCertificateUrl' ? 'akta' : 'kts';
+      const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('registration_files')
@@ -164,11 +168,11 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         .from('registration_files')
         .getPublicUrl(fileName);
 
-      updatePlayer(idx, 'studentCardUrl', publicUrlData.publicUrl);
+      updatePlayer(idx, field, publicUrlData.publicUrl);
     } catch (err: any) {
       alert(err.message || "Gagal mengunggah file.");
     } finally {
-      setUploadingIdx(null);
+      setUploadingState(null);
     }
   };
 
@@ -401,24 +405,34 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                       </div>
                     )}
 
-                    {/* Posisi (Opsional) */}
-                    <div className="w-full sm:w-1/2 pr-0 sm:pr-2 space-y-2">
-                      <label className="block text-sm font-medium text-white/90">Posisi <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
-                      <select value={player.posisi || ''} onChange={(e) => updatePlayer(idx, 'posisi', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
-                        <option value="">-- Pilih Posisi --</option>
-                        <option value="Penjaga Gawang">Penjaga Gawang</option>
-                        <option value="Anchor">Anchor</option>
-                        <option value="Flank">Flank</option>
-                        <option value="Pivot">Pivot</option>
-                      </select>
+                    <div className="flex flex-col sm:flex-row gap-4 w-full">
+                      {/* Posisi */}
+                      <div className="flex-1 w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Posisi <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                        <select value={player.posisi || ''} onChange={(e) => updatePlayer(idx, 'posisi', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
+                          <option value="">-- Pilih Posisi --</option>
+                          <option value="Penjaga Gawang">Penjaga Gawang</option>
+                          <option value="Anchor">Anchor</option>
+                          <option value="Flank">Flank</option>
+                          <option value="Pivot">Pivot</option>
+                        </select>
+                      </div>
+                      
+                      {/* Nomor Punggung */}
+                      <div className="flex-1 w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Nomor Punggung <span className="text-status-warning">*</span></label>
+                        <input type="text" value={player.jerseyNumber || ''} onChange={(e) => updatePlayer(idx, 'jerseyNumber', e.target.value)} placeholder="Contoh: 10" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        {errors[`players.${idx}.jerseyNumber`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                      </div>
                     </div>
 
-                    <div className="w-full space-y-2">
-                      <label className="block text-sm font-medium text-white/90">Kartu Tanda Siswa (Opsional)</label>
+                    {/* Upload Pas Foto */}
+                    <div className="w-full space-y-2 mt-4">
+                      <label className="block text-sm font-medium text-white/90">Pas Foto Pemain <span className="text-status-warning">*</span></label>
                       <div className="flex items-center gap-4">
-                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, e)} disabled={uploadingIdx === idx} />
-                          {uploadingIdx === idx ? (
+                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.photoUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                          <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(idx, 'photoUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'photoUrl'} />
+                          {uploadingState?.idx === idx && uploadingState?.field === 'photoUrl' ? (
                             <div className="flex items-center gap-2 text-brand-accent">
                               <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
                               <span className="text-sm">Mengunggah...</span>
@@ -426,13 +440,67 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                           ) : (
                             <div className="flex items-center gap-2 text-white/80">
                               <UploadCloud size={18} />
-                              <span className="text-sm">{player.studentCardUrl ? 'Ganti File KTS' : 'Unggah File KTS'}</span>
+                              <span className="text-sm">{player.photoUrl ? 'Ganti Pas Foto' : 'Unggah Pas Foto'}</span>
+                            </div>
+                          )}
+                        </label>
+                        {player.photoUrl && (
+                          <a href={player.photoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
+                            <FileImage size={16} /> Lihat Foto
+                          </a>
+                        )}
+                      </div>
+                      {errors[`players.${idx}.photoUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
+                    </div>
+
+                    {/* Upload Kartu Tanda Pelajar */}
+                    <div className="w-full space-y-2 mt-4">
+                      <label className="block text-sm font-medium text-white/90">Kartu Tanda Pelajar <span className="text-status-warning">*</span></label>
+                      <div className="flex items-center gap-4">
+                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
+                          {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
+                            <div className="flex items-center gap-2 text-brand-accent">
+                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                              <span className="text-sm">Mengunggah...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-white/80">
+                              <UploadCloud size={18} />
+                              <span className="text-sm">{player.studentCardUrl ? 'Ganti File KTP/KTS' : 'Unggah File KTP/KTS'}</span>
                             </div>
                           )}
                         </label>
                         {player.studentCardUrl && (
                           <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
-                            <FileImage size={16} /> Lihat KTS
+                            <FileImage size={16} /> Lihat KTP/KTS
+                          </a>
+                        )}
+                      </div>
+                      {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
+                    </div>
+
+                    {/* Upload Akta Kelahiran */}
+                    <div className="w-full space-y-2 mt-4">
+                      <label className="block text-sm font-medium text-white/90">Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                      <div className="flex items-center gap-4">
+                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
+                          {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
+                            <div className="flex items-center gap-2 text-brand-accent">
+                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                              <span className="text-sm">Mengunggah...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-white/80">
+                              <UploadCloud size={18} />
+                              <span className="text-sm">{player.birthCertificateUrl ? 'Ganti File Akta' : 'Unggah File Akta'}</span>
+                            </div>
+                          )}
+                        </label>
+                        {player.birthCertificateUrl && (
+                          <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-brand-primary hover:underline">
+                            <FileImage size={16} /> Lihat Akta
                           </a>
                         )}
                       </div>
