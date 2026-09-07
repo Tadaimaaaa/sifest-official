@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { EventData } from '@/data/events';
 import { RegistrationDraft } from '@/lib/types/registration';
 import { RegistrationResult } from '@/lib/data/registrations';
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Download, CheckCircle, MapPin, Calendar, Clock } from 'lucide-react';
@@ -64,6 +64,11 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
     event: event.slug,
   });
 
+  const isFutsal = draft.eventSlug === 'turnamen-futsal-slta';
+  const schoolName = draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution;
+  const coachName = draft.participant.metadata?.schoolData?.coachName || '-';
+  const captainName = draft.participant.metadata?.players?.[0]?.name || draft.participant.fullName;
+
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-4">
@@ -103,7 +108,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
             
             {/* QR Code */}
             <div className="bg-white p-4 rounded-2xl flex-shrink-0">
-              <QRCodeSVG 
+              <QRCodeCanvas 
                 value={qrData}
                 size={140}
                 level="Q"
@@ -114,14 +119,33 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
             {/* Info */}
             <div className="flex-grow space-y-6 w-full text-left">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-white/50 text-xs uppercase mb-1">Peserta / Tim</p>
-                  <p className="text-white font-semibold text-lg">{draft.participant.fullName}</p>
-                </div>
-                <div>
-                  <p className="text-white/50 text-xs uppercase mb-1">Asal Institusi</p>
-                  <p className="text-white font-semibold text-lg">{draft.participant.institution}</p>
-                </div>
+                {isFutsal ? (
+                  <>
+                    <div className="col-span-2 sm:col-span-1">
+                      <p className="text-white/50 text-xs uppercase mb-1">Nama Sekolah</p>
+                      <p className="text-white font-semibold text-lg leading-tight">{schoolName}</p>
+                    </div>
+                    <div className="col-span-2 sm:col-span-1">
+                      <p className="text-white/50 text-xs uppercase mb-1">Nama Pembina</p>
+                      <p className="text-white font-semibold text-lg leading-tight">{coachName}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-white/50 text-xs uppercase mb-1">Nama Kapten</p>
+                      <p className="text-white font-semibold text-lg leading-tight">{captainName}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="col-span-2 sm:col-span-1">
+                      <p className="text-white/50 text-xs uppercase mb-1">Peserta / Tim</p>
+                      <p className="text-white font-semibold text-lg leading-tight">{draft.participant.fullName}</p>
+                    </div>
+                    <div className="col-span-2 sm:col-span-1">
+                      <p className="text-white/50 text-xs uppercase mb-1">Asal Institusi</p>
+                      <p className="text-white font-semibold text-lg leading-tight">{draft.participant.institution}</p>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="space-y-3 pt-4 border-t border-white/10">
