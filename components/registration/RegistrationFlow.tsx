@@ -38,6 +38,19 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   // Derived state
   const selectedEvent = events.find((e) => e.slug === draft.eventSlug);
 
+  const steps = draft.eventSlug === 'turnamen-futsal-slta'
+    ? [
+        { id: 1, label: "Acara" },
+        { id: 2, label: "Data Sekolah" },
+        { id: 3, label: "Data Pemain" },
+        { id: 4, label: "Ulasan" },
+      ]
+    : [
+        { id: 1, label: "Acara" },
+        { id: 2, label: "Data Peserta" },
+        { id: 3, label: "Ulasan" },
+      ];
+
   const handleEventSelect = (slug: string) => {
     setDraft((prev) => ({ ...prev, eventSlug: slug }));
   };
@@ -46,7 +59,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     setDraft((prev) => ({ ...prev, participant: participantData }));
   };
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
   const goToStep = (step: number) => setCurrentStep(step);
 
@@ -55,7 +68,22 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     setSubmitError(null);
 
     try {
-      const result = await registerParticipant(draft);
+      // Map Futsal SLTA fields to standard participant fields for database constraints
+      const submissionDraft = { ...draft };
+      if (draft.eventSlug === 'turnamen-futsal-slta') {
+        const school = draft.participant.metadata?.schoolData;
+        if (school) {
+          submissionDraft.participant = {
+            ...submissionDraft.participant,
+            fullName: school.coachName || '',
+            email: school.email || '',
+            whatsapp: school.coachWhatsapp || '',
+            institution: school.schoolName || '',
+          };
+        }
+      }
+
+      const result = await registerParticipant(submissionDraft);
       
       if (result.success && result.registrationCode && result.registrationId) {
         setSuccessResult({
@@ -191,7 +219,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
             </p>
           </div>
 
-          <StepIndicator currentStep={currentStep} />
+          <StepIndicator currentStep={currentStep} steps={steps} />
 
           <div className="mt-8 relative">
             {/* Background Glow */}
@@ -207,17 +235,43 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 />
               )}
 
-              {currentStep === 2 && (
+              {/* Standard Event Participant Data */}
+              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
                   onUpdate={handleParticipantUpdate}
                   onNext={nextStep}
                   onBack={prevStep}
+                  mode="default"
                 />
               )}
 
-              {currentStep === 3 && selectedEvent && (
+              {/* Futsal SLTA School Data */}
+              {currentStep === 2 && draft.eventSlug === 'turnamen-futsal-slta' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="school"
+                />
+              )}
+
+              {/* Futsal SLTA Player Data */}
+              {currentStep === 3 && draft.eventSlug === 'turnamen-futsal-slta' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="players"
+                />
+              )}
+
+              {currentStep === steps.length && selectedEvent && (
                 <div className="space-y-4">
                   {submitError && (
                     <div className="w-full bg-status-warning/10 border border-status-warning/20 text-status-warning p-4 rounded-xl flex items-center justify-center text-center">
@@ -235,7 +289,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Edge case fallback */}
-              {currentStep === 3 && !selectedEvent && (
+              {currentStep === steps.length && !selectedEvent && (
                 <div className="text-center py-20">
                   <p className="text-white/60 mb-6">Acara tidak valid atau belum dipilih.</p>
                   <button onClick={() => goToStep(1)} className="text-brand-accent hover:underline">

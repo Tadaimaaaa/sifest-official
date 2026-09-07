@@ -3,18 +3,13 @@ import React from "react";
 
 interface StepIndicatorProps {
   currentStep: number;
+  steps: { id: number; label: string }[];
 }
 
-const STEPS = [
-  { id: 1, label: "Acara" },
-  { id: 2, label: "Data Peserta" },
-  { id: 3, label: "Ulasan" },
-];
-
-export function StepIndicator({ currentStep }: StepIndicatorProps) {
+export function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
   return (
     <div className="flex items-center justify-center w-full max-w-xl mx-auto mb-12">
-      {STEPS.map((step, index) => {
+      {steps.map((step, index) => {
         const isCompleted = currentStep > step.id;
         const isActive = currentStep === step.id;
 
@@ -43,7 +38,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
               </span>
             </div>
 
-            {index < STEPS.length - 1 && (
+            {index < steps.length - 1 && (
               <div className="flex-1 h-[2px] mx-2 md:mx-4 bg-white/10 relative overflow-hidden rounded-full">
                 <div
                   className="absolute top-0 left-0 h-full bg-brand-accent transition-all duration-500 ease-out"
