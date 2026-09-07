@@ -297,9 +297,17 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                       <h3 className="font-bold text-white mb-2">Instruksi Pembayaran Manual</h3>
                       <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">{selectedEvent.price}</strong> ke rekening berikut:</p>
                       
-                      <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                        <p className="text-white font-mono text-lg font-bold">[Bank Tujuan] 123456789</p>
-                        <p className="text-white/60 text-sm">a.n. SI FEST 2026</p>
+                      <div className="space-y-3">
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">BRI</p>
+                          <p className="text-white font-mono text-lg font-bold">817301013354530</p>
+                          <p className="text-white/60 text-sm">a.n. ZHARA DELVIA PUTRI</p>
+                        </div>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">BANK NAGARI</p>
+                          <p className="text-white font-mono text-lg font-bold">10030234000065</p>
+                          <p className="text-white/60 text-sm">a.n. FACHRATUN RAHIMA</p>
+                        </div>
                       </div>
 
                       <div className="pt-4 border-t border-white/10">
@@ -346,7 +354,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                         *Silakan unggah bukti pembayaran dan konfirmasi melalui WhatsApp terlebih dahulu sebelum menekan tombol Selesai.
                       </p>
                       <a
-                        href={`https://wa.me/[Nomor WA]?text=Halo%20Panitia%20SI%20FEST,%20saya%20ingin%20mengonfirmasi%20pembayaran%20untuk%20pendaftaran%20${selectedEvent.title}.%0A%0AKode%20Pendaftaran:%20${successResult.code}`}
+                        href={`https://wa.me/6282192402821?text=Halo%20Panitia%20SI%20FEST%202026%2C%20saya%20ingin%20mengonfirmasi%20pembayaran%20pendaftaran%20berikut%3A%0A%0A%F0%9F%8E%AF%20*KONFIRMASI%20PEMBAYARAN%20SI%20FEST%202026*%0A%0A%E2%80%A2%20Nama%20Acara%3A%20${encodeURIComponent(selectedEvent.title)}%0A%E2%80%A2%20Kode%20Pendaftaran%3A%20*${successResult.code}*%0A%E2%80%A2%20Nama%20Peserta%3A%20${encodeURIComponent(draft.participant.fullName)}%0A%E2%80%A2%20Asal%20Institusi%3A%20${encodeURIComponent(draft.participant.institution)}%0A%0ABukti%20pembayaran%20telah%20saya%20lampirkan.%20Mohon%20konfirmasi%20penerimaan.%20Terima%20kasih!%20%F0%9F%99%8F`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 bg-[#25D366] text-white hover:bg-[#128C7E] hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]"
