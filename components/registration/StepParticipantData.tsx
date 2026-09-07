@@ -77,7 +77,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         const teamData = meta.teamData || {};
         if (!teamData.coachName?.trim()) { newErrors['teamData.coachName'] = "Nama Pelatih wajib diisi."; isValid = false; }
         if (!teamData.coachWhatsapp?.trim()) { newErrors['teamData.coachWhatsapp'] = "No WhatsApp Pelatih wajib diisi."; isValid = false; }
-        if (!teamData.assistantCoachName?.trim()) { newErrors['teamData.assistantCoachName'] = "Nama Asisten Pelatih wajib diisi."; isValid = false; }
 
         const players = meta.players || [];
         if (players.length === 0) {
@@ -397,9 +396,8 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     {errors['teamData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.coachWhatsapp']}</p>}
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-white/90">Nama Asisten Pelatih <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">Nama Asisten Pelatih <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
                     <input type="text" value={data.metadata.teamData?.assistantCoachName || ''} onChange={(e) => updateTeamData('assistantCoachName', e.target.value)} placeholder="Nama Asisten Pelatih" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                    {errors['teamData.assistantCoachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.assistantCoachName']}</p>}
                   </div>
                 </div>
               </GlassCard>
