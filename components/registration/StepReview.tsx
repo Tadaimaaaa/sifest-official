@@ -81,41 +81,79 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
             </button>
           </div>
           
-          <h3 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-6">Data Peserta</h3>
+          <h3 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-6">
+            {draft.eventSlug === 'turnamen-futsal-slta' ? 'Data Sekolah' : 'Data Peserta'}
+          </h3>
           
-          <div className="space-y-5">
-            <div className="flex items-start gap-3">
-              <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs text-white/50 mb-0.5">Nama Lengkap</p>
-                <p className="text-sm font-medium text-white/90">{draft.participant.fullName}</p>
+          {draft.eventSlug === 'turnamen-futsal-slta' ? (
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Sekolah</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-start gap-3">
-              <Mail size={18} className="text-brand-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs text-white/50 mb-0.5">Email</p>
-                <p className="text-sm font-medium text-white/90">{draft.participant.email}</p>
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Pembina</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-start gap-3">
-              <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs text-white/50 mb-0.5">WhatsApp</p>
-                <p className="text-sm font-medium text-white/90">{draft.participant.whatsapp}</p>
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">No HP Pembina</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachWhatsapp || draft.participant.whatsapp}</p>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-start gap-3">
-              <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs text-white/50 mb-0.5">Asal Institusi</p>
-                <p className="text-sm font-medium text-white/90">{draft.participant.institution}</p>
+              <div className="flex items-start gap-3">
+                <MapPin size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Asal Kab/Kota</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.city || "-"}</p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Lengkap</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.fullName}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Mail size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Email</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.email}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">WhatsApp</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.whatsapp}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Asal Institusi</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.institution}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </GlassCard>
       </div>
 
