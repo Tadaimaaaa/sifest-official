@@ -84,7 +84,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 250.000 / Tim",
+    price: "Rp 200.000 / Tim",
     registrationCloseDate: "2026-10-10T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -119,10 +119,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
   {
     id: "evt-02-umum",
     slug: "turnamen-futsal-umum",
-    title: "Turnamen Futsal UMUM",
+    title: "Turnamen Futsal Mahasiswa/Umum",
     category: "Sport",
     status: "Open",
-    shortDescription: "Ajang kompetisi olahraga futsal bergengsi kategori Umum.",
+    shortDescription: "Ajang kompetisi olahraga futsal bergengsi kategori Mahasiswa dan Umum.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk kalangan mahasiswa dan masyarakat umum di Sumatera Barat.",
     icon: "Trophy",
     date: "03 - 06 November 2026",
@@ -172,7 +172,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 250.000 - Rp 300.000 / Tim",
+    price: "Rp 200.000 - Rp 300.000 / Tim",
   },
   {
     id: "evt-03",
