@@ -1,6 +1,12 @@
 export type EventCategory = 'Seminar' | 'Sport' | 'E-Sport' | 'Competition' | 'Bazaar';
 export type EventStatus = 'Open' | 'Closed' | 'Coming Soon';
 
+export interface RegistrationPhase {
+  name: string;
+  startDate: string;
+  endDate: string;
+}
+
 export interface EventData {
   id: string;
   slug: string;
@@ -16,6 +22,7 @@ export interface EventData {
   price?: string;
   registrationStartDate?: string;
   registrationCloseDate?: string;
+  registrationPhases?: RegistrationPhase[];
   requirements?: string[];
   registrationFlow?: string[];
   timeline?: { title: string; date: string }[];
@@ -88,6 +95,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     price: "Rp 200.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+    ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
       "Pemain wajib melampirkan Kartu Pelajar yang aktif",
@@ -133,6 +144,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     price: "Rp 300.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+    ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
       "Pemain wajib melampirkan KTP atau Kartu Tanda Mahasiswa yang aktif",
@@ -193,6 +208,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     price: "Rp 50.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+    ],
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
       "Setiap pemain wajib menggunakan akun Mobile Legends milik sendiri.",
@@ -243,6 +262,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     price: "Rp 50.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+    ],
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
       "Setiap pemain wajib menggunakan akun E-Football milik sendiri.",
