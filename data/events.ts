@@ -37,9 +37,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
     icon: "GraduationCap",
     date: "03 November 2026",
     time: "08.00 - 17.30 WIB",
-    location: "UPI Exhibition Hall (Lt. 1)",
-    price: "Rp 50.000",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    location: "UPI Convention Center",
+    price: "Gratis",
+    registrationCloseDate: "2026-10-31T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam seminar SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
@@ -187,7 +187,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 100.000 / Tim",
+    price: "Rp 50.000 / Tim",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -236,7 +236,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 100.000 / Tim",
+    price: "Rp 50.000 / Tim",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -284,7 +284,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 100.000 / Tim",
+    price: "Rp 50.000 / Tim",
   },
   {
     id: "evt-04",
@@ -335,21 +335,21 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ]
   },
   {
-    id: "evt-05",
-    slug: "open-bazaar",
-    title: "Open Bazaar / UMKM & F&B",
+    id: "evt-05-mahasiswa",
+    slug: "open-bazaar-mahasiswa",
+    title: "Open Bazaar Mahasiswa",
     category: "Bazaar",
     status: "Open",
-    shortDescription: "Eksplorasi ragam kuliner dan produk kreatif dari UMKM lokal.",
-    description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
+    shortDescription: "Bazaar kuliner dan produk kreatif khusus tenant mahasiswa.",
+    description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif dari mahasiswa di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
     icon: "Store",
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
-    price: "Gratis",
+    price: "Rp 250.000",
     registrationCloseDate: "2026-10-15T23:59:59+07:00",
     requirements: [
-      "Pendaftaran tenant terbuka untuk mahasiswa dan pelaku UMKM umum",
+      "Pendaftaran tenant terbuka khusus untuk mahasiswa aktif",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
       "Dilarang menjual produk yang melanggar norma, hukum, atau berbahaya",
       "Mematuhi seluruh tata tertib yang ditetapkan oleh panitia SI FEST"
@@ -376,6 +376,66 @@ export const OFFICIAL_EVENTS: EventData[] = [
     contacts: [
       { name: "Aqil", phone: "081266869460" },
       { name: "Hanafi", phone: "0853-7931-8662" }
-    ]
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-05-umum",
+    slug: "open-bazaar-umum",
+    title: "Open Bazaar UMUM",
+    category: "Bazaar",
+    status: "Open",
+    shortDescription: "Bazaar kuliner dan produk kreatif untuk tenant umum.",
+    description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif dari UMKM lokal di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
+    icon: "Store",
+    date: "02 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Halaman depan UPI Exhibition Hall",
+    price: "Rp 300.000",
+    registrationCloseDate: "2026-10-15T23:59:59+07:00",
+    requirements: [
+      "Pendaftaran tenant terbuka untuk pelaku UMKM umum",
+      "Setiap tenant wajib menjaga kebersihan area masing-masing",
+      "Dilarang menjual produk yang melanggar norma, hukum, atau berbahaya",
+      "Mematuhi seluruh tata tertib yang ditetapkan oleh panitia SI FEST"
+    ],
+    registrationFlow: [
+      "Calon tenant mengisi formulir pengajuan di website SI FEST.",
+      "Melampirkan katalog produk atau menu yang akan dijual.",
+      "Panitia melakukan kurasi dan seleksi tenant.",
+      "Tenant yang lolos membayar biaya sewa stand.",
+      "Mengikuti pengarahan (briefing) loading barang sebelum acara."
+    ],
+    timeline: [
+      { title: "Pendaftaran & Kurasi", date: "1 - 15 Oktober 2026" },
+      { title: "Pengumuman Lolos", date: "17 Oktober 2026" },
+      { title: "Technical Meeting Tenant", date: "20 Oktober 2026" },
+      { title: "Pelaksanaan Bazaar", date: "02 - 06 November 2026" }
+    ],
+    benefits: [
+      "Fasilitas Stand (Meja & Kursi)",
+      "Akses Listrik & Kebersihan Area",
+      "Promosi di Media Sosial SI FEST",
+      "Sertifikat Partisipasi Tenant"
+    ],
+    contacts: [
+      { name: "Aqil", phone: "081266869460" },
+      { name: "Hanafi", phone: "0853-7931-8662" }
+    ],
+    isSubEvent: true
+  },
+  {
+    id: "evt-05-parent",
+    slug: "open-bazaar",
+    title: "Open Bazaar / UMKM & F&B",
+    category: "Bazaar",
+    status: "Open",
+    shortDescription: "Eksplorasi ragam kuliner dan produk kreatif dari UMKM lokal.",
+    description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
+    icon: "Store",
+    date: "02 - 06 November 2026",
+    time: "08.00 - 17.30 WIB",
+    location: "Halaman depan UPI Exhibition Hall",
+    price: "Rp 250.000 - Rp 300.000",
   },
 ];
