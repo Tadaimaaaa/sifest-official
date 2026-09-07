@@ -74,6 +74,11 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
 
       if (mode === 'players') {
+        const teamData = meta.teamData || {};
+        if (!teamData.coachName?.trim()) { newErrors['teamData.coachName'] = "Nama Pelatih wajib diisi."; isValid = false; }
+        if (!teamData.coachWhatsapp?.trim()) { newErrors['teamData.coachWhatsapp'] = "No WhatsApp Pelatih wajib diisi."; isValid = false; }
+        if (!teamData.assistantCoachName?.trim()) { newErrors['teamData.assistantCoachName'] = "Nama Asisten Pelatih wajib diisi."; isValid = false; }
+
         const players = meta.players || [];
         if (players.length === 0) {
           newErrors['players'] = "Minimal harus ada 1 data pemain.";
@@ -110,6 +115,18 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       metadata: {
         ...meta,
         schoolData: { ...meta.schoolData, [field]: value }
+      }
+    });
+  };
+
+  // Helper to update team/coach metadata
+  const updateTeamData = (field: string, value: string) => {
+    const meta = data.metadata || { teamData: {}, players: [{ name: '', nisn: '' }] };
+    onUpdate({
+      ...data,
+      metadata: {
+        ...meta,
+        teamData: { ...meta.teamData, [field]: value }
       }
     });
   };
@@ -364,14 +381,38 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
           {/* PLAYER DATA */}
           {mode === 'players' && (
-            <GlassCard variant="medium" className="p-6 md:p-8">
-              <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                <h3 className="font-heading text-xl font-bold text-white">2. Data Pemain</h3>
-                <span className="text-sm text-white/50">{data.metadata.players?.length || 0} / 12 Pemain</span>
-              </div>
-              {errors['players'] && <p className="text-sm text-status-warning mb-4"><AlertCircle size={14} className="inline mr-1"/>{errors['players']}</p>}
-              
-              <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Card 1: Data Pelatih */}
+              <GlassCard variant="medium" className="p-6 md:p-8">
+                <h3 className="font-heading text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">1. Data Pelatih</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-white/90">Nama Pelatih <span className="text-status-warning">*</span></label>
+                    <input type="text" value={data.metadata.teamData?.coachName || ''} onChange={(e) => updateTeamData('coachName', e.target.value)} placeholder="Nama Pelatih" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                    {errors['teamData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.coachName']}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Pelatih <span className="text-status-warning">*</span></label>
+                    <input type="tel" value={data.metadata.teamData?.coachWhatsapp || ''} onChange={(e) => updateTeamData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                    {errors['teamData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.coachWhatsapp']}</p>}
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <label className="block text-sm font-medium text-white/90">Nama Asisten Pelatih <span className="text-status-warning">*</span></label>
+                    <input type="text" value={data.metadata.teamData?.assistantCoachName || ''} onChange={(e) => updateTeamData('assistantCoachName', e.target.value)} placeholder="Nama Asisten Pelatih" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                    {errors['teamData.assistantCoachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.assistantCoachName']}</p>}
+                  </div>
+                </div>
+              </GlassCard>
+
+              {/* Card 2: Data Pemain */}
+              <GlassCard variant="medium" className="p-6 md:p-8">
+                <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                  <h3 className="font-heading text-xl font-bold text-white">2. Data Pemain</h3>
+                  <span className="text-sm text-white/50">{data.metadata.players?.length || 0} / 12 Pemain</span>
+                </div>
+                {errors['players'] && <p className="text-sm text-status-warning mb-4"><AlertCircle size={14} className="inline mr-1"/>{errors['players']}</p>}
+                
+                <div className="space-y-4">
                 {data.metadata.players?.map((player: any, idx: number) => (
                   <div key={idx} className="flex flex-col gap-4 items-start p-6 rounded-xl bg-white/5 border border-white/10 relative">
                     {data.metadata.players.length > 1 && (
@@ -517,7 +558,8 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                   Tambah Pemain
                 </Button>
               )}
-            </GlassCard>
+              </GlassCard>
+            </div>
           )}
         </div>
       )}
