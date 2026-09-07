@@ -3,6 +3,7 @@ export interface ParticipantData {
   email: string;
   whatsapp: string;
   institution: string;
+  metadata?: any;
 }
 
 export interface RegistrationDraft {

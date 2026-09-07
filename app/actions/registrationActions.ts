@@ -39,6 +39,29 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       return { success: false, error: "Asal institusi wajib diisi." };
     }
 
+    // Custom Validation for Futsal SLTA
+    if (draft.eventSlug === "turnamen-futsal-slta") {
+      const meta = draft.participant.metadata;
+      if (!meta) {
+        return { success: false, error: "Data sekolah dan data pemain wajib diisi." };
+      }
+      
+      const school = meta.schoolData;
+      if (!school || !school.schoolName || !school.level || !school.address || !school.city || !school.coachName || !school.coachWhatsapp) {
+        return { success: false, error: "Semua kolom Data Sekolah wajib diisi." };
+      }
+
+      const players = meta.players;
+      if (!players || !Array.isArray(players) || players.length === 0) {
+        return { success: false, error: "Minimal harus ada 1 data pemain." };
+      }
+      for (const p of players) {
+        if (!p.name || !p.nisn) {
+          return { success: false, error: "Nama dan NISN setiap pemain wajib diisi." };
+        }
+      }
+    }
+
     // 2. Validate Event (ensure it's a real event from our catalog)
     // We check against the static catalog to ensure they aren't passing a fake slug.
     const allEvents = getAllEvents();

@@ -34,6 +34,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
       p_email: draft.participant.email,
       p_whatsapp: draft.participant.whatsapp,
       p_institution: draft.participant.institution,
+      p_metadata: draft.participant.metadata || null,
     });
 
     if (error) {
