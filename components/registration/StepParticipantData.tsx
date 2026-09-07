@@ -129,7 +129,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     onUpdate({ ...data, metadata: { ...meta, players: newPlayers } });
   };
 
-  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'whatsapp' | 'studentCardUrl', value: string) => {
+  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'whatsapp' | 'studentCardUrl' | 'posisi', value: string) => {
     const meta = data.metadata;
     if (!meta) return;
     const newPlayers = [...meta.players];
