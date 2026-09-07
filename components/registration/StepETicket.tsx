@@ -4,7 +4,7 @@ import { RegistrationDraft } from '@/lib/types/registration';
 import { RegistrationResult } from '@/lib/data/registrations';
 import { QRCodeCanvas } from 'qrcode.react';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import { Download, CheckCircle, MapPin, Calendar, Clock } from 'lucide-react';
 import Link from 'next/link';
 
@@ -50,9 +50,9 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
       pdf.addImage(imgData, 'JPEG', margin, margin, finalWidth, finalHeight);
       pdf.save(`SIFEST_Ticket_${successResult.code}.pdf`);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Gagal men-download PDF:", error);
-      alert("Gagal mengunduh E-Ticket. Silakan coba lagi.");
+      alert("Gagal mengunduh E-Ticket: " + (error.message || "Silakan coba lagi."));
     } finally {
       setIsDownloading(false);
     }
