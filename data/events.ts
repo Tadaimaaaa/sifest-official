@@ -172,6 +172,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
+    price: "Rp 250.000 - Rp 300.000 / Tim",
   },
   {
     id: "evt-03",
@@ -283,6 +284,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
+    price: "Rp 100.000 / Tim",
   },
   {
     id: "evt-04",
