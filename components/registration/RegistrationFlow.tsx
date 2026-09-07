@@ -13,6 +13,7 @@ import { registerParticipant } from "@/app/actions/registrationActions";
 import { updatePaymentProofUrl } from "@/app/actions/paymentProofActions";
 import { createClient } from "@/lib/supabase/client";
 import { UploadCloud, CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 interface RegistrationFlowProps {
   initialEventSlug?: string;
@@ -301,15 +302,23 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                       <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">{selectedEvent.price}</strong> ke rekening berikut:</p>
                       
                       <div className="space-y-3">
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">BRI</p>
-                          <p className="text-white font-mono text-lg font-bold">817301013354530</p>
-                          <p className="text-white/60 text-sm">a.n. ZHARA DELVIA PUTRI</p>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-4">
+                          <div className="bg-white rounded-lg p-2 flex-shrink-0">
+                            <Image src="/images/banks/logo-bri.jpg" alt="BRI" width={64} height={42} className="object-contain" />
+                          </div>
+                          <div>
+                            <p className="text-white font-mono text-lg font-bold">817301013354530</p>
+                            <p className="text-white/60 text-sm">a.n. ZHARA DELVIA PUTRI</p>
+                          </div>
                         </div>
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                          <p className="text-white/50 text-xs uppercase tracking-wider mb-1">BANK NAGARI</p>
-                          <p className="text-white font-mono text-lg font-bold">10030234000065</p>
-                          <p className="text-white/60 text-sm">a.n. FACHRATUN RAHIMA</p>
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-4">
+                          <div className="bg-white rounded-lg p-2 flex-shrink-0">
+                            <Image src="/images/banks/logo-bank-nagari.jpg" alt="Bank Nagari" width={64} height={42} className="object-contain" />
+                          </div>
+                          <div>
+                            <p className="text-white font-mono text-lg font-bold">10030234000065</p>
+                            <p className="text-white/60 text-sm">a.n. FACHRATUN RAHIMA</p>
+                          </div>
                         </div>
                       </div>
 
