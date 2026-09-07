@@ -37,12 +37,22 @@ export function EventCard({ event }: { event: EventData }) {
         <div className="mb-6 px-4 py-2 rounded-lg bg-white/10 border border-white/20 w-full">
           <span className="text-xs text-white/90 block mb-1 uppercase tracking-wider font-semibold">Biaya Pendaftaran</span>
           {event.price.includes('\n') ? (
-            <div className="flex flex-row justify-center items-center gap-x-4 divide-x divide-white/20">
-              {event.price.split('\n').map((p, i) => (
-                <span key={i} className={`text-sm sm:text-base font-bold text-brand-accent ${i > 0 ? 'pl-4' : ''}`}>
-                  {p}
-                </span>
-              ))}
+            <div className="flex flex-row justify-center items-center w-full mt-2">
+              {event.price.split('\n').map((p, i) => {
+                const parts = p.split(': ');
+                return (
+                  <div key={i} className={`flex flex-col items-center justify-center w-1/2 ${i > 0 ? 'border-l border-white/20' : ''}`}>
+                    {parts.length > 1 ? (
+                      <>
+                        <span className="text-[10px] sm:text-xs text-white/70 uppercase tracking-wider mb-0.5">{parts[0]}</span>
+                        <span className="text-sm sm:text-base font-bold text-brand-accent whitespace-nowrap">{parts[1]}</span>
+                      </>
+                    ) : (
+                      <span className="text-sm sm:text-base font-bold text-brand-accent whitespace-nowrap">{p}</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <span className="text-base font-bold text-brand-accent">{event.price}</span>
