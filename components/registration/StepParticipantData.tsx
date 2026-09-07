@@ -266,12 +266,12 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             <GlassCard variant="medium" className="p-6 md:p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/90">Nama Sekolah *</label>
+                  <label className="block text-sm font-medium text-white/90">Nama Sekolah <span className="text-status-warning">*</span></label>
                   <input type="text" value={data.metadata.schoolData?.schoolName || ''} onChange={(e) => updateSchoolData('schoolName', e.target.value)} placeholder="SMA Negeri 1 Padang" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.schoolName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.schoolName']}</p>}
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/90">Jenjang *</label>
+                  <label className="block text-sm font-medium text-white/90">Jenjang <span className="text-status-warning">*</span></label>
                   <select value={data.metadata.schoolData?.level || ''} onChange={(e) => updateSchoolData('level', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
                     <option value="" disabled>Pilih Jenjang</option>
                     <option value="SMA">SMA</option>
@@ -281,27 +281,27 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                   {errors['schoolData.level'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.level']}</p>}
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="block text-sm font-medium text-white/90">Alamat Sekolah *</label>
+                  <label className="block text-sm font-medium text-white/90">Alamat Sekolah <span className="text-status-warning">*</span></label>
                   <input type="text" value={data.metadata.schoolData?.address || ''} onChange={(e) => updateSchoolData('address', e.target.value)} placeholder="Jl. Sudirman No. 1" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.address'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.address']}</p>}
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/90">Kota/Kabupaten *</label>
+                  <label className="block text-sm font-medium text-white/90">Kota/Kabupaten <span className="text-status-warning">*</span></label>
                   <input type="text" value={data.metadata.schoolData?.city || ''} onChange={(e) => updateSchoolData('city', e.target.value)} placeholder="Kota Padang" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.city'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.city']}</p>}
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="block text-sm font-medium text-white/90">Email Sekolah / Perwakilan * (Digunakan untuk invoice pembayaran)</label>
+                  <label className="block text-sm font-medium text-white/90">Email Sekolah / Perwakilan <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Digunakan untuk invoice)</span></label>
                   <input type="email" value={data.metadata.schoolData?.email || ''} onChange={(e) => updateSchoolData('email', e.target.value)} placeholder="email@sekolah.sch.id" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.email'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.email']}</p>}
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/90">Nama Guru / Pembina *</label>
+                  <label className="block text-sm font-medium text-white/90">Nama Guru / Pembina <span className="text-status-warning">*</span></label>
                   <input type="text" value={data.metadata.schoolData?.coachName || ''} onChange={(e) => updateSchoolData('coachName', e.target.value)} placeholder="Bapak Budi" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachName']}</p>}
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/90">No. WhatsApp Pembina *</label>
+                  <label className="block text-sm font-medium text-white/90">No. WhatsApp Pembina <span className="text-status-warning">*</span></label>
                   <input type="tel" value={data.metadata.schoolData?.coachWhatsapp || ''} onChange={(e) => updateSchoolData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                   {errors['schoolData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachWhatsapp']}</p>}
                 </div>
@@ -322,12 +322,12 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 {data.metadata.players?.map((player: any, idx: number) => (
                   <div key={idx} className="flex flex-col sm:flex-row gap-4 items-start sm:items-end p-4 rounded-xl bg-white/5 border border-white/10">
                     <div className="flex-1 w-full space-y-2">
-                      <label className="block text-sm font-medium text-white/90">Nama Pemain {idx + 1} *</label>
+                      <label className="block text-sm font-medium text-white/90">Nama Pemain {idx + 1} <span className="text-status-warning">*</span></label>
                       <input type="text" value={player.name} onChange={(e) => updatePlayer(idx, 'name', e.target.value)} placeholder="Nama Lengkap" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                       {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                     </div>
                     <div className="flex-1 w-full space-y-2">
-                      <label className="block text-sm font-medium text-white/90">NISN *</label>
+                      <label className="block text-sm font-medium text-white/90">NISN <span className="text-status-warning">*</span></label>
                       <input type="text" value={player.nisn} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder="00123..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                       {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                     </div>
