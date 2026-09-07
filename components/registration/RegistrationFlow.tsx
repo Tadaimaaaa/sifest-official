@@ -322,6 +322,9 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                     </a>
                   ) : (
                     <div className="flex flex-col gap-4">
+                      <p className="text-white/70 text-sm mb-2">
+                        *Silakan unggah bukti pembayaran dan konfirmasi melalui WhatsApp terlebih dahulu sebelum menekan tombol Selesai.
+                      </p>
                       <a
                         href={`https://wa.me/[Nomor WA]?text=Halo%20Panitia%20SI%20FEST,%20saya%20ingin%20mengonfirmasi%20pembayaran%20untuk%20pendaftaran%20${selectedEvent.title}.%0A%0AKode%20Pendaftaran:%20${successResult.code}`}
                         target="_blank"
@@ -333,12 +336,21 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                         </svg>
                         Konfirmasi via WhatsApp
                       </a>
-                      <a
-                        href="/"
-                        className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-white/10 text-white hover:bg-white/20 border border-white/10"
-                      >
-                        Selesai
-                      </a>
+                      {uploadSuccess ? (
+                        <a
+                          href="/"
+                          className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-white/10 text-white hover:bg-white/20 border border-white/10"
+                        >
+                          Selesai
+                        </a>
+                      ) : (
+                        <button
+                          disabled
+                          className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-white/5 text-white/30 border border-white/5 cursor-not-allowed"
+                        >
+                          Selesai
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
