@@ -1,12 +1,10 @@
-"use client";
-
-import { EventData, RegistrationPhase } from "@/data/events";
+import { EventData } from "@/data/events";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
-import { BookOpen, Gamepad2, GraduationCap, Store, Trophy, Clock } from "lucide-react";
+import { BookOpen, Gamepad2, GraduationCap, Store, Trophy } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const IconMap: Record<string, React.ReactNode> = {
   GraduationCap: <GraduationCap size={48} strokeWidth={1.5} className="text-brand-accent drop-shadow-md" />,
@@ -17,94 +15,6 @@ const IconMap: Record<string, React.ReactNode> = {
 };
 
 export function EventCard({ event }: { event: EventData }) {
-  const [now, setNow] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setNow(new Date());
-    const interval = setInterval(() => {
-      setNow(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Determine button state and countdown
-  let buttonState = "LOADING";
-  let buttonText = "Loading...";
-  let buttonHref = "#";
-  let countdownText = "";
-  let countdownTarget: Date | null = null;
-
-  if (now) {
-    if (event.status === "Closed") {
-      buttonState = "CLOSED";
-      buttonText = "Pendaftaran Ditutup";
-    } else {
-      const regStart = event.registrationStartDate ? new Date(event.registrationStartDate) : null;
-      const regEnd = event.registrationCloseDate ? new Date(event.registrationCloseDate) : null;
-
-      if (regStart && now < regStart) {
-        buttonState = "COUNTDOWN";
-        buttonText = "Belum Dibuka";
-        countdownText = "Pendaftaran Dibuka Dalam:";
-        countdownTarget = regStart;
-      } else if (regEnd && now > regEnd) {
-        buttonState = "CLOSED";
-        buttonText = "Pendaftaran Ditutup";
-      } else {
-        // It's between start and end (or no start/end defined). Check phases.
-        if (event.registrationPhases && event.registrationPhases.length > 0) {
-          let currentPhase: RegistrationPhase | null = null;
-          let nextPhase: RegistrationPhase | null = null;
-
-          for (let i = 0; i < event.registrationPhases.length; i++) {
-            const phaseStart = new Date(event.registrationPhases[i].startDate);
-            const phaseEnd = new Date(event.registrationPhases[i].endDate);
-            if (now >= phaseStart && now <= phaseEnd) {
-              currentPhase = event.registrationPhases[i];
-              break;
-            } else if (now < phaseStart && (!nextPhase || phaseStart < new Date(nextPhase.startDate))) {
-              nextPhase = event.registrationPhases[i];
-            }
-          }
-
-          if (currentPhase) {
-            buttonState = "OPEN";
-            buttonText = `Daftar Sekarang (${currentPhase.name})`;
-            buttonHref = `/events/${event.slug}`;
-          } else if (nextPhase) {
-            buttonState = "COUNTDOWN";
-            buttonText = `Menunggu ${nextPhase.name}`;
-            countdownText = `${nextPhase.name} Dibuka Dalam:`;
-            countdownTarget = new Date(nextPhase.startDate);
-          } else {
-            // Gap without next phase? Fallback to generic open
-            buttonState = "OPEN";
-            buttonText = "Daftar Sekarang";
-            buttonHref = `/events/${event.slug}`;
-          }
-        } else {
-          // No phases, just generic open
-          buttonState = "OPEN";
-          buttonText = "Daftar Sekarang";
-          buttonHref = `/events/${event.slug}`;
-        }
-      }
-    }
-  }
-
-  const formatCountdown = (target: Date) => {
-    if (!now) return "";
-    const diff = target.getTime() - now.getTime();
-    if (diff <= 0) return "00:00:00:00";
-    
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / 1000 / 60) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-    
-    return `${d.toString().padStart(2, '0')} Hari ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
   return (
     <GlassCard variant="medium" interactive className="flex flex-col items-center text-center group">
       <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-[var(--radius-pill)] glass-strong group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,183,22,0.3)] transition-all duration-300 overflow-hidden relative p-3">
@@ -149,27 +59,11 @@ export function EventCard({ event }: { event: EventData }) {
           )}
         </div>
       )}
-      {buttonState === "COUNTDOWN" && countdownTarget && (
-        <div className="w-full mb-6 py-2 px-3 bg-brand-primary/20 border border-brand-accent/30 rounded-lg flex flex-col items-center justify-center">
-          <span className="text-[10px] text-white/70 uppercase tracking-widest mb-1">{countdownText}</span>
-          <div className="flex items-center gap-2 text-brand-accent font-mono font-bold text-sm sm:text-base">
-            <Clock className="w-4 h-4" />
-            {formatCountdown(countdownTarget)}
-          </div>
-        </div>
-      )}
-
-      {buttonState === "OPEN" ? (
-        <Link href={buttonHref} className="w-full mt-auto">
-          <Button variant="ghost" className="w-full border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium">
-            {buttonText}
-          </Button>
-        </Link>
-      ) : (
-        <Button disabled variant="ghost" className="w-full mt-auto border border-white/10 text-white/40 cursor-not-allowed bg-white/5">
-          {buttonText}
+      <Link href={`/events/${event.slug}`} className="w-full mt-auto">
+        <Button variant="ghost" className="w-full border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium">
+          Daftar Sekarang
         </Button>
-      )}
+      </Link>
     </GlassCard>
   );
 }
