@@ -126,7 +126,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{schoolName}</p>
                     </div>
                     <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Pembina</p>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab / Pembina</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{coachName}</p>
                     </div>
                     <div style={{ gridColumn: 'span 2' }}>

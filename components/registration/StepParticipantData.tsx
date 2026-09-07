@@ -60,7 +60,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         if (!school.level?.trim()) { newErrors['schoolData.level'] = "Jenjang wajib dipilih."; isValid = false; }
         if (!school.address?.trim()) { newErrors['schoolData.address'] = "Alamat wajib diisi."; isValid = false; }
         if (!school.city?.trim()) { newErrors['schoolData.city'] = "Kota/Kabupaten wajib diisi."; isValid = false; }
-        if (!school.coachName?.trim()) { newErrors['schoolData.coachName'] = "Nama Pembina wajib diisi."; isValid = false; }
+        if (!school.coachName?.trim()) { newErrors['schoolData.coachName'] = "Nama Penanggung Jawab / Pembina wajib diisi."; isValid = false; }
         if (!school.coachWhatsapp?.trim()) { newErrors['schoolData.coachWhatsapp'] = "No WhatsApp Pembina wajib diisi."; isValid = false; }
         
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -339,17 +339,17 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 </div>
               </GlassCard>
 
-              {/* Card 2: Data Pelatih / Pembina */}
+              {/* Card 2: Penanggung Jawab / Pembina */}
               <GlassCard variant="medium" className="p-6 md:p-8">
-                <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">Data Pelatih / Pembina</h4>
+                <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">Penanggung Jawab / Pembina</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Nama Guru / Pembina <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">Nama Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
                     <input type="text" value={data.metadata.schoolData?.coachName || ''} onChange={(e) => updateSchoolData('coachName', e.target.value)} placeholder="Bapak Budi" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachName']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Pembina <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
                     <input type="tel" value={data.metadata.schoolData?.coachWhatsapp || ''} onChange={(e) => updateSchoolData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachWhatsapp']}</p>}
                   </div>
