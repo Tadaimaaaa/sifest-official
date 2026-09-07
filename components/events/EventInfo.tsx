@@ -108,7 +108,7 @@ export function EventInfo({ event }: { event: EventData }) {
                 <p className="text-sm text-white/50 mb-1">Status Pendaftaran</p>
                 <div className="inline-flex mt-1 items-center px-3 py-1 rounded-full text-xs font-semibold bg-status-success/20 text-status-success border border-status-success/30">
                   {event.status === "Open" && event.registrationCloseDate ? (
-                    <RegistrationCountdown targetDate={event.registrationCloseDate} />
+                    <RegistrationCountdown startDate={event.registrationStartDate} closeDate={event.registrationCloseDate} />
                   ) : (
                     event.status
                   )}

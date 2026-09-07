@@ -14,6 +14,7 @@ export interface EventData {
   time?: string;
   location?: string;
   price?: string;
+  registrationStartDate?: string;
   registrationCloseDate?: string;
   requirements?: string[];
   registrationFlow?: string[];
@@ -85,6 +86,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 200.000 / Tim",
+    registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -129,6 +131,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 300.000 / Tim",
+    registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -188,6 +191,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Rp 50.000 / Tim",
+    registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -237,6 +241,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Rp 50.000 / Tim",
+    registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
