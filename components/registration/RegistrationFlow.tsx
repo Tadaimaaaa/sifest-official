@@ -7,6 +7,7 @@ import { StepIndicator } from "@/components/registration/StepIndicator";
 import { StepEventSelection } from "@/components/registration/StepEventSelection";
 import { StepParticipantData } from "@/components/registration/StepParticipantData";
 import { StepReview } from "@/components/registration/StepReview";
+import { StepETicket } from "@/components/registration/StepETicket";
 import { Container } from "@/components/ui/Container";
 import { registerParticipant } from "@/app/actions/registrationActions";
 import { updatePaymentProofUrl } from "@/app/actions/paymentProofActions";
@@ -314,12 +315,12 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   )}
                   
                   {isEventFree() ? (
-                    <a
-                      href="/"
+                    <button
+                      onClick={() => goToStep(steps.length + 2)}
                       className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-brand-primary text-brand-secondary hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(245,183,22,0.4)]"
                     >
-                      Kembali ke Beranda
-                    </a>
+                      Lihat E-Ticket
+                    </button>
                   ) : (
                     <div className="flex flex-col gap-4">
                       <p className="text-white/70 text-sm mb-2">
@@ -337,12 +338,12 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                         Konfirmasi via WhatsApp
                       </a>
                       {uploadSuccess ? (
-                        <a
-                          href="/"
+                        <button
+                          onClick={() => goToStep(steps.length + 2)}
                           className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-white/10 text-white hover:bg-white/20 border border-white/10"
                         >
-                          Selesai
-                        </a>
+                          Selesai & Lihat E-Ticket
+                        </button>
                       ) : (
                         <button
                           disabled
@@ -356,8 +357,17 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 </div>
               )}
 
+              {/* Step 6: E-Ticket */}
+              {currentStep === steps.length + 2 && successResult && selectedEvent && (
+                <StepETicket 
+                  event={selectedEvent} 
+                  draft={draft} 
+                  successResult={successResult} 
+                />
+              )}
+
               {/* Edge case fallback */}
-              {(currentStep === steps.length - 1 || currentStep === steps.length) && !selectedEvent && (
+              {(currentStep === steps.length - 1 || currentStep === steps.length || currentStep === steps.length + 1 || currentStep === steps.length + 2) && !selectedEvent && (
                 <div className="text-center py-20">
                   <p className="text-white/60 mb-6">Acara tidak valid atau belum dipilih.</p>
                   <button onClick={() => goToStep(1)} className="text-brand-accent hover:underline">
