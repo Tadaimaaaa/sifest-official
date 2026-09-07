@@ -10,7 +10,7 @@ import { StepReview } from "@/components/registration/StepReview";
 import { Container } from "@/components/ui/Container";
 import { registerParticipant } from "@/app/actions/registrationActions";
 import { updatePaymentProofUrl } from "@/app/actions/paymentProofActions";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { UploadCloud, CheckCircle } from "lucide-react";
 
 interface RegistrationFlowProps {
@@ -120,6 +120,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     setIsUploading(true);
     setUploadError(null);
     try {
+      const supabase = createClient();
       const fileExt = file.name.split('.').pop();
       const fileName = `proof_${successResult.id}_${Date.now()}.${fileExt}`;
       
