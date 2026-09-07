@@ -11,7 +11,7 @@ import Link from 'next/link';
 interface StepETicketProps {
   event: EventData;
   draft: RegistrationDraft;
-  successResult: RegistrationResult;
+  successResult: { code: string; id: string };
 }
 
 export function StepETicket({ event, draft, successResult }: StepETicketProps) {
@@ -59,7 +59,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
   };
 
   const qrData = JSON.stringify({
-    id: successResult.registrationId,
+    id: successResult.id,
     code: successResult.code,
     event: event.slug,
   });
