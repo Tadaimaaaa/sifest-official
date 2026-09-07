@@ -36,7 +36,7 @@ export function EventCard({ event }: { event: EventData }) {
       {event.price && (
         <div className="mb-6 px-4 py-2 rounded-lg bg-white/10 border border-white/20 w-full">
           <span className="text-xs text-white/90 block mb-0.5 uppercase tracking-wider font-semibold">Biaya Pendaftaran</span>
-          <span className="text-base font-bold text-brand-accent">{event.price}</span>
+          <span className="text-base font-bold text-brand-accent whitespace-pre-line">{event.price}</span>
         </div>
       )}
       <Link href={`/events/${event.slug}`} className="w-full mt-auto">
