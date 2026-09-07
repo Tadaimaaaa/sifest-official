@@ -29,6 +29,11 @@ export function EventHero({ event }: { event: EventData }) {
                 Daftar Sekarang
               </Button>
             </Link>
+            <Link href={event.guidebookUrl || "#"} target={event.guidebookUrl ? "_blank" : "_self"} rel="noopener noreferrer" className="w-full sm:w-auto block">
+              <Button size="lg" variant="glass" className="w-full sm:w-64 whitespace-nowrap text-white">
+                Buku Panduan
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

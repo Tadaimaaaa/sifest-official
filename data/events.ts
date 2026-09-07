@@ -22,6 +22,7 @@ export interface EventData {
   contacts?: { name: string; phone: string }[];
   isSubEvent?: boolean;
   image?: string;
+  guidebookUrl?: string;
 }
 
 export const OFFICIAL_EVENTS: EventData[] = [
