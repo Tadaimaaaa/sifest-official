@@ -187,12 +187,15 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
           )}
           {isDownloading ? "Memproses PDF..." : "Unduh E-Ticket (PDF)"}
         </button>
-        <Link
-          href="/"
+        <button
+          onClick={() => {
+            try { sessionStorage.removeItem('sifest_reg_draft'); } catch(e) {}
+            window.location.href = '/';
+          }}
           className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-lg transition-all duration-300 bg-white/10 text-white hover:bg-white/20 border border-white/10"
         >
           Kembali ke Beranda
-        </Link>
+        </button>
       </div>
     </div>
   );

@@ -36,22 +36,25 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [successResult, setSuccessResult] = useState<{ code: string; id: string } | null>(null);
 
-  // Persist draft and step to sessionStorage
+  // Persist draft and step to sessionStorage (NOT successResult - causes stale state issues)
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem('sifest_reg_draft');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.draft) setDraft(parsed.draft);
-        if (parsed.step && parsed.step < 6) setCurrentStep(parsed.step);
-        if (parsed.successResult) setSuccessResult(parsed.successResult);
+        if (parsed.draft && parsed.draft.eventSlug) setDraft(parsed.draft);
+        if (parsed.step && parsed.step >= 1 && parsed.step < steps.length) setCurrentStep(parsed.step);
       }
     } catch (e) {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     try {
-      sessionStorage.setItem('sifest_reg_draft', JSON.stringify({ draft, step: currentStep, successResult }));
+      // Only save while form is in progress (not after completion)
+      if (!successResult) {
+        sessionStorage.setItem('sifest_reg_draft', JSON.stringify({ draft, step: currentStep }));
+      }
     } catch (e) {}
   }, [draft, currentStep, successResult]);
 
