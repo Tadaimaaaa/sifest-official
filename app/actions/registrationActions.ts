@@ -55,9 +55,13 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       if (!players || !Array.isArray(players) || players.length === 0) {
         return { success: false, error: "Minimal harus ada 1 data pemain." };
       }
-      for (const p of players) {
+      for (let i = 0; i < players.length; i++) {
+        const p = players[i];
         if (!p.name || !p.nisn) {
           return { success: false, error: "Nama dan NISN setiap pemain wajib diisi." };
+        }
+        if (i === 0 && !p.whatsapp) {
+          return { success: false, error: "Nomor WhatsApp Pemain 1 (Kapten) wajib diisi." };
         }
       }
     }

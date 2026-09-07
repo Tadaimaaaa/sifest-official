@@ -44,11 +44,13 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
         { id: 2, label: "Data Sekolah" },
         { id: 3, label: "Data Pemain" },
         { id: 4, label: "Ulasan" },
+        { id: 5, label: "Pembayaran" },
       ]
     : [
         { id: 1, label: "Acara" },
         { id: 2, label: "Data Peserta" },
         { id: 3, label: "Ulasan" },
+        { id: 4, label: "Pembayaran" },
       ];
 
   const handleEventSelect = (slug: string) => {
@@ -90,6 +92,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
           code: result.registrationCode,
           id: result.registrationId
         });
+        setCurrentStep(steps.length);
       } else {
         setSubmitError(result.error || "Gagal melakukan pendaftaran.");
       }
@@ -140,65 +143,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     }
   };
 
-  // If successfully registered, show confirmation screen and payment button
-  if (successResult) {
-    let isFreeEvent = false;
-    if (selectedEvent?.price) {
-      const lowerPrice = selectedEvent.price.toLowerCase().trim();
-      if (lowerPrice === "gratis" || lowerPrice === "free" || lowerPrice === "0") {
-        isFreeEvent = true;
-      }
-    }
-
-    return (
-      <div className="w-full relative z-10 pt-32 pb-24 min-h-[80svh] flex flex-col justify-center items-center">
-        <Container>
-          <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-brand-accent/20">
-            <div className="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(245,183,22,0.3)]">
-              <svg className="w-10 h-10 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            
-            <h2 className="font-heading text-4xl font-bold text-white text-glow">
-              Pendaftaran Berhasil!
-            </h2>
-            
-            <div className="bg-white/5 border border-white/10 rounded-xl p-6 my-8">
-              <p className="text-white/60 text-sm mb-2 uppercase tracking-widest font-semibold">Kode Pendaftaran Anda</p>
-              <p className="text-3xl md:text-4xl font-mono font-bold text-brand-accent tracking-wider">
-                {successResult.code}
-              </p>
-            </div>
-            
-            <p className="text-white/80 leading-relaxed mb-6">
-              {isFreeEvent 
-                ? "Data Anda telah dicatat di sistem kami. Silakan tekan tombol di bawah untuk menyelesaikan pendaftaran." 
-                : "Data Anda telah dicatat di sistem kami. Langkah selanjutnya adalah menyelesaikan pembayaran."}
-            </p>
-
-            {paymentError && (
-              <div className="w-full bg-status-warning/10 border border-status-warning/20 text-status-warning p-4 rounded-xl mb-6 text-sm">
-                {paymentError}
-              </div>
-            )}
-            
-            <button
-              onClick={handleNextStep}
-              disabled={isPaying}
-              className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                isPaying
-                  ? "bg-white/10 text-white/50 cursor-not-allowed"
-                  : "bg-brand-primary text-brand-secondary hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(245,183,22,0.4)]"
-              }`}
-            >
-              {isPaying ? "Memproses..." : (isFreeEvent ? "Selesaikan Pendaftaran" : "Lanjutkan")}
-            </button>
-          </div>
-        </Container>
-      </div>
-    );
-  }
+  // If successfully registered, logic continues below in currentStep === steps.length
 
   return (
     <div className="w-full relative z-10 pt-32 pb-24">
@@ -271,7 +216,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 />
               )}
 
-              {currentStep === steps.length && selectedEvent && (
+              {currentStep === steps.length - 1 && selectedEvent && !successResult && (
                 <div className="space-y-4">
                   {submitError && (
                     <div className="w-full bg-status-warning/10 border border-status-warning/20 text-status-warning p-4 rounded-xl flex items-center justify-center text-center">
@@ -288,8 +233,70 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 </div>
               )}
 
+              {/* Payment Step */}
+              {currentStep === steps.length && successResult && selectedEvent && (
+                <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-brand-accent/20 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <div className="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(245,183,22,0.3)]">
+                    <svg className="w-10 h-10 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  
+                  <h2 className="font-heading text-4xl font-bold text-white text-glow">
+                    Pendaftaran Berhasil!
+                  </h2>
+                  
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6 my-8">
+                    <p className="text-white/60 text-sm mb-2 uppercase tracking-widest font-semibold">Kode Pendaftaran Anda</p>
+                    <p className="text-3xl md:text-4xl font-mono font-bold text-brand-accent tracking-wider">
+                      {successResult.code}
+                    </p>
+                  </div>
+                  
+                  <p className="text-white/80 leading-relaxed mb-6">
+                    {(() => {
+                      let isFree = false;
+                      if (selectedEvent.price) {
+                        const lp = selectedEvent.price.toLowerCase().trim();
+                        if (lp === "gratis" || lp === "free" || lp === "0") isFree = true;
+                      }
+                      return isFree 
+                        ? "Data Anda telah dicatat di sistem kami. Silakan tekan tombol di bawah untuk menyelesaikan pendaftaran." 
+                        : "Data Anda telah dicatat di sistem kami. Langkah selanjutnya adalah menyelesaikan pembayaran.";
+                    })()}
+                  </p>
+
+                  {paymentError && (
+                    <div className="w-full bg-status-warning/10 border border-status-warning/20 text-status-warning p-4 rounded-xl mb-6 text-sm">
+                      {paymentError}
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={handleNextStep}
+                    disabled={isPaying}
+                    className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                      isPaying
+                        ? "bg-white/10 text-white/50 cursor-not-allowed"
+                        : "bg-brand-primary text-brand-secondary hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(245,183,22,0.4)]"
+                    }`}
+                  >
+                    {isPaying ? "Memproses..." : (
+                      (() => {
+                        let isFree = false;
+                        if (selectedEvent.price) {
+                          const lp = selectedEvent.price.toLowerCase().trim();
+                          if (lp === "gratis" || lp === "free" || lp === "0") isFree = true;
+                        }
+                        return isFree ? "Selesaikan Pendaftaran" : "Lanjutkan";
+                      })()
+                    )}
+                  </button>
+                </div>
+              )}
+
               {/* Edge case fallback */}
-              {currentStep === steps.length && !selectedEvent && (
+              {(currentStep === steps.length - 1 || currentStep === steps.length) && !selectedEvent && (
                 <div className="text-center py-20">
                   <p className="text-white/60 mb-6">Acara tidak valid atau belum dipilih.</p>
                   <button onClick={() => goToStep(1)} className="text-brand-accent hover:underline">
