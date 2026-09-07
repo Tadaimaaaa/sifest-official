@@ -407,7 +407,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                       <select value={player.posisi || ''} onChange={(e) => updatePlayer(idx, 'posisi', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
                         <option value="">-- Pilih Posisi --</option>
                         <option value="Penjaga Gawang">Penjaga Gawang</option>
-                        <option value="Defender">Defender</option>
+                        <option value="Anchor">Anchor</option>
                         <option value="Flank">Flank</option>
                         <option value="Pivot">Pivot</option>
                       </select>
