@@ -20,10 +20,11 @@ export function Navbar() {
 
   const navLinks = [
     { name: "Beranda", href: "/" },
-    { name: "Tentang", href: "#about" },
-    { name: "Acara", href: "#events" },
-    { name: "Jadwal", href: "#timeline" },
-    { name: "Sponsor", href: "#sponsors" },
+    { name: "Tentang", href: "/#about" },
+    { name: "Acara", href: "/#events" },
+    { name: "Jadwal", href: "/#timeline" },
+    { name: "Sponsor", href: "/#sponsors" },
+    { name: "Cetak Tiket", href: "/cetak-tiket" },
   ];
 
   return (
