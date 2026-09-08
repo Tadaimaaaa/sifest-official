@@ -263,7 +263,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Standard Event Participant Data */}
-              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && draft.eventSlug !== 'turnamen-esport-efootball' && !draft.eventSlug.startsWith('open-bazaar') && (
+              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && draft.eventSlug !== 'turnamen-esport-efootball' && draft.eventSlug !== 'lomba-keagamaan' && !draft.eventSlug.startsWith('open-bazaar') && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -271,6 +271,18 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   onNext={nextStep}
                   onBack={prevStep}
                   mode="default"
+                />
+              )}
+
+              {/* MTQ Participant Data */}
+              {currentStep === 2 && draft.eventSlug === 'lomba-keagamaan' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="mtq"
                 />
               )}
 

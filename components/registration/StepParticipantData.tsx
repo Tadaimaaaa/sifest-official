@@ -11,7 +11,7 @@ interface StepParticipantDataProps {
   onUpdate: (data: ParticipantData) => void;
   onNext: () => void;
   onBack: () => void;
-  mode?: 'default' | 'school' | 'players' | 'mlbb-team' | 'mlbb-players' | 'efootball' | 'bazaar';
+  mode?: 'default' | 'school' | 'players' | 'mlbb-team' | 'mlbb-players' | 'efootball' | 'bazaar' | 'mtq';
 }
 
 export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack, mode = 'default' }: StepParticipantDataProps) {
@@ -156,6 +156,30 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
       const meta = data.metadata || {};
       if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
+    }
+
+    if (mode === 'mtq') {
+      if (!data.fullName.trim()) { newErrors.fullName = "Nama Lengkap Peserta wajib diisi."; isValid = false; }
+      if (!data.institution.trim()) { newErrors.institution = "Asal Sekolah wajib diisi."; isValid = false; }
+      const meta = data.metadata || {};
+      if (!meta.grade?.trim()) { newErrors['metadata.grade'] = "Kelas wajib diisi."; isValid = false; }
+      const phoneRegex = /^[+0-9]{9,15}$/;
+      if (!data.whatsapp.trim()) {
+        newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
+        isValid = false;
+      } else if (!phoneRegex.test(data.whatsapp.replace(/\s+/g, ""))) {
+        newErrors.whatsapp = "Format Nomor WhatsApp tidak valid.";
+        isValid = false;
+      }
+      if (!meta.studentCardUrl) { newErrors['metadata.studentCardUrl'] = "Surat Keterangan Sekolah / Kartu Pelajar wajib diunggah."; isValid = false; }
+      if (!meta.mentorName?.trim()) { newErrors['metadata.mentorName'] = "Nama Pembimbing wajib diisi."; isValid = false; }
+      if (!meta.mentorWhatsapp?.trim()) {
+        newErrors['metadata.mentorWhatsapp'] = "Nomor WhatsApp Pembimbing wajib diisi.";
+        isValid = false;
+      } else if (!phoneRegex.test(meta.mentorWhatsapp.replace(/\s+/g, ""))) {
+        newErrors['metadata.mentorWhatsapp'] = "Format Nomor WhatsApp Pembimbing tidak valid.";
+        isValid = false;
+      }
     }
 
     setErrors(newErrors);
@@ -488,6 +512,107 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               placeholder="Contoh: Sate Taichan, Kopi, Thrift Kaos"
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
+          </div>
+        </GlassCard>
+      )}
+
+      {mode === 'mtq' && (
+        <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="mtqFullName" className="block text-sm font-medium text-white/90">Nama Lengkap Peserta <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqFullName"
+              type="text"
+              value={data.fullName}
+              onChange={(e) => onUpdate({ ...data, fullName: e.target.value })}
+              placeholder="Masukkan nama lengkap peserta"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.fullName && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.fullName}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="mtqInstitution" className="block text-sm font-medium text-white/90">Asal Sekolah <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqInstitution"
+              type="text"
+              value={data.institution}
+              onChange={(e) => onUpdate({ ...data, institution: e.target.value })}
+              placeholder="Contoh: SMA Negeri 1 Padang"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.institution && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.institution}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="mtqGrade" className="block text-sm font-medium text-white/90">Kelas <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqGrade"
+              type="text"
+              value={data.metadata?.grade || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, grade: e.target.value } })}
+              placeholder="Contoh: XII IPA 1"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.grade'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.grade']}</p>}
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="mtqWhatsapp" className="block text-sm font-medium text-white/90">No. WhatsApp Peserta <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqWhatsapp"
+              type="tel"
+              value={data.whatsapp}
+              onChange={(e) => onUpdate({ ...data, whatsapp: e.target.value })}
+              placeholder="081234567890"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.whatsapp && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.whatsapp}</p>}
+          </div>
+
+          <div className="space-y-3 md:col-span-2">
+            <label className="block text-sm font-medium text-white/90">Upload Kartu Pelajar / Surat Keterangan Sekolah <span className="text-status-warning">*</span></label>
+            <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('studentCardUrl', e)} disabled={uploadingState?.field === 'studentCardUrl'} />
+              {uploadingState?.field === 'studentCardUrl' ? (
+                <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+              ) : data.metadata?.studentCardUrl ? (
+                <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+              ) : (
+                <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+              )}
+            </label>
+            {errors['metadata.studentCardUrl'] && (
+              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                <AlertCircle size={14} /> {errors['metadata.studentCardUrl']}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="mtqMentorName" className="block text-sm font-medium text-white/90">Nama Pembimbing <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqMentorName"
+              type="text"
+              value={data.metadata?.mentorName || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, mentorName: e.target.value } })}
+              placeholder="Nama Guru/Pembimbing"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.mentorName'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.mentorName']}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="mtqMentorWhatsapp" className="block text-sm font-medium text-white/90">No. WhatsApp Pembimbing <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqMentorWhatsapp"
+              type="tel"
+              value={data.metadata?.mentorWhatsapp || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, mentorWhatsapp: e.target.value } })}
+              placeholder="081234567890"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.mentorWhatsapp'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.mentorWhatsapp']}</p>}
           </div>
         </GlassCard>
       )}
