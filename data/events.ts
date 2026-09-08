@@ -259,7 +259,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 50.000 / Tim",
+    price: "Rp 75.000",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     registrationPhases: [
@@ -312,7 +312,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 50.000 / Tim",
+    price: "MLBB: Rp 50.000 / Tim\nE-Football: Rp 75.000",
   },
   {
     id: "evt-04",
