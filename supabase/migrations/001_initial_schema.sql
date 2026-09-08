@@ -22,8 +22,8 @@ CREATE TABLE events (
 -- Seed initial event data from data/events.ts
 INSERT INTO events (slug, name, category, description, location, price, registration_open) VALUES
 ('seminar-nasional', 'Seminar Nasional Teknologi Y2K', 'Seminar', 'Seminar membahas perkembangan teknologi menuju era Nostalgic Utopia.', 'UPI Convention Center', 'Rp 50.000', true),
-('turnamen-futsal-slta', 'Turnamen Futsal SLTA', 'Sport', 'Turnamen futsal antar SMA/SMK/MA sederajat se-Sumatera Barat.', 'Lap. Futsal UPI YPTK Padang', 'Rp 200.000 / Tim', true),
-('turnamen-futsal-umum', 'Turnamen Futsal Mahasiswa/Umum', 'Sport', 'Turnamen futsal kategori Mahasiswa dan Umum.', 'Lap. Futsal UPI YPTK Padang', 'Rp 300.000 / Tim', true),
+('turnamen-futsal-slta', 'Turnamen Futsal SLTA', 'Sport', 'Turnamen futsal antar SMA/SMK/MA sederajat se-Sumatera Barat.', 'Lap. Futsal UPI YPTK Padang', 'Rp 350.000 / Tim', true),
+('turnamen-futsal-umum', 'Turnamen Futsal Mahasiswa/Umum', 'Sport', 'Turnamen futsal kategori Mahasiswa dan Umum.', 'Lap. Futsal UPI YPTK Padang', 'Rp 350.000 / Tim', true),
 ('turnamen-esport-mlbb', 'Mobile Legends E-Sport Arena', 'E-Sport', 'Turnamen Mobile Legends Bang Bang tingkat nasional.', 'Online & UPI Convention Center', 'Rp 100.000 / Tim', true),
 ('lomba-keagamaan', 'MTQ & Lomba Keagamaan', 'Religi', 'Lomba MTQ dan kegiatan keagamaan antar mahasiswa.', 'Masjid Raya UPI YPTK', 'Gratis', true),
 ('open-bazaar', 'Y2K Open Bazaar', 'Bazaar', 'Bazaar makanan, minuman, dan thrift shop dengan nuansa Y2K.', 'Plaza UPI YPTK', 'Menyusul', true)

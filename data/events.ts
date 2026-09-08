@@ -92,7 +92,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 200.000 / Tim",
+    price: "Rp 350.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     registrationPhases: [
@@ -141,7 +141,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 300.000 / Tim",
+    price: "Rp 350.000 / Tim",
     registrationStartDate: "2026-09-28T00:00:00+07:00",
     registrationCloseDate: "2026-10-28T23:59:59+07:00",
     registrationPhases: [
@@ -190,7 +190,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "SLTA: Rp 200.000 / Tim\nUmum: Rp 300.000 / Tim",
+    price: "SLTA: Rp 350.000 / Tim\nUmum: Rp 350.000 / Tim",
   },
   {
     id: "evt-03",
