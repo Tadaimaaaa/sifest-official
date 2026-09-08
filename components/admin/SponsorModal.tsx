@@ -14,7 +14,6 @@ export interface SponsorModalProps {
 
 export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorModalProps) {
   const router = useRouter();
-  const supabase = createClient();
   
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -86,6 +85,7 @@ export function SponsorModal({ isOpen, onClose, sponsor, onSuccess }: SponsorMod
 
     setIsSaving(true);
     let finalImageUrl = sponsor?.logo_url || null;
+    const supabase = createClient();
 
     try {
       // 1. Upload image if a new one is selected

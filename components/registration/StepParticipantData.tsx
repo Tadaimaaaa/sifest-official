@@ -242,7 +242,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     onUpdate({ ...data, metadata: { ...meta, players: newPlayers } });
   };
 
-  const supabase = createClient();
   const [uploadingState, setUploadingState] = useState<{ idx: number, field: string } | null>(null);
 
   const handleFileUpload = async (idx: number, field: 'studentCardUrl' | 'photoUrl' | 'birthCertificateUrl', e: React.ChangeEvent<HTMLInputElement>) => {
@@ -256,6 +255,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
     setUploadingState({ idx, field });
     try {
+      const supabase = createClient();
       const fileExt = file.name.split('.').pop();
       const prefix = field === 'photoUrl' ? 'foto' : field === 'birthCertificateUrl' ? 'akta' : 'kts';
       const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
@@ -289,6 +289,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
     setUploadingState({ idx: -1, field });
     try {
+      const supabase = createClient();
       const fileExt = file.name.split('.').pop();
       const prefix = field === 'fotoKtpUrl' ? 'ktp' : field === 'fotoKtmUrl' ? 'ktm' : 'pelajar';
       const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;

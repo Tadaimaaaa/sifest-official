@@ -65,12 +65,11 @@ export function CommitteeGrid() {
   const [divisionsData, setDivisionsData] = useState(STATIC_DIVISIONS);
   const [isLoading, setIsLoading] = useState(true);
 
-  const supabase = createClient();
-
   useEffect(() => {
     const fetchDatabaseMembers = async () => {
       setIsLoading(true);
       try {
+        const supabase = createClient();
         const { data, error } = await supabase
           .from('committee_members')
           .select('*')

@@ -5,10 +5,9 @@ import { createClient } from "@/lib/supabase/client";
 
 export function SponsorGrid() {
   const [sponsors, setSponsors] = useState<any[]>([]);
-  const supabase = createClient();
-
   useEffect(() => {
     const fetchSponsors = async () => {
+      const supabase = createClient();
       const { data } = await supabase.from('sponsors').select('*');
       if (data) {
         setSponsors(data);

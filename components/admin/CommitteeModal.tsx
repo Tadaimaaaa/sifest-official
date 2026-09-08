@@ -15,7 +15,6 @@ export interface CommitteeModalProps {
 
 export function CommitteeModal({ isOpen, onClose, member, onSuccess }: CommitteeModalProps) {
   const router = useRouter();
-  const supabase = createClient();
   
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -96,6 +95,7 @@ export function CommitteeModal({ isOpen, onClose, member, onSuccess }: Committee
 
     setIsSaving(true);
     let finalImageUrl = member?.image_url || null;
+    const supabase = createClient();
 
     try {
       // 1. Upload image if a new one is selected
