@@ -235,6 +235,14 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
           players: [{ name: '', nisn: '' }] // Start with 1 player
         }
       });
+    } else if (eventSlug === 'turnamen-esport-mlbb' && !data.metadata) {
+      onUpdate({
+        ...data,
+        metadata: {
+          teamData: { teamName: '', teamCategory: '', captainName: '', captainWhatsapp: '', coachName: '', coachWhatsapp: '', assistantCoachName: '' },
+          players: Array(6).fill(null).map(() => ({ name: '', nickname: '', idGame: '', studentCardUrl: '' }))
+        }
+      });
     }
   }, [eventSlug, data.metadata, onUpdate]);
 
@@ -242,7 +250,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-8">
         <h2 className="font-heading text-3xl font-bold text-white mb-3">
-          {mode === 'school' ? 'Data Sekolah' : mode === 'players' ? 'Data Pemain' : 'Data Peserta'}
+          {mode === 'school' ? 'Data Sekolah' : mode === 'mlbb-team' ? 'Data Tim' : (mode === 'players' || mode === 'mlbb-players') ? 'Data Pemain' : 'Data Peserta'}
         </h2>
         <p className="text-white/70">Pastikan data yang Anda masukkan sudah benar dan dapat dihubungi.</p>
       </div>
