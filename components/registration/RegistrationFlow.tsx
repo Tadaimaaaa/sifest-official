@@ -137,6 +137,17 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
             institution: team.teamName || '',
           };
         }
+      } else if (draft.eventSlug === 'turnamen-esport-efootball') {
+        submissionDraft.participant = {
+          ...submissionDraft.participant,
+          email: `${draft.participant.whatsapp.replace(/\D/g, '')}@efootball.sifest.id`,
+          institution: 'Peserta Umum / E-Football',
+        };
+      } else if (draft.eventSlug.startsWith('open-bazaar')) {
+        submissionDraft.participant = {
+          ...submissionDraft.participant,
+          email: `${draft.participant.whatsapp.replace(/\D/g, '')}@bazaar.sifest.id`,
+        };
       }
 
       const result = await registerParticipant(submissionDraft);
@@ -248,7 +259,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Standard Event Participant Data */}
-              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && (
+              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && draft.eventSlug !== 'turnamen-esport-efootball' && !draft.eventSlug.startsWith('open-bazaar') && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -256,6 +267,30 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   onNext={nextStep}
                   onBack={prevStep}
                   mode="default"
+                />
+              )}
+
+              {/* Bazaar Participant Data */}
+              {currentStep === 2 && draft.eventSlug.startsWith('open-bazaar') && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="bazaar"
+                />
+              )}
+
+              {/* E-Football Participant Data */}
+              {currentStep === 2 && draft.eventSlug === 'turnamen-esport-efootball' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="efootball"
                 />
               )}
 

@@ -11,7 +11,7 @@ interface StepParticipantDataProps {
   onUpdate: (data: ParticipantData) => void;
   onNext: () => void;
   onBack: () => void;
-  mode?: 'default' | 'school' | 'players' | 'mlbb-team' | 'mlbb-players';
+  mode?: 'default' | 'school' | 'players' | 'mlbb-team' | 'mlbb-players' | 'efootball' | 'bazaar';
 }
 
 export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack, mode = 'default' }: StepParticipantDataProps) {
@@ -107,6 +107,8 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         if (!team.captainWhatsapp?.trim()) { newErrors['teamData.captainWhatsapp'] = "Nomor WhatsApp Kapten wajib diisi."; isValid = false; }
       }
 
+      }
+
       if (mode === 'mlbb-players') {
         const players = meta.players || [];
         if (players.length < 5) {
@@ -127,6 +129,35 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
           }
         }
       }
+    }
+
+    if (eventSlug === 'turnamen-esport-efootball' && mode === 'efootball') {
+      if (!data.fullName.trim()) { newErrors.fullName = "Nama lengkap wajib diisi."; isValid = false; }
+      const phoneRegex = /^[+0-9]{9,15}$/;
+      if (!data.whatsapp.trim()) {
+        newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
+        isValid = false;
+      } else if (!phoneRegex.test(data.whatsapp.replace(/\s+/g, ""))) {
+        newErrors.whatsapp = "Format nomor WhatsApp tidak valid.";
+        isValid = false;
+      }
+      const meta = data.metadata || {};
+      if (!meta.fotoKtpUrl) { newErrors['metadata.fotoKtpUrl'] = "Foto KTP wajib diunggah."; isValid = false; }
+    }
+
+    if (eventSlug.startsWith('open-bazaar') && mode === 'bazaar') {
+      if (!data.institution.trim()) { newErrors.institution = "Nama Usaha/Brand wajib diisi."; isValid = false; }
+      if (!data.fullName.trim()) { newErrors.fullName = "Nama Penanggung Jawab wajib diisi."; isValid = false; }
+      const phoneRegex = /^[+0-9]{9,15}$/;
+      if (!data.whatsapp.trim()) {
+        newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
+        isValid = false;
+      } else if (!phoneRegex.test(data.whatsapp.replace(/\s+/g, ""))) {
+        newErrors.whatsapp = "Format nomor WhatsApp tidak valid.";
+        isValid = false;
+      }
+      const meta = data.metadata || {};
+      if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
     }
 
     setErrors(newErrors);
@@ -225,6 +256,40 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
   };
 
+  const handleSingleFileUpload = async (field: 'fotoKtpUrl' | 'fotoKtmUrl', e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+      alert("Harap unggah file gambar (JPG/PNG) atau PDF.");
+      return;
+    }
+
+    setUploadingState({ idx: -1, field });
+    try {
+      const fileExt = file.name.split('.').pop();
+      const prefix = field === 'fotoKtpUrl' ? 'ktp' : 'ktm';
+      const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('registration_files')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from('registration_files')
+        .getPublicUrl(fileName);
+
+      const meta = data.metadata || {};
+      onUpdate({ ...data, metadata: { ...meta, [field]: publicUrlData.publicUrl } });
+    } catch (err: any) {
+      alert(err.message || "Gagal mengunggah file.");
+    } finally {
+      setUploadingState(null);
+    }
+  };
+
   // Initialize Futsal metadata if empty
   React.useEffect(() => {
     if (eventSlug === 'turnamen-futsal-slta' && !data.metadata) {
@@ -243,6 +308,16 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
           players: Array(6).fill(null).map(() => ({ name: '', nickname: '', idGame: '', studentCardUrl: '' }))
         }
       });
+    } else if (eventSlug === 'turnamen-esport-efootball' && !data.metadata) {
+      onUpdate({
+        ...data,
+        metadata: { fotoKtpUrl: '', fotoKtmUrl: '' }
+      });
+    } else if (eventSlug.startsWith('open-bazaar') && !data.metadata) {
+      onUpdate({
+        ...data,
+        metadata: { address: '', instagram: '', category: '', products: '' }
+      });
     }
   }, [eventSlug, data.metadata, onUpdate]);
 
@@ -250,10 +325,174 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-8">
         <h2 className="font-heading text-3xl font-bold text-white mb-3">
-          {mode === 'school' ? 'Data Sekolah' : mode === 'mlbb-team' ? 'Data Tim' : (mode === 'players' || mode === 'mlbb-players') ? 'Data Pemain' : 'Data Peserta'}
+          {mode === 'school' ? 'Data Sekolah' : mode === 'mlbb-team' ? 'Data Tim' : (mode === 'players' || mode === 'mlbb-players') ? 'Data Pemain' : mode === 'bazaar' ? 'Data Usaha' : 'Data Peserta'}
         </h2>
         <p className="text-white/70">Pastikan data yang Anda masukkan sudah benar dan dapat dihubungi.</p>
       </div>
+
+      {mode === 'efootball' && (
+        <GlassCard variant="medium" className="p-6 md:p-8 space-y-6">
+          <div className="space-y-2">
+            <label htmlFor="efFullName" className="block text-sm font-medium text-white/90">Nama Lengkap <span className="text-status-warning">*</span></label>
+            <input
+              id="efFullName"
+              type="text"
+              value={data.fullName}
+              onChange={(e) => onUpdate({ ...data, fullName: e.target.value })}
+              placeholder="Masukkan nama lengkap"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.fullName && (
+              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                <AlertCircle size={14} /> {errors.fullName}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="efWhatsapp" className="block text-sm font-medium text-white/90">Nomor WhatsApp <span className="text-status-warning">*</span></label>
+            <input
+              id="efWhatsapp"
+              type="tel"
+              value={data.whatsapp}
+              onChange={(e) => onUpdate({ ...data, whatsapp: e.target.value })}
+              placeholder="081234567890"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.whatsapp && (
+              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                <AlertCircle size={14} /> {errors.whatsapp}
+              </p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-white/90">Foto KTP <span className="text-status-warning">*</span></label>
+              <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+                <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('fotoKtpUrl', e)} disabled={uploadingState?.field === 'fotoKtpUrl'} />
+                {uploadingState?.field === 'fotoKtpUrl' ? (
+                  <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+                ) : data.metadata?.fotoKtpUrl ? (
+                  <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+                )}
+              </label>
+              {errors['metadata.fotoKtpUrl'] && (
+                <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                  <AlertCircle size={14} /> {errors['metadata.fotoKtpUrl']}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-white/90">Foto KTM <span className="text-white/50">(Opsional)</span></label>
+              <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+                <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('fotoKtmUrl', e)} disabled={uploadingState?.field === 'fotoKtmUrl'} />
+                {uploadingState?.field === 'fotoKtmUrl' ? (
+                  <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+                ) : data.metadata?.fotoKtmUrl ? (
+                  <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+                )}
+              </label>
+            </div>
+          </div>
+        </GlassCard>
+      )}
+
+      {mode === 'bazaar' && (
+        <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label htmlFor="bazaarInstitution" className="block text-sm font-medium text-white/90">Nama Usaha/Brand <span className="text-status-warning">*</span></label>
+            <input
+              id="bazaarInstitution"
+              type="text"
+              value={data.institution}
+              onChange={(e) => onUpdate({ ...data, institution: e.target.value })}
+              placeholder="Masukkan nama usaha/brand"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.institution && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.institution}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="bazaarFullName" className="block text-sm font-medium text-white/90">Nama Penanggung Jawab <span className="text-status-warning">*</span></label>
+            <input
+              id="bazaarFullName"
+              type="text"
+              value={data.fullName}
+              onChange={(e) => onUpdate({ ...data, fullName: e.target.value })}
+              placeholder="Masukkan nama penanggung jawab"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.fullName && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.fullName}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="bazaarWhatsapp" className="block text-sm font-medium text-white/90">Nomor WhatsApp <span className="text-status-warning">*</span></label>
+            <input
+              id="bazaarWhatsapp"
+              type="tel"
+              value={data.whatsapp}
+              onChange={(e) => onUpdate({ ...data, whatsapp: e.target.value })}
+              placeholder="081234567890"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors.whatsapp && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.whatsapp}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="bazaarInstagram" className="block text-sm font-medium text-white/90">Instagram/Sosial Media <span className="text-white/50">(Opsional)</span></label>
+            <input
+              id="bazaarInstagram"
+              type="text"
+              value={data.metadata?.instagram || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, instagram: e.target.value } })}
+              placeholder="@username atau link"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label htmlFor="bazaarAddress" className="block text-sm font-medium text-white/90">Alamat <span className="text-status-warning">*</span></label>
+            <textarea
+              id="bazaarAddress"
+              value={data.metadata?.address || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, address: e.target.value } })}
+              placeholder="Alamat lengkap usaha atau domisili penanggung jawab"
+              className="w-full h-24 p-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all resize-none"
+            />
+            {errors['metadata.address'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.address']}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="bazaarCategory" className="block text-sm font-medium text-white/90">Kategori Usaha <span className="text-white/50">(Opsional)</span></label>
+            <input
+              id="bazaarCategory"
+              type="text"
+              value={data.metadata?.category || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, category: e.target.value } })}
+              placeholder="Contoh: Makanan & Minuman, Fashion, Jasa"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="bazaarProducts" className="block text-sm font-medium text-white/90">Produk yang Dijual <span className="text-white/50">(Opsional)</span></label>
+            <input
+              id="bazaarProducts"
+              type="text"
+              value={data.metadata?.products || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, products: e.target.value } })}
+              placeholder="Contoh: Sate Taichan, Kopi, Thrift Kaos"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+          </div>
+        </GlassCard>
+      )}
 
       {mode === 'default' && (
         <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">

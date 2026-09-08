@@ -4,6 +4,11 @@ export function getAllEvents(): EventData[] {
   return OFFICIAL_EVENTS;
 }
 
+export function getRegisterableEvents(): EventData[] {
+  const excludedSlugs = ['turnamen-futsal', 'turnamen-esport', 'open-bazaar'];
+  return OFFICIAL_EVENTS.filter((event) => !excludedSlugs.includes(event.slug));
+}
+
 export function getMainEvents(): EventData[] {
   return OFFICIAL_EVENTS.filter(event => !event.isSubEvent);
 }

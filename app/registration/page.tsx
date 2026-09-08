@@ -2,7 +2,7 @@ import { RegistrationFlow } from "@/components/registration/RegistrationFlow";
 import { Navbar } from "@/components/navigation/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BackgroundAmbience } from "@/components/layout/BackgroundAmbience";
-import { getAllEvents } from "@/lib/events";
+import { getRegisterableEvents } from "@/lib/events";
 import { Metadata } from "next";
 import React from "react";
 
@@ -21,7 +21,7 @@ export default async function RegistrationPage({ searchParams }: RegistrationPag
   const eventSlug = typeof resolvedSearchParams.event === "string" ? resolvedSearchParams.event : undefined;
   
   // Fetch events on server
-  const events = getAllEvents();
+  const events = getRegisterableEvents();
 
   return (
     <main className="relative min-h-[100svh] w-full overflow-hidden bg-[#0A192F]/40">
