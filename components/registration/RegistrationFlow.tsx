@@ -50,7 +50,11 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
             setCurrentStep(2);
           } else {
             setDraft(parsed.draft);
-            if (parsed.step && parsed.step >= 1 && parsed.step < steps.length) setCurrentStep(parsed.step);
+            if (initialEventSlug) {
+              setCurrentStep(parsed.step && parsed.step > 2 ? parsed.step : 2);
+            } else if (parsed.step && parsed.step >= 1 && parsed.step < steps.length) {
+              setCurrentStep(parsed.step);
+            }
           }
         }
       } else if (initialEventSlug) {
