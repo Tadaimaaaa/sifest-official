@@ -278,7 +278,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
   };
 
-  const handleSingleFileUpload = async (field: 'fotoKtpUrl' | 'fotoKtmUrl', e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSingleFileUpload = async (field: 'fotoKtpUrl' | 'fotoKtmUrl' | 'studentCardUrl', e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -290,7 +290,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     setUploadingState({ idx: -1, field });
     try {
       const fileExt = file.name.split('.').pop();
-      const prefix = field === 'fotoKtpUrl' ? 'ktp' : 'ktm';
+      const prefix = field === 'fotoKtpUrl' ? 'ktp' : field === 'fotoKtmUrl' ? 'ktm' : 'pelajar';
       const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
