@@ -107,8 +107,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         if (!team.captainWhatsapp?.trim()) { newErrors['teamData.captainWhatsapp'] = "Nomor WhatsApp Kapten wajib diisi."; isValid = false; }
       }
 
-      }
-
       if (mode === 'mlbb-players') {
         const players = meta.players || [];
         if (players.length < 5) {
