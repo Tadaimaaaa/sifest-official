@@ -43,8 +43,19 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
       const saved = sessionStorage.getItem('sifest_reg_draft');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.draft && parsed.draft.eventSlug) setDraft(parsed.draft);
-        if (parsed.step && parsed.step >= 1 && parsed.step < steps.length) setCurrentStep(parsed.step);
+        if (parsed.draft && parsed.draft.eventSlug) {
+          // If URL param forces an event and it differs from cache, use URL param
+          if (initialEventSlug && initialEventSlug !== parsed.draft.eventSlug) {
+            setDraft((prev) => ({ ...prev, eventSlug: initialEventSlug }));
+            setCurrentStep(2);
+          } else {
+            setDraft(parsed.draft);
+            if (parsed.step && parsed.step >= 1 && parsed.step < steps.length) setCurrentStep(parsed.step);
+          }
+        }
+      } else if (initialEventSlug) {
+        setDraft((prev) => ({ ...prev, eventSlug: initialEventSlug }));
+        setCurrentStep(2);
       }
     } catch (e) {}
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,6 +77,14 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     ? [
         { id: 1, label: "Acara" },
         { id: 2, label: "Data Sekolah" },
+        { id: 3, label: "Data Pemain" },
+        { id: 4, label: "Ulasan" },
+        { id: 5, label: "Pembayaran" },
+      ]
+    : draft.eventSlug === 'turnamen-esport-mlbb'
+    ? [
+        { id: 1, label: "Acara" },
+        { id: 2, label: "Data Tim" },
         { id: 3, label: "Data Pemain" },
         { id: 4, label: "Ulasan" },
         { id: 5, label: "Pembayaran" },
@@ -94,7 +113,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     setSubmitError(null);
 
     try {
-      // Map Futsal SLTA fields to standard participant fields for database constraints
+      // Map dynamic fields to standard participant fields for database constraints
       const submissionDraft = { ...draft };
       if (draft.eventSlug === 'turnamen-futsal-slta') {
         const school = draft.participant.metadata?.schoolData;
@@ -105,6 +124,17 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
             email: school.email || '',
             whatsapp: school.coachWhatsapp || '',
             institution: school.schoolName || '',
+          };
+        }
+      } else if (draft.eventSlug === 'turnamen-esport-mlbb') {
+        const team = draft.participant.metadata?.teamData;
+        if (team) {
+          submissionDraft.participant = {
+            ...submissionDraft.participant,
+            fullName: team.captainName || '',
+            email: draft.participant.email || '', // Email is not specifically asked in MLBB, we might need a fallback or collect it
+            whatsapp: team.captainWhatsapp || '',
+            institution: team.teamName || '',
           };
         }
       }
@@ -218,7 +248,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Standard Event Participant Data */}
-              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && (
+              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -250,6 +280,30 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   onNext={nextStep}
                   onBack={prevStep}
                   mode="players"
+                />
+              )}
+
+              {/* MLBB Team Data */}
+              {currentStep === 2 && draft.eventSlug === 'turnamen-esport-mlbb' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="mlbb-team"
+                />
+              )}
+
+              {/* MLBB Player Data */}
+              {currentStep === 3 && draft.eventSlug === 'turnamen-esport-mlbb' && (
+                <StepParticipantData
+                  data={draft.participant}
+                  eventSlug={draft.eventSlug}
+                  onUpdate={handleParticipantUpdate}
+                  onNext={nextStep}
+                  onBack={prevStep}
+                  mode="mlbb-players"
                 />
               )}
 

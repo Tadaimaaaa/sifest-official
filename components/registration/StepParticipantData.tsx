@@ -11,7 +11,7 @@ interface StepParticipantDataProps {
   onUpdate: (data: ParticipantData) => void;
   onNext: () => void;
   onBack: () => void;
-  mode?: 'default' | 'school' | 'players';
+  mode?: 'default' | 'school' | 'players' | 'mlbb-team' | 'mlbb-players';
 }
 
 export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack, mode = 'default' }: StepParticipantDataProps) {
@@ -96,6 +96,39 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
     }
 
+    if (eventSlug === 'turnamen-esport-mlbb') {
+      const meta = data.metadata || { teamData: {}, players: [] };
+      
+      if (mode === 'mlbb-team') {
+        const team = meta.teamData || {};
+        if (!team.teamCategory?.trim()) { newErrors['teamData.teamCategory'] = "Kategori wajib dipilih."; isValid = false; }
+        if (!team.teamName?.trim()) { newErrors['teamData.teamName'] = "Nama Tim wajib diisi."; isValid = false; }
+        if (!team.captainName?.trim()) { newErrors['teamData.captainName'] = "Nama Kapten wajib diisi."; isValid = false; }
+        if (!team.captainWhatsapp?.trim()) { newErrors['teamData.captainWhatsapp'] = "Nomor WhatsApp Kapten wajib diisi."; isValid = false; }
+      }
+
+      if (mode === 'mlbb-players') {
+        const players = meta.players || [];
+        if (players.length < 5) {
+           newErrors['players'] = "Minimal harus ada 5 data pemain (1 Kapten + 4 Anggota).";
+           isValid = false;
+        } else {
+          for (let idx = 0; idx < 6; idx++) {
+            const p = players[idx] || {};
+            const isCadangan = idx === 5;
+            const isEmptyCadangan = isCadangan && !p.name?.trim() && !p.nickname?.trim() && !p.idGame?.trim();
+            
+            if (!isEmptyCadangan) {
+              // Kapten name is derived from step 2, but for safety, validate it here if missing
+              if (!p.name?.trim() && idx !== 0) { newErrors[`players.${idx}.name`] = "Nama Lengkap wajib diisi."; isValid = false; }
+              if (!p.nickname?.trim()) { newErrors[`players.${idx}.nickname`] = "Nickname/IGN wajib diisi."; isValid = false; }
+              if (!p.idGame?.trim()) { newErrors[`players.${idx}.idGame`] = "ID Game wajib diisi."; isValid = false; }
+            }
+          }
+        }
+      }
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -148,7 +181,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     onUpdate({ ...data, metadata: { ...meta, players: newPlayers } });
   };
 
-  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'whatsapp' | 'studentCardUrl' | 'posisi' | 'photoUrl' | 'birthCertificateUrl' | 'jerseyNumber', value: string) => {
+  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'nickname' | 'idGame' | 'whatsapp' | 'studentCardUrl' | 'posisi' | 'photoUrl' | 'birthCertificateUrl' | 'jerseyNumber', value: string) => {
     const meta = data.metadata;
     if (!meta) return;
     const newPlayers = [...meta.players];
@@ -185,7 +218,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         .getPublicUrl(fileName);
 
       updatePlayer(idx, field, publicUrlData.publicUrl);
-    } catch (err: any) {
+    } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       alert(err.message || "Gagal mengunggah file.");
     } finally {
       setUploadingState(null);
@@ -411,7 +444,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 {errors['players'] && <p className="text-sm text-status-warning mb-4"><AlertCircle size={14} className="inline mr-1"/>{errors['players']}</p>}
                 
                 <div className="space-y-4">
-                {data.metadata.players?.map((player: any, idx: number) => (
+                {data.metadata.players?.map((player: Record<string, string>, idx: number) => (
                   <div key={idx} className="flex flex-col gap-4 items-start p-6 rounded-xl bg-white/5 border border-white/10 relative">
                     {data.metadata.players.length > 1 && (
                       <button type="button" onClick={() => removePlayer(idx)} className="absolute top-4 right-4 h-10 w-10 flex items-center justify-center rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors">
@@ -559,6 +592,200 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               </GlassCard>
             </div>
           )}
+        </div>
+      )}
+
+      {mode === 'mlbb-team' && data.metadata && (
+        <GlassCard variant="medium" className="p-6 md:p-8 space-y-6">
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-white">Data Tim</h3>
+            
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/90">
+                Kategori <span className="text-status-warning">*</span>
+              </label>
+              <select
+                value={data.metadata.teamData?.teamCategory || ''}
+                onChange={(e) => updateTeamData('teamCategory', e.target.value)}
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
+              >
+                <option value="" disabled className="text-slate-800">Pilih Kategori</option>
+                <option value="Siswa" className="text-slate-800">Siswa</option>
+                <option value="Mahasiswa" className="text-slate-800">Mahasiswa</option>
+                <option value="Umum" className="text-slate-800">Umum</option>
+              </select>
+              {errors['teamData.teamCategory'] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.teamCategory']}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/90">
+                Nama Tim <span className="text-status-warning">*</span>
+              </label>
+              <input
+                type="text"
+                value={data.metadata.teamData?.teamName || ''}
+                onChange={(e) => updateTeamData('teamName', e.target.value)}
+                placeholder="Masukkan nama tim"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors['teamData.teamName'] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.teamName']}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/90">
+                Nama Kapten <span className="text-status-warning">*</span>
+              </label>
+              <input
+                type="text"
+                value={data.metadata.teamData?.captainName || ''}
+                onChange={(e) => updateTeamData('captainName', e.target.value)}
+                placeholder="Nama lengkap kapten"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors['teamData.captainName'] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.captainName']}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/90">
+                Nomor WhatsApp Kapten <span className="text-status-warning">*</span>
+              </label>
+              <input
+                type="tel"
+                value={data.metadata.teamData?.captainWhatsapp || ''}
+                onChange={(e) => updateTeamData('captainWhatsapp', e.target.value)}
+                placeholder="081234567890"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors['teamData.captainWhatsapp'] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.captainWhatsapp']}</p>}
+            </div>
+          </div>
+        </GlassCard>
+      )}
+
+      {mode === 'mlbb-players' && data.metadata && (
+        <div className="space-y-6">
+          <GlassCard variant="medium" className="p-6 md:p-8 space-y-6">
+            <h3 className="text-xl font-semibold text-white">Data Coach (Opsional)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-white/90">Nama Coach</label>
+                <input
+                  type="text"
+                  value={data.metadata.teamData?.coachName || ''}
+                  onChange={(e) => updateTeamData('coachName', e.target.value)}
+                  placeholder="Opsional"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-white/90">No. WhatsApp Coach</label>
+                <input
+                  type="tel"
+                  value={data.metadata.teamData?.coachWhatsapp || ''}
+                  onChange={(e) => updateTeamData('coachWhatsapp', e.target.value)}
+                  placeholder="Opsional"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="block text-sm font-medium text-white/90">Nama Asisten Coach</label>
+                <input
+                  type="text"
+                  value={data.metadata.teamData?.assistantCoachName || ''}
+                  onChange={(e) => updateTeamData('assistantCoachName', e.target.value)}
+                  placeholder="Opsional"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+              </div>
+            </div>
+          </GlassCard>
+
+          <div className="space-y-6">
+            {data.metadata.players?.slice(0, 6).map((player: Record<string, string>, idx: number) => {
+              const isCadangan = idx === 5;
+              const isKapten = idx === 0;
+              const title = isKapten ? 'Kapten' : isCadangan ? 'Cadangan 1 (Opsional)' : `Player ${idx + 1}`;
+              const requiredMark = isCadangan ? '' : <span className="text-status-warning">*</span>;
+              
+              // For captain, we lock the name field
+              const kaptenName = data.metadata?.teamData?.captainName || '';
+
+              return (
+                <GlassCard key={idx} variant="medium" className="p-6 md:p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-semibold text-white">{title}</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-white/90">Nama Lengkap {requiredMark}</label>
+                      <input
+                        type="text"
+                        value={isKapten ? kaptenName : player.name || ''}
+                        onChange={(e) => {
+                          if (!isKapten) updatePlayer(idx, 'name', e.target.value);
+                        }}
+                        disabled={isKapten}
+                        placeholder={isKapten ? "Sesuai Data Tim" : "Nama lengkap"}
+                        className={`w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all ${isKapten ? 'opacity-70 cursor-not-allowed' : ''}`}
+                      />
+                      {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.${idx}.name`]}</p>}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-white/90">Nickname / IGN {requiredMark}</label>
+                      <input
+                        type="text"
+                        value={player.nickname || ''}
+                        onChange={(e) => updatePlayer(idx, 'nickname', e.target.value)}
+                        placeholder="In-Game Name"
+                        className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                      />
+                      {errors[`players.${idx}.nickname`] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.${idx}.nickname`]}</p>}
+                    </div>
+
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="block text-sm font-medium text-white/90">ID Game {requiredMark}</label>
+                      <input
+                        type="text"
+                        value={player.idGame || ''}
+                        onChange={(e) => updatePlayer(idx, 'idGame', e.target.value)}
+                        placeholder="Contoh: 12345678 (1234)"
+                        className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                      />
+                      {errors[`players.${idx}.idGame`] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.${idx}.idGame`]}</p>}
+                    </div>
+
+                    <div className="w-full space-y-2 md:col-span-2">
+                      <label className="block text-sm font-medium text-white/90">KTM / KTP / KTS <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                      <div className="flex flex-col gap-2">
+                        <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                          <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
+                          {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
+                            <div className="flex items-center gap-2 text-brand-accent">
+                              <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                              <span className="text-sm">Mengunggah...</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-white/80">
+                              <UploadCloud size={18} />
+                              <span className="text-sm">{player.studentCardUrl ? 'Ganti Dokumen' : 'Unggah Dokumen'}</span>
+                            </div>
+                          )}
+                        </label>
+                        {player.studentCardUrl && (
+                          <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                            <FileImage size={16} /> Lihat Dokumen
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                  </div>
+                </GlassCard>
+              );
+            })}
+          </div>
         </div>
       )}
 

@@ -82,7 +82,7 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
           </div>
           
           <h3 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-6">
-            {draft.eventSlug === 'turnamen-futsal-slta' ? 'Data Sekolah' : 'Data Peserta'}
+            {draft.eventSlug === 'turnamen-futsal-slta' ? 'Data Sekolah' : draft.eventSlug === 'turnamen-esport-mlbb' ? 'Data Tim' : 'Data Peserta'}
           </h3>
           
           {draft.eventSlug === 'turnamen-futsal-slta' ? (
@@ -116,6 +116,45 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
                 <div>
                   <p className="text-xs text-white/50 mb-0.5">Asal Kab/Kota</p>
                   <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.city || "-"}</p>
+                </div>
+              </div>
+            </div>
+          ) : draft.eventSlug === 'turnamen-esport-mlbb' ? (
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Tim</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.teamData?.teamName || "-"}</p>
+                  <div className="inline-block mt-1 px-2 py-0.5 rounded border border-white/20 bg-white/5 text-[10px] text-white/70">
+                    {draft.participant.metadata?.teamData?.teamCategory || "-"}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Kapten Tim</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.teamData?.captainName || "-"}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">No WA Kapten</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.teamData?.captainWhatsapp || "-"}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Jumlah Pemain</p>
+                  <p className="text-sm font-medium text-white/90">
+                    {draft.participant.metadata?.players?.filter((p: Record<string, string>) => p.name || p.nickname).length || 0} Pemain
+                  </p>
                 </div>
               </div>
             </div>
