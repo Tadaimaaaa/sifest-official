@@ -15,9 +15,8 @@ export default function CommitteeCMSPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [filterDivision, setFilterDivision] = useState("all");
 
-  const supabase = createClient();
-
   const fetchMembers = async () => {
+    const supabase = createClient();
     setIsLoading(true);
     const { data, error } = await supabase
       .from('committee_members')
@@ -70,6 +69,7 @@ export default function CommitteeCMSPage() {
 
   const handleDelete = async (id: string, imageUrl: string) => {
     if (confirm("Apakah Anda yakin ingin menghapus panitia ini?")) {
+      const supabase = createClient();
       try {
         // 1. Delete from DB
         await supabase.from('committee_members').delete().eq('id', id);

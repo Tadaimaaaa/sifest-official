@@ -13,9 +13,8 @@ export default function SponsorsAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSponsor, setSelectedSponsor] = useState<any | null>(null);
 
-  const supabase = createClient();
-
   const fetchSponsors = async () => {
+    const supabase = createClient();
     setIsLoading(true);
     const { data, error } = await supabase
       .from('sponsors')
@@ -50,6 +49,7 @@ export default function SponsorsAdmin() {
 
   const handleDelete = async (id: string, logoUrl: string) => {
     if (confirm("Apakah Anda yakin ingin menghapus mitra ini?")) {
+      const supabase = createClient();
       try {
         // Delete from database
         const { error: dbError } = await supabase
