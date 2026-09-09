@@ -64,10 +64,13 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
     event: event.slug,
   });
 
-  const isFutsal = draft.eventSlug === 'turnamen-futsal-slta';
+  const isFutsal = draft.eventSlug.includes('futsal');
+  const isEsport = draft.eventSlug.includes('esport') || draft.eventSlug === 'mlbb';
+
   const schoolName = draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution;
-  const coachName = draft.participant.metadata?.schoolData?.coachName || '-';
-  const captainName = draft.participant.metadata?.players?.[0]?.name || draft.participant.fullName;
+  const coachName = draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName || '-';
+  const captainName = draft.participant.metadata?.players?.[0]?.name || draft.participant.metadata?.teamData?.captainName || draft.participant.fullName;
+  const captainWa = draft.participant.metadata?.players?.[0]?.whatsapp || draft.participant.metadata?.teamData?.captainWhatsapp || draft.participant.whatsapp;
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -122,16 +125,27 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                 {isFutsal ? (
                   <>
                     <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Sekolah</p>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Asal Sekolah</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{schoolName}</p>
                     </div>
                     <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab / Pembina</p>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{coachName}</p>
                     </div>
                     <div style={{ gridColumn: 'span 2' }}>
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Kapten</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
+                    </div>
+                  </>
+                ) : isEsport ? (
+                  <>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Kapten</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
+                    </div>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>WhatsApp Kapten</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainWa}</p>
                     </div>
                   </>
                 ) : (
