@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Section } from "@/components/layout/Section";
 import { Navbar } from "@/components/navigation/Navbar";
 import { SponsorGrid } from "@/components/sponsors/SponsorGrid";
+import { MediaPartnerGrid } from "@/components/sponsors/MediaPartnerGrid";
 import { Timeline } from "@/components/timeline/Timeline";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -54,6 +55,10 @@ export default function Home() {
 
       <Section id="sponsors" title="Sponsor & Mitra Kami">
         <SponsorGrid />
+      </Section>
+
+      <Section id="media-partners" title="Media Partner" className="pt-0">
+        <MediaPartnerGrid />
       </Section>
 
       <Footer />
