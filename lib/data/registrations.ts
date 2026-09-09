@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { RegistrationDraft } from "@/lib/types/registration";
 import crypto from "crypto";
@@ -10,48 +10,70 @@ export type RegistrationResult = {
   error?: string;
 };
 
-/**
- * Generates a unique, readable registration code.
- * Example: SIF-2026-A1B2C3
- */
 function generateRegistrationCode(): string {
   const randomChars = crypto.randomBytes(3).toString("hex").toUpperCase();
   return `SIF-2026-${randomChars}`;
 }
 
-/**
- * Submits a registration using the admin client and Supabase RPC to ensure atomicity.
- */
 export async function submitRegistration(draft: RegistrationDraft): Promise<RegistrationResult> {
   try {
     const registrationCode = generateRegistrationCode();
 
-    // Call the RPC function defined in the migration
-    const { data, error } = await supabaseAdmin.rpc("create_registration_flow", {
-      p_event_slug: draft.eventSlug,
-      p_registration_code: registrationCode,
-      p_full_name: draft.participant.fullName,
-      p_email: draft.participant.email,
-      p_whatsapp: draft.participant.whatsapp,
-      p_institution: draft.participant.institution,
-      p_metadata: draft.participant.metadata || null,
-    });
+    // Step 1: Find the event by slug
+    const { data: event, error: eventError } = await supabaseAdmin
+      .from("events")
+      .select("id, registration_open")
+      .eq("slug", draft.eventSlug)
+      .single();
 
-    if (error) {
-      console.error("[Data Layer] Registration RPC Error:", error);
-      return { success: false, error: `DB Error: ${error.message || error.code || JSON.stringify(error)}` };
+    if (eventError || !event) {
+      return { success: false, error: `Event tidak ditemukan: ${draft.eventSlug}` };
     }
 
-    // The RPC returns a JSON object on success
-    const result = data as { success: boolean; registration_id: string; registration_code: string };
+    if (event.registration_open === false) {
+      return { success: false, error: "Pendaftaran untuk event ini sudah ditutup." };
+    }
+
+    // Step 2: Insert registration
+    const { data: registration, error: regError } = await supabaseAdmin
+      .from("registrations")
+      .insert({
+        event_id: event.id,
+        registration_code: registrationCode,
+        status: "PENDING",
+      })
+      .select("id")
+      .single();
+
+    if (regError || !registration) {
+      return { success: false, error: `Gagal membuat data pendaftaran: ${regError?.message}` };
+    }
+
+    // Step 3: Insert participant
+    const { error: participantError } = await supabaseAdmin
+      .from("participants")
+      .insert({
+        registration_id: registration.id,
+        full_name: draft.participant.fullName,
+        email: draft.participant.email,
+        whatsapp: draft.participant.whatsapp,
+        institution: draft.participant.institution,
+        metadata: draft.participant.metadata || null,
+      });
+
+    if (participantError) {
+      // Rollback: delete the registration we just created
+      await supabaseAdmin.from("registrations").delete().eq("id", registration.id);
+      return { success: false, error: `Gagal menyimpan data peserta: ${participantError.message}` };
+    }
 
     return {
       success: true,
-      registrationId: result.registration_id,
-      registrationCode: result.registration_code,
+      registrationId: registration.id,
+      registrationCode: registrationCode,
     };
-  } catch (err) {
+  } catch (err: any) {
     console.error("[Data Layer] Registration Exception:", err);
-    return { success: false, error: "Terjadi kesalahan internal pada server." };
+    return { success: false, error: `Kesalahan server: ${err?.message || "Unknown"}` };
   }
 }
