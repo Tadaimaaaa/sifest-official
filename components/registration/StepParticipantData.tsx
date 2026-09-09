@@ -159,24 +159,26 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
 
     if (mode === 'mtq') {
-      if (!data.fullName.trim()) { newErrors.fullName = "Nama Lengkap Peserta wajib diisi."; isValid = false; }
-      if (!data.institution.trim()) { newErrors.institution = "Asal Sekolah wajib diisi."; isValid = false; }
+      if (!data.fullName.trim()) { newErrors.fullName = "Nama Peserta wajib diisi."; isValid = false; }
       const meta = data.metadata || {};
+      if (!meta.gender) { newErrors['metadata.gender'] = "Jenis Kelamin wajib dipilih."; isValid = false; }
+      if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
+      if (!data.institution.trim()) { newErrors.institution = "Asal Sekolah wajib diisi."; isValid = false; }
       const phoneRegex = /^[+0-9]{9,15}$/;
       if (!data.whatsapp.trim()) {
-        newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
+        newErrors.whatsapp = "Nomor WhatsApp aktif wajib diisi.";
         isValid = false;
       } else if (!phoneRegex.test(data.whatsapp.replace(/\s+/g, ""))) {
         newErrors.whatsapp = "Format Nomor WhatsApp tidak valid.";
         isValid = false;
       }
-      if (!meta.studentCardUrl) { newErrors['metadata.studentCardUrl'] = "Surat Keterangan Sekolah / Kartu Pelajar wajib diunggah."; isValid = false; }
-      if (!meta.mentorName?.trim()) { newErrors['metadata.mentorName'] = "Nama Pembimbing wajib diisi."; isValid = false; }
-      if (!meta.mentorWhatsapp?.trim()) {
-        newErrors['metadata.mentorWhatsapp'] = "Nomor WhatsApp Pembimbing wajib diisi.";
+      if (!data.email?.trim()) { newErrors.email = "Email aktif wajib diisi."; isValid = false; }
+      if (!meta.guruPendamping?.trim()) { newErrors['metadata.guruPendamping'] = "Nama Guru Pendamping wajib diisi."; isValid = false; }
+      if (!meta.nowaGuruPendamping?.trim()) {
+        newErrors['metadata.nowaGuruPendamping'] = "No. WA Guru Pendamping wajib diisi.";
         isValid = false;
-      } else if (!phoneRegex.test(meta.mentorWhatsapp.replace(/\s+/g, ""))) {
-        newErrors['metadata.mentorWhatsapp'] = "Format Nomor WhatsApp Pembimbing tidak valid.";
+      } else if (!phoneRegex.test(meta.nowaGuruPendamping.replace(/\s+/g, ""))) {
+        newErrors['metadata.nowaGuruPendamping'] = "Format No. WA Guru Pendamping tidak valid.";
         isValid = false;
       }
     }
@@ -518,8 +520,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
       {mode === 'mtq' && (
         <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Nama Peserta */}
           <div className="space-y-2 md:col-span-2">
-            <label htmlFor="mtqFullName" className="block text-sm font-medium text-white/90">Nama Lengkap Peserta <span className="text-status-warning">*</span></label>
+            <label htmlFor="mtqFullName" className="block text-sm font-medium text-white/90">Nama Peserta <span className="text-status-warning">*</span></label>
             <input
               id="mtqFullName"
               type="text"
@@ -531,7 +534,37 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             {errors.fullName && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.fullName}</p>}
           </div>
 
+          {/* Jenis Kelamin */}
           <div className="space-y-2">
+            <label className="block text-sm font-medium text-white/90">Jenis Kelamin <span className="text-status-warning">*</span></label>
+            <select
+              value={data.metadata?.gender || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, gender: e.target.value } })}
+              className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-brand-accent transition-all"
+            >
+              <option value="" disabled className="text-slate-800">Pilih jenis kelamin</option>
+              <option value="Laki-laki" className="text-slate-800">Laki-laki</option>
+              <option value="Perempuan" className="text-slate-800">Perempuan</option>
+            </select>
+            {errors['metadata.gender'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.gender']}</p>}
+          </div>
+
+          {/* Alamat */}
+          <div className="space-y-2">
+            <label htmlFor="mtqAddress" className="block text-sm font-medium text-white/90">Alamat <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqAddress"
+              type="text"
+              value={data.metadata?.address || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, address: e.target.value } })}
+              placeholder="Masukkan alamat lengkap"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.address'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.address']}</p>}
+          </div>
+
+          {/* Asal Sekolah */}
+          <div className="space-y-2 md:col-span-2">
             <label htmlFor="mtqInstitution" className="block text-sm font-medium text-white/90">Asal Sekolah <span className="text-status-warning">*</span></label>
             <input
               id="mtqInstitution"
@@ -544,10 +577,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             {errors.institution && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.institution}</p>}
           </div>
 
-
-
-          <div className="space-y-2 md:col-span-2">
-            <label htmlFor="mtqWhatsapp" className="block text-sm font-medium text-white/90">No. WhatsApp Peserta <span className="text-status-warning">*</span></label>
+          {/* No. WhatsApp */}
+          <div className="space-y-2">
+            <label htmlFor="mtqWhatsapp" className="block text-sm font-medium text-white/90">Nomor WhatsApp Aktif <span className="text-status-warning">*</span></label>
             <input
               id="mtqWhatsapp"
               type="tel"
@@ -559,49 +591,46 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             {errors.whatsapp && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.whatsapp}</p>}
           </div>
 
-          <div className="space-y-3 md:col-span-2">
-            <label className="block text-sm font-medium text-white/90">Upload Kartu Pelajar / Surat Keterangan Sekolah <span className="text-status-warning">*</span></label>
-            <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('studentCardUrl', e)} disabled={uploadingState?.field === 'studentCardUrl'} />
-              {uploadingState?.field === 'studentCardUrl' ? (
-                <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
-              ) : data.metadata?.studentCardUrl ? (
-                <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
-              ) : (
-                <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
-              )}
-            </label>
-            {errors['metadata.studentCardUrl'] && (
-              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
-                <AlertCircle size={14} /> {errors['metadata.studentCardUrl']}
-              </p>
-            )}
-          </div>
-
+          {/* Email */}
           <div className="space-y-2">
-            <label htmlFor="mtqMentorName" className="block text-sm font-medium text-white/90">Nama Pembimbing <span className="text-status-warning">*</span></label>
+            <label htmlFor="mtqEmail" className="block text-sm font-medium text-white/90">Email Aktif <span className="text-status-warning">*</span></label>
             <input
-              id="mtqMentorName"
-              type="text"
-              value={data.metadata?.mentorName || ''}
-              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, mentorName: e.target.value } })}
-              placeholder="Nama Guru/Pembimbing"
+              id="mtqEmail"
+              type="email"
+              value={data.email || ''}
+              onChange={(e) => onUpdate({ ...data, email: e.target.value })}
+              placeholder="contoh@email.com"
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
-            {errors['metadata.mentorName'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.mentorName']}</p>}
+            {errors.email && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.email}</p>}
           </div>
 
+          {/* Guru Pendamping */}
           <div className="space-y-2">
-            <label htmlFor="mtqMentorWhatsapp" className="block text-sm font-medium text-white/90">No. WhatsApp Pembimbing <span className="text-status-warning">*</span></label>
+            <label htmlFor="mtqGuruPendamping" className="block text-sm font-medium text-white/90">Guru Pendamping <span className="text-status-warning">*</span></label>
             <input
-              id="mtqMentorWhatsapp"
+              id="mtqGuruPendamping"
+              type="text"
+              value={data.metadata?.guruPendamping || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, guruPendamping: e.target.value } })}
+              placeholder="Nama Guru Pendamping"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.guruPendamping'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.guruPendamping']}</p>}
+          </div>
+
+          {/* No. WA Guru Pendamping */}
+          <div className="space-y-2">
+            <label htmlFor="mtqNowaGuru" className="block text-sm font-medium text-white/90">No. WA Guru Pendamping <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqNowaGuru"
               type="tel"
-              value={data.metadata?.mentorWhatsapp || ''}
-              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, mentorWhatsapp: e.target.value } })}
+              value={data.metadata?.nowaGuruPendamping || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, nowaGuruPendamping: e.target.value } })}
               placeholder="081234567890"
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
-            {errors['metadata.mentorWhatsapp'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.mentorWhatsapp']}</p>}
+            {errors['metadata.nowaGuruPendamping'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.nowaGuruPendamping']}</p>}
           </div>
         </GlassCard>
       )}
