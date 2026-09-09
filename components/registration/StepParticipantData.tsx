@@ -173,6 +173,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         isValid = false;
       }
       if (!data.email?.trim()) { newErrors.email = "Email aktif wajib diisi."; isValid = false; }
+      if (!meta.studentCardUrl) { newErrors['metadata.studentCardUrl'] = "Kartu Pelajar / Surat Keterangan Sekolah wajib diunggah."; isValid = false; }
       if (!meta.guruPendamping?.trim()) { newErrors['metadata.guruPendamping'] = "Nama Guru Pendamping wajib diisi."; isValid = false; }
       if (!meta.nowaGuruPendamping?.trim()) {
         newErrors['metadata.nowaGuruPendamping'] = "No. WA Guru Pendamping wajib diisi.";
@@ -603,6 +604,26 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
             {errors.email && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.email}</p>}
+          </div>
+
+          {/* Upload Kartu Pelajar / Surat Keterangan Sekolah */}
+          <div className="space-y-3 md:col-span-2">
+            <label className="block text-sm font-medium text-white/90">Upload Kartu Pelajar / Surat Keterangan Sekolah <span className="text-status-warning">*</span></label>
+            <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('studentCardUrl', e)} disabled={uploadingState?.field === 'studentCardUrl'} />
+              {uploadingState?.field === 'studentCardUrl' ? (
+                <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+              ) : data.metadata?.studentCardUrl ? (
+                <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+              ) : (
+                <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+              )}
+            </label>
+            {errors['metadata.studentCardUrl'] && (
+              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                <AlertCircle size={14} /> {errors['metadata.studentCardUrl']}
+              </p>
+            )}
           </div>
 
           {/* Guru Pendamping */}
