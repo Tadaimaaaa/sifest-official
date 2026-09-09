@@ -114,7 +114,6 @@ export function MediaPartnerModal({ isOpen, onClose, partner, onSuccess }: Media
       // 2. Save data to database
       const payload = {
         name,
-        tier: "Media Partner", // Default fallback since DB requires it
         logo_url: finalImageUrl
       };
 
