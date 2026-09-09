@@ -152,6 +152,13 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
           ...submissionDraft.participant,
           email: `${draft.participant.whatsapp.replace(/\D/g, '')}@bazaar.sifest.id`,
         };
+      } else if (draft.eventSlug === 'lomba-keagamaan') {
+        // MTQ: ensure email and institution are properly mapped
+        submissionDraft.participant = {
+          ...submissionDraft.participant,
+          email: draft.participant.email?.trim() || `${draft.participant.whatsapp.replace(/\D/g, '')}@mtq.sifest.id`,
+          institution: draft.participant.institution?.trim() || 'Peserta MTQ',
+        };
       }
 
       const result = await registerParticipant(submissionDraft);
