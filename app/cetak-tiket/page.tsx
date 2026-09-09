@@ -50,6 +50,11 @@ export default function CetakTiketPage() {
       const targetEvent = events.find(ev => ev.slug === selectedEvent);
       if (!targetEvent) throw new Error("Event tidak valid");
 
+      // Kumpulkan slug event ini dan semua sub-event-nya (misal Futsal SLTA & Umum)
+      const validSlugs = [targetEvent.slug];
+      const subEvents = events.filter(e => e.parentId === targetEvent.id);
+      subEvents.forEach(sub => validSlugs.push(sub.slug));
+
       // Cari partisipan berdasarkan event slug
       const { data: regs, error } = await supabase
         .from('registrations')
@@ -69,7 +74,7 @@ export default function CetakTiketPage() {
             slug
           )
         `)
-        .eq('events.slug', targetEvent.slug);
+        .in('events.slug', validSlugs);
 
       if (error) throw error;
 
