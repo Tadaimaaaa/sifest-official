@@ -179,6 +179,7 @@
   .animate-spin-slow { animation: spin-slow 20s linear infinite; }
   .animate-spin-slow-reverse { animation: spin-slow-reverse 25s linear infinite; }
   .animate-marquee { animation: marquee 30s linear infinite; }
+  .animate-marquee-reverse { animation: marquee 30s linear infinite reverse; }
 
   /* ANDROID TV INTRO ANIMATIONS */
   @keyframes orb-container {
