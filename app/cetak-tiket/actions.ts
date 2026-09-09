@@ -46,8 +46,10 @@ export async function checkTicketData(selectedEventSlug: string, nameInput: stri
     }
 
     const matchedReg = regs.find(reg => {
-      const p = reg.participants as any;
-      if (!p) return false;
+      const participantsList = reg.participants as any[];
+      if (!participantsList || participantsList.length === 0) return false;
+      
+      const p = participantsList[0];
       
       const possibleNames: string[] = [p.full_name];
       const possibleWas: string[] = [p.whatsapp];
@@ -74,7 +76,7 @@ export async function checkTicketData(selectedEventSlug: string, nameInput: stri
       return { error: "Data tidak ditemukan. Pastikan Nama dan No. WhatsApp sama persis dengan saat pendaftaran." };
     }
 
-    const p = matchedReg.participants as any;
+    const p = (matchedReg.participants as any[])[0];
     
     return {
       success: true,
