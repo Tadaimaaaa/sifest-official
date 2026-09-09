@@ -94,9 +94,13 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
         >
           {/* Header */}
           <div style={{ background: '#1e293b', padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>E-Ticket SI FEST 2026</p>
-              <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700, margin: 0 }}>{event.title}</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              {/* Using native img tag for html2canvas compatibility */}
+              <img src="/logo-sifest.png" alt="SI FEST" style={{ width: '48px', height: '48px', objectFit: 'contain' }} crossOrigin="anonymous" />
+              <div>
+                <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>E-Ticket SI FEST 2026</p>
+                <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700, margin: 0 }}>{event.title}</h3>
+              </div>
             </div>
             <div style={{ textAlign: 'right' }}>
               <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>KODE REGISTRASI</p>
