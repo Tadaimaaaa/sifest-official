@@ -52,7 +52,7 @@ export default function CetakTiketPage() {
 
       // Kumpulkan slug event ini dan semua sub-event-nya (misal Futsal SLTA & Umum)
       const validSlugs = [targetEvent.slug];
-      const subEvents = events.filter(e => e.parentId === targetEvent.id);
+      const subEvents = events.filter(e => e.isSubEvent && e.slug.startsWith(targetEvent.slug + '-'));
       subEvents.forEach(sub => validSlugs.push(sub.slug));
 
       // Cari partisipan berdasarkan event slug
