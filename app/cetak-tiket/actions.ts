@@ -49,24 +49,25 @@ export async function checkTicketData(selectedEventSlug: string, nameInput: stri
       const p = reg.participants as any;
       if (!p) return false;
       
-      let dbName = p.full_name;
-      let dbWa = p.whatsapp;
+      const possibleNames: string[] = [p.full_name];
+      const possibleWas: string[] = [p.whatsapp];
 
       if (selectedEventSlug.includes('futsal') || selectedEventSlug.includes('esport') || selectedEventSlug === 'mlbb') {
-        if (p.metadata?.teamData?.captainName) {
-          dbName = p.metadata.teamData.captainName;
-        } else if (p.metadata?.players?.[0]?.name) {
-          dbName = p.metadata.players[0].name;
-        }
-
-        if (p.metadata?.teamData?.captainWhatsapp) {
-          dbWa = p.metadata.teamData.captainWhatsapp;
-        }
+        if (p.metadata?.teamData?.captainName) possibleNames.push(p.metadata.teamData.captainName);
+        if (p.metadata?.players?.[0]?.name) possibleNames.push(p.metadata.players[0].name);
+        
+        if (p.metadata?.teamData?.captainWhatsapp) possibleWas.push(p.metadata.teamData.captainWhatsapp);
+        if (p.metadata?.players?.[0]?.whatsapp) possibleWas.push(p.metadata.players[0].whatsapp);
       }
 
       const normalize = (str: string) => (str || "").toLowerCase().replace(/\s+/g, '');
+      const normInputName = normalize(nameInput);
+      const normInputWa = normalize(waInput);
       
-      return normalize(dbName) === normalize(nameInput) && normalize(dbWa) === normalize(waInput);
+      const isNameMatch = possibleNames.some(n => normalize(n) === normInputName);
+      const isWaMatch = possibleWas.some(w => normalize(w) === normInputWa);
+
+      return isNameMatch && isWaMatch;
     });
 
     if (!matchedReg) {
