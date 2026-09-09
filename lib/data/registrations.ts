@@ -1,7 +1,13 @@
 "use server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@supabase/supabase-js";
 import { RegistrationDraft } from "@/lib/types/registration";
 import crypto from "crypto";
+
+// Use anon key for registration (with RLS policies allowing insert)
+const supabasePublic = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export type RegistrationResult = {
   success: boolean;
@@ -20,7 +26,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
     const registrationCode = generateRegistrationCode();
 
     // Step 1: Find the event by slug
-    const { data: event, error: eventError } = await supabaseAdmin
+    const { data: event, error: eventError } = await supabasePublic
       .from("events")
       .select("id, registration_open")
       .eq("slug", draft.eventSlug)
@@ -35,7 +41,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
     }
 
     // Step 2: Insert registration
-    const { data: registration, error: regError } = await supabaseAdmin
+    const { data: registration, error: regError } = await supabasePublic
       .from("registrations")
       .insert({
         event_id: event.id,
@@ -50,7 +56,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
     }
 
     // Step 3: Insert participant
-    const { error: participantError } = await supabaseAdmin
+    const { error: participantError } = await supabasePublic
       .from("participants")
       .insert({
         registration_id: registration.id,
@@ -63,7 +69,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
 
     if (participantError) {
       // Rollback: delete the registration we just created
-      await supabaseAdmin.from("registrations").delete().eq("id", registration.id);
+      await supabasePublic.from("registrations").delete().eq("id", registration.id);
       return { success: false, error: `Gagal menyimpan data peserta: ${participantError.message}` };
     }
 
