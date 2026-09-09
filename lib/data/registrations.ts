@@ -39,7 +39,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
 
     if (error) {
       console.error("[Data Layer] Registration RPC Error:", error);
-      return { success: false, error: "Pendaftaran gagal diproses oleh database." };
+      return { success: false, error: `DB Error: ${error.message || error.code || JSON.stringify(error)}` };
     }
 
     // The RPC returns a JSON object on success
