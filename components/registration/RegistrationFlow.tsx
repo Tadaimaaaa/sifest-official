@@ -151,7 +151,13 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
         submissionDraft.participant = {
           ...submissionDraft.participant,
           email: `${draft.participant.whatsapp.replace(/\D/g, '')}@bazaar.sifest.id`,
+          metadata: {
+            ...draft.participant.metadata,
+            bazaarCategory: draft.eventSlug === 'open-bazaar-umum' ? 'UMUM' : 'MAHASISWA',
+          }
         };
+        // Map to the single database event slug
+        submissionDraft.eventSlug = 'open-bazaar';
       } else if (draft.eventSlug === 'lomba-keagamaan') {
         // MTQ: ensure email and institution are properly mapped
         submissionDraft.participant = {
