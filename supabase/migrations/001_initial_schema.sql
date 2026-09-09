@@ -25,6 +25,7 @@ INSERT INTO events (slug, name, category, description, location, price, registra
 ('turnamen-futsal-slta', 'Turnamen Futsal SLTA', 'Sport', 'Turnamen futsal antar SMA/SMK/MA sederajat se-Sumatera Barat.', 'Lap. Futsal UPI YPTK Padang', 'Rp 350.000 / Tim', true),
 ('turnamen-futsal-umum', 'Turnamen Futsal Mahasiswa/Umum', 'Sport', 'Turnamen futsal kategori Mahasiswa dan Umum.', 'Lap. Futsal UPI YPTK Padang', 'Rp 350.000 / Tim', true),
 ('turnamen-esport-mlbb', 'Mobile Legends E-Sport Arena', 'E-Sport', 'Turnamen Mobile Legends Bang Bang tingkat nasional.', 'Online & UPI Convention Center', 'Rp 100.000 / Tim', true),
+('turnamen-esport-efootball', 'Turnamen E-Sport E-Football', 'E-Sport', 'Turnamen E-Football SI FEST 2026 mencari pemain esports terbaik.', 'Lantai 2 UPI Exhibition Hall', 'Single Slot: Rp 75.000, Double: Rp 125.000', true),
 ('lomba-keagamaan', 'MTQ & Lomba Keagamaan', 'Religi', 'Lomba MTQ dan kegiatan keagamaan antar mahasiswa.', 'Masjid Raya UPI YPTK', 'Gratis', true),
 ('open-bazaar', 'Y2K Open Bazaar', 'Bazaar', 'Bazaar makanan, minuman, dan thrift shop dengan nuansa Y2K.', 'Plaza UPI YPTK', 'Menyusul', true)
 ON CONFLICT (slug) DO NOTHING;
