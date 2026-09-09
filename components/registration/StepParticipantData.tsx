@@ -162,7 +162,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       if (!data.fullName.trim()) { newErrors.fullName = "Nama Lengkap Peserta wajib diisi."; isValid = false; }
       if (!data.institution.trim()) { newErrors.institution = "Asal Sekolah wajib diisi."; isValid = false; }
       const meta = data.metadata || {};
-      if (!meta.grade?.trim()) { newErrors['metadata.grade'] = "Kelas wajib diisi."; isValid = false; }
       const phoneRegex = /^[+0-9]{9,15}$/;
       if (!data.whatsapp.trim()) {
         newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
@@ -545,18 +544,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             {errors.institution && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.institution}</p>}
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="mtqGrade" className="block text-sm font-medium text-white/90">Kelas <span className="text-status-warning">*</span></label>
-            <input
-              id="mtqGrade"
-              type="text"
-              value={data.metadata?.grade || ''}
-              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, grade: e.target.value } })}
-              placeholder="Contoh: XII IPA 1"
-              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
-            />
-            {errors['metadata.grade'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.grade']}</p>}
-          </div>
+
 
           <div className="space-y-2 md:col-span-2">
             <label htmlFor="mtqWhatsapp" className="block text-sm font-medium text-white/90">No. WhatsApp Peserta <span className="text-status-warning">*</span></label>
