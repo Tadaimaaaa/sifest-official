@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, Calendar, Settings, LogOut, Menu, X, Handshake } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Settings, LogOut, Menu, X, Handshake, Image as ImageIcon } from "lucide-react";
 import React, { useState } from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -18,6 +18,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Tim Panitia", href: "/admin/committee", icon: Users },
     { name: "Sponsor", href: "/admin/sponsors", icon: Handshake },
+    { name: "Media Partner", href: "/admin/media-partners", icon: ImageIcon },
     { name: "Pengaturan", href: "/admin/settings", icon: Settings },
   ];
 
