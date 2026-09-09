@@ -96,7 +96,7 @@ export function MediaPartnerModal({ isOpen, onClose, partner, onSuccess }: Media
         const filePath = `${fileName}`;
 
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('media_partners')
+          .from('sponsors')
           .upload(filePath, fileToUpload);
 
         if (uploadError) {
@@ -104,7 +104,7 @@ export function MediaPartnerModal({ isOpen, onClose, partner, onSuccess }: Media
         }
 
         const { data: publicUrlData } = supabase.storage
-          .from('media_partners')
+          .from('sponsors')
           .getPublicUrl(filePath);
 
         finalImageUrl = publicUrlData.publicUrl;
