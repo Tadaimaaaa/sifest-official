@@ -50,7 +50,7 @@ export default function CetakTiketPage() {
       const targetEvent = events.find(ev => ev.slug === selectedEvent);
       if (!targetEvent) throw new Error("Event tidak valid");
 
-      // Cari partisipan berdasarkan event_id
+      // Cari partisipan berdasarkan event slug
       const { data: regs, error } = await supabase
         .from('registrations')
         .select(`
@@ -65,11 +65,11 @@ export default function CetakTiketPage() {
             institution,
             metadata
           ),
-          events (
+          events!inner (
             slug
           )
         `)
-        .eq('event_id', targetEvent.id);
+        .eq('events.slug', targetEvent.slug);
 
       if (error) throw error;
 
