@@ -38,7 +38,7 @@ export default function MediaPartnersAdmin() {
   });
 
   const handleEdit = (partner: any) => {
-    setSelectedPartner(sponsor);
+    setSelectedPartner(partner);
     setIsModalOpen(true);
   };
 
@@ -128,7 +128,7 @@ export default function MediaPartnersAdmin() {
                   </td>
                 </tr>
               ) : (
-                filteredPartners.map((sponsor) => (
+                filteredPartners.map((partner) => (
                   <tr key={partner.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
@@ -147,7 +147,7 @@ export default function MediaPartnersAdmin() {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button 
-                          onClick={() => handleEdit(sponsor)}
+                          onClick={() => handleEdit(partner)}
                           className="p-2 text-slate-400 hover:text-brand-primary hover:bg-brand-primary/10 rounded-lg transition-colors"
                           title="Edit"
                         >
@@ -173,7 +173,7 @@ export default function MediaPartnersAdmin() {
       <MediaPartnerModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        sponsor={selectedPartner}
+        partner={selectedPartner}
         onSuccess={fetchPartners}
       />
     </div>
