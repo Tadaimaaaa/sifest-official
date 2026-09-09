@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Navbar } from '@/components/navigation/Navbar';
 import { OFFICIAL_EVENTS as events } from '@/data/events';
-import { createClient } from '@/lib/supabase/client';
+import { checkTicketData } from "./actions";
 import { StepETicket } from '@/components/registration/StepETicket';
 import { AlertCircle, Search, Ticket, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -45,91 +45,20 @@ export default function CetakTiketPage() {
     try {
       setIsLoading(true);
       setErrorMsg('');
-      const supabase = createClient();
       
+      const result = await checkTicketData(selectedEvent, nameInput, waInput);
+      
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
       const targetEvent = events.find(ev => ev.slug === selectedEvent);
       if (!targetEvent) throw new Error("Event tidak valid");
 
-      // Kumpulkan slug event ini dan semua sub-event-nya (misal Futsal SLTA & Umum)
-      const validSlugs = [targetEvent.slug];
-      const subEvents = events.filter(e => e.isSubEvent && e.slug.startsWith(targetEvent.slug + '-'));
-      subEvents.forEach(sub => validSlugs.push(sub.slug));
-
-      // Cari partisipan berdasarkan event slug
-      const { data: regs, error } = await supabase
-        .from('registrations')
-        .select(`
-          id,
-          registration_code,
-          event_id,
-          participants (
-            id,
-            full_name,
-            email,
-            whatsapp,
-            institution,
-            metadata
-          ),
-          events!inner (
-            slug
-          )
-        `)
-        .in('events.slug', validSlugs);
-
-      if (error) throw error;
-
-      if (!regs || regs.length === 0) {
-        throw new Error('Data tidak ditemukan.');
-      }
-
-      // Filter berdasarkan nama & WA secara manual agar lebih fleksibel
-      const matchedReg = regs.find(reg => {
-        const p = reg.participants as any;
-        if (!p) return false;
-        
-        let dbName = p.full_name;
-        let dbWa = p.whatsapp;
-
-        // Jika e-sport atau futsal, nama/wa kapten mungkin ada di metadata
-        if (selectedEvent.includes('futsal') || selectedEvent.includes('esport') || selectedEvent === 'mlbb') {
-          if (p.metadata?.teamData?.captainName) {
-            dbName = p.metadata.teamData.captainName;
-          } else if (p.metadata?.players?.[0]?.name) {
-            dbName = p.metadata.players[0].name;
-          }
-
-          if (p.metadata?.teamData?.captainWhatsapp) {
-            dbWa = p.metadata.teamData.captainWhatsapp;
-          }
-        }
-
-        // Bandingkan dengan toleransi case-insensitive dan tanpa spasi
-        const normalize = (str: string) => str.toLowerCase().replace(/\s+/g, '');
-        
-        return normalize(dbName) === normalize(nameInput) && normalize(dbWa) === normalize(waInput);
-      });
-
-      if (!matchedReg) {
-        throw new Error('Data tidak ditemukan. Pastikan Nama dan No. WhatsApp sama persis dengan saat pendaftaran.');
-      }
-
-      const p = matchedReg.participants as any;
-      
-      const draftData = {
-        eventSlug: targetEvent.slug,
-        participant: {
-          fullName: p.full_name,
-          email: p.email,
-          whatsapp: p.whatsapp,
-          institution: p.institution,
-          metadata: p.metadata
-        }
-      };
-
       setTicketData({
         event: targetEvent,
-        draft: draftData,
-        successResult: { code: matchedReg.registration_code, id: matchedReg.id }
+        draft: result.draftData,
+        successResult: result.successResult as any
       });
 
     } catch (err: any) {
