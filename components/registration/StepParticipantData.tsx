@@ -61,12 +61,15 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       const school = meta.schoolData;
       
       if (mode === 'school') {
-        if (!school.schoolName?.trim()) { newErrors['schoolData.schoolName'] = "Nama Sekolah wajib diisi."; isValid = false; }
-        if (!school.level?.trim()) { newErrors['schoolData.level'] = "Jenjang wajib dipilih."; isValid = false; }
+        if (!school.schoolName?.trim()) { newErrors['schoolData.schoolName'] = eventSlug === 'turnamen-futsal-umum' ? "Nama Tim wajib diisi." : "Nama Sekolah wajib diisi."; isValid = false; }
+        if (!school.level?.trim()) { newErrors['schoolData.level'] = "Kategori/Jenjang wajib dipilih."; isValid = false; }
         if (!school.address?.trim()) { newErrors['schoolData.address'] = "Alamat wajib diisi."; isValid = false; }
         if (!school.city?.trim()) { newErrors['schoolData.city'] = "Kota/Kabupaten wajib diisi."; isValid = false; }
-        if (!school.coachName?.trim()) { newErrors['schoolData.coachName'] = "Nama Penanggung Jawab / Pembina wajib diisi."; isValid = false; }
-        if (!school.coachWhatsapp?.trim()) { newErrors['schoolData.coachWhatsapp'] = "No WhatsApp Pembina wajib diisi."; isValid = false; }
+        
+        if (eventSlug === 'turnamen-futsal-slta') {
+          if (!school.coachName?.trim()) { newErrors['schoolData.coachName'] = "Nama Penanggung Jawab / Pembina wajib diisi."; isValid = false; }
+          if (!school.coachWhatsapp?.trim()) { newErrors['schoolData.coachWhatsapp'] = "No WhatsApp Pembina wajib diisi."; isValid = false; }
+        }
         
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!school.email?.trim()) { 
@@ -789,27 +792,36 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
           {/* SCHOOL DATA */}
           {mode === 'school' && (
             <div className="space-y-6">
-              {/* Card 1: Data Sekolah */}
+              {/* Card 1: Data Sekolah / Tim */}
               <GlassCard variant="medium" className="p-6 md:p-8">
-                <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">Data Sekolah</h4>
+                <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">{eventSlug === 'turnamen-futsal-umum' ? 'Data Tim' : 'Data Sekolah'}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Nama Sekolah <span className="text-status-warning">*</span></label>
-                    <input type="text" value={data.metadata.schoolData?.schoolName || ''} onChange={(e) => updateSchoolData('schoolName', e.target.value)} placeholder="SMA Negeri 1 Padang" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-umum' ? 'Nama Tim' : 'Nama Sekolah'} <span className="text-status-warning">*</span></label>
+                    <input type="text" value={data.metadata.schoolData?.schoolName || ''} onChange={(e) => updateSchoolData('schoolName', e.target.value)} placeholder={eventSlug === 'turnamen-futsal-umum' ? "Nama Tim" : "SMA Negeri 1 Padang"} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.schoolName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.schoolName']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Jenjang <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-umum' ? 'Kategori Tim' : 'Jenjang'} <span className="text-status-warning">*</span></label>
                     <select value={data.metadata.schoolData?.level || ''} onChange={(e) => updateSchoolData('level', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
-                      <option value="" disabled>Pilih Jenjang</option>
-                      <option value="SMA">SMA</option>
-                      <option value="SMK">SMK</option>
-                      <option value="MA">MA</option>
+                      <option value="" disabled>Pilih {eventSlug === 'turnamen-futsal-umum' ? 'Kategori' : 'Jenjang'}</option>
+                      {eventSlug === 'turnamen-futsal-umum' ? (
+                        <>
+                          <option value="Mahasiswa">Mahasiswa</option>
+                          <option value="Umum">Umum</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="SMA">SMA</option>
+                          <option value="SMK">SMK</option>
+                          <option value="MA">MA</option>
+                        </>
+                      )}
                     </select>
                     {errors['schoolData.level'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.level']}</p>}
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-white/90">Alamat Sekolah <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-umum' ? 'Alamat Tim / Basecamp' : 'Alamat Sekolah'} <span className="text-status-warning">*</span></label>
                     <input type="text" value={data.metadata.schoolData?.address || ''} onChange={(e) => updateSchoolData('address', e.target.value)} placeholder="Jl. Sudirman No. 1" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.address'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.address']}</p>}
                   </div>
@@ -819,29 +831,31 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     {errors['schoolData.city'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.city']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Email Sekolah / Perwakilan <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Untuk invoice)</span></label>
-                    <input type="email" value={data.metadata.schoolData?.email || ''} onChange={(e) => updateSchoolData('email', e.target.value)} placeholder="email@sekolah.sch.id" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-umum' ? 'Email Tim / Perwakilan' : 'Email Sekolah / Perwakilan'} <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Untuk invoice)</span></label>
+                    <input type="email" value={data.metadata.schoolData?.email || ''} onChange={(e) => updateSchoolData('email', e.target.value)} placeholder="email@contoh.com" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.email'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.email']}</p>}
                   </div>
                 </div>
               </GlassCard>
 
               {/* Card 2: Penanggung Jawab / Pembina */}
-              <GlassCard variant="medium" className="p-6 md:p-8">
-                <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">Penanggung Jawab / Pembina</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Nama Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
-                    <input type="text" value={data.metadata.schoolData?.coachName || ''} onChange={(e) => updateSchoolData('coachName', e.target.value)} placeholder="Bapak Budi" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                    {errors['schoolData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachName']}</p>}
+              {eventSlug === 'turnamen-futsal-slta' && (
+                <GlassCard variant="medium" className="p-6 md:p-8">
+                  <h4 className="font-heading text-lg font-bold text-white mb-6 pb-4 border-b border-white/10">Penanggung Jawab / Pembina</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-white/90">Nama Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
+                      <input type="text" value={data.metadata.schoolData?.coachName || ''} onChange={(e) => updateSchoolData('coachName', e.target.value)} placeholder="Bapak Budi" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                      {errors['schoolData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachName']}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium text-white/90">No. WhatsApp Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
+                      <input type="tel" value={data.metadata.schoolData?.coachWhatsapp || ''} onChange={(e) => updateSchoolData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                      {errors['schoolData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachWhatsapp']}</p>}
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Penanggung Jawab / Pembina <span className="text-status-warning">*</span></label>
-                    <input type="tel" value={data.metadata.schoolData?.coachWhatsapp || ''} onChange={(e) => updateSchoolData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                    {errors['schoolData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.coachWhatsapp']}</p>}
-                  </div>
-                </div>
-              </GlassCard>
+                </GlassCard>
+              )}
             </div>
           )}
 

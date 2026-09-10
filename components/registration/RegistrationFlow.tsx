@@ -80,7 +80,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const steps = draft.eventSlug.startsWith('turnamen-futsal')
     ? [
         { id: 1, label: "Acara" },
-        { id: 2, label: "Data Sekolah" },
+        { id: 2, label: draft.eventSlug === 'turnamen-futsal-umum' ? "Data Tim" : "Data Sekolah" },
         { id: 3, label: "Data Pemain" },
         { id: 4, label: "Ulasan" },
         { id: 5, label: "Pembayaran" },

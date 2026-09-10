@@ -9,6 +9,8 @@ const supabasePublic = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+import { supabaseAdmin } from "@/lib/supabase/admin";
+
 export type RegistrationResult = {
   success: boolean;
   registrationId?: string;
@@ -82,7 +84,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
                      eventCatalogData?.price === "Rp 0";
 
     if (isGratis) {
-      const { error: txError } = await supabasePublic
+      const { error: txError } = await supabaseAdmin
         .from("transactions")
         .insert({
           registration_id: registration.id,
@@ -97,7 +99,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
         console.error("Gagal membuat transaksi FREE:", txError);
       } else {
         // Automatically mark registration as confirmed
-        await supabasePublic.from("registrations").update({ status: "CONFIRMED" }).eq("id", registration.id);
+        await supabaseAdmin.from("registrations").update({ status: "CONFIRMED" }).eq("id", registration.id);
       }
     }
 
