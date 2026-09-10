@@ -77,7 +77,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   // Derived state
   const selectedEvent = events.find((e) => e.slug === draft.eventSlug);
 
-  const steps = draft.eventSlug === 'turnamen-futsal-slta'
+  const steps = draft.eventSlug.startsWith('turnamen-futsal')
     ? [
         { id: 1, label: "Acara" },
         { id: 2, label: "Data Sekolah" },
@@ -119,7 +119,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     try {
       // Map dynamic fields to standard participant fields for database constraints
       const submissionDraft = { ...draft };
-      if (draft.eventSlug === 'turnamen-futsal-slta') {
+      if (draft.eventSlug.startsWith('turnamen-futsal')) {
         const school = draft.participant.metadata?.schoolData;
         if (school) {
           submissionDraft.participant = {
@@ -270,7 +270,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Standard Event Participant Data */}
-              {currentStep === 2 && draft.eventSlug !== 'turnamen-futsal-slta' && draft.eventSlug !== 'turnamen-esport-mlbb' && draft.eventSlug !== 'turnamen-esport-efootball' && draft.eventSlug !== 'lomba-keagamaan' && !draft.eventSlug.startsWith('open-bazaar') && (
+              {currentStep === 2 && !draft.eventSlug.startsWith('turnamen-futsal') && draft.eventSlug !== 'turnamen-esport-mlbb' && draft.eventSlug !== 'turnamen-esport-efootball' && draft.eventSlug !== 'lomba-keagamaan' && !draft.eventSlug.startsWith('open-bazaar') && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -318,7 +318,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Futsal SLTA School Data */}
-              {currentStep === 2 && draft.eventSlug === 'turnamen-futsal-slta' && (
+              {currentStep === 2 && draft.eventSlug.startsWith('turnamen-futsal') && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -330,7 +330,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Futsal SLTA Player Data */}
-              {currentStep === 3 && draft.eventSlug === 'turnamen-futsal-slta' && (
+              {currentStep === 3 && draft.eventSlug.startsWith('turnamen-futsal') && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}

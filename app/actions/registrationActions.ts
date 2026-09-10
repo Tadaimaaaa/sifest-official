@@ -40,7 +40,7 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
     }
 
     // Custom Validation for Futsal SLTA
-    if (draft.eventSlug === "turnamen-futsal-slta") {
+    if (draft.eventSlug.startsWith('turnamen-futsal')) {
       const meta = draft.participant.metadata;
       if (!meta) {
         return { success: false, error: "Data sekolah dan data pemain wajib diisi." };

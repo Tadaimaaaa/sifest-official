@@ -56,7 +56,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
     }
 
-    if (eventSlug === 'turnamen-futsal-slta') {
+    if (eventSlug.startsWith('turnamen-futsal')) {
       const meta = data.metadata || { schoolData: {}, players: [] };
       const school = meta.schoolData;
       
@@ -322,7 +322,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
   // Initialize Futsal metadata if empty
   React.useEffect(() => {
-    if (eventSlug === 'turnamen-futsal-slta' && !data.metadata) {
+    if (eventSlug.startsWith('turnamen-futsal') && !data.metadata) {
       onUpdate({
         ...data,
         metadata: {
@@ -785,7 +785,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       )}
 
       {/* EXTENDED FORMS FOR FUTSAL SLTA */}
-      {eventSlug === 'turnamen-futsal-slta' && data.metadata && (
+      {eventSlug.startsWith('turnamen-futsal') && data.metadata && (
         <div className="space-y-8 mt-4">
           {/* SCHOOL DATA */}
           {mode === 'school' && (
