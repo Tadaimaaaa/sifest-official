@@ -74,9 +74,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
     }
 
     // Step 4: Auto-create transaction for FREE events
-    const isFree = event.slug === 'seminar-nasional' || event.slug === 'mtq'; 
-    // Or we could fetch the event.price from the database if we had it, but we can also use getAllEvents()
-    // Wait, the easiest way is to check the imported catalog:
+    // We check the imported catalog to see if the event is free:
     const allEvents = (await import("@/lib/events")).getAllEvents();
     const eventCatalogData = allEvents.find(e => e.slug === draft.eventSlug);
     const isGratis = eventCatalogData?.price?.toLowerCase().includes("gratis") || 
