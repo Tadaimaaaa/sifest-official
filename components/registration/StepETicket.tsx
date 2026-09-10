@@ -186,7 +186,9 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
           {/* Footer */}
           <div style={{ background: 'rgba(10,25,47,0.4)', padding: '16px', textAlign: 'center', borderTop: '1px solid rgba(10,25,47,0.3)' }}>
             <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 500 }}>
-              *Harap simpan tiket ini dan tunjukkan pada saat registrasi ulang di hari H untuk keperluan absensi dan pengambilan E-Sertifikat.
+              {event.slug === 'seminar-nasional'
+                ? '*Harap simpan tiket ini dan tunjukkan pada saat registrasi ulang di hari H untuk keperluan absensi dan pengambilan E-Sertifikat.'
+                : '*Harap simpan tiket ini dan tunjukkan pada saat registrasi ulang di hari H untuk keperluan daftar ulang.'}
             </p>
           </div>
         </div>
