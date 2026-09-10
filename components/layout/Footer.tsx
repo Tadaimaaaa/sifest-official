@@ -24,8 +24,11 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4">Navigasi</h4>
             <ul className="space-y-2">
-              <li><Link href="#events" className="text-white/60 hover:text-white transition-colors">Acara</Link></li>
-              <li><Link href="#timeline" className="text-white/60 hover:text-white transition-colors">Jadwal</Link></li>
+              <li><Link href="/#events" className="text-white/60 hover:text-white transition-colors">Acara</Link></li>
+              <li><Link href="/#about" className="text-white/60 hover:text-white transition-colors">Tentang</Link></li>
+              <li><Link href="/#timeline" className="text-white/60 hover:text-white transition-colors">Jadwal</Link></li>
+              <li><Link href="/#sponsors" className="text-white/60 hover:text-white transition-colors">Sponsor</Link></li>
+              <li><Link href="/#media-partners" className="text-white/60 hover:text-white transition-colors">Media Partner</Link></li>
               <li><Link href="/registration" className="text-white/60 hover:text-white transition-colors">Pendaftaran</Link></li>
             </ul>
           </div>
