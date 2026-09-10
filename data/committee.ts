@@ -134,7 +134,7 @@ export const DIVISIONS: Division[] = [
   },
   {
     id: "seminar",
-    name: "Event Seminar Nasional",
+    name: "Event Talk Show",
     members: [
       { id: "sem-1", name: "Wahyu Febrian Wiratama", nim: "23101152610438", role: "Ketua Pelaksana" },
       { id: "sem-2", name: "Dinda Fadillah C", nim: "24101152610048", role: "Sekretaris & Bendahara" },
