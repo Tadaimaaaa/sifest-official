@@ -46,7 +46,12 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
 
       if (!data.institution.trim()) {
-        newErrors.institution = "Asal institusi wajib diisi.";
+        newErrors.institution = "Data wajib diisi.";
+        isValid = false;
+      }
+
+      if (!data.metadata?.nobp?.trim()) {
+        newErrors['metadata.nobp'] = "NoBP / NPM / NIS wajib diisi.";
         isValid = false;
       }
     }
@@ -666,7 +671,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 : eventSlug === 'open-bazaar'
                   ? "Nama Brand / Usaha & Penanggung Jawab"
                   : eventSlug === 'seminar-nasional'
-                    ? "Nama Lengkap (Untuk Sertifikat)"
+                    ? "Nama Lengkap ( Untuk E- Sertifikat )"
                     : "Nama Lengkap Peserta"} <span className="text-status-warning">*</span>
             </label>
             <input
@@ -735,7 +740,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             <label htmlFor="institution" className="block text-sm font-medium text-white/90">
               {eventSlug === 'open-bazaar' 
                 ? "Kategori Usaha (F&B, Fashion, dll)" 
-                : "Asal Institusi / Sekolah / Kampus"} <span className="text-status-warning">*</span>
+                : "Kelas"} <span className="text-status-warning">*</span>
             </label>
             <input
               id="institution"
@@ -745,7 +750,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               placeholder={
                 eventSlug === 'open-bazaar' 
                   ? "Contoh: Makanan & Minuman" 
-                  : "Universitas / SMA / Instansi"
+                  : "Contoh: SI 1"
               }
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
             />
@@ -754,6 +759,27 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 <AlertCircle size={14} /> {errors.institution}
               </p>
             )}
+          </div>
+
+          {/* NoBP */}
+          <div className="space-y-2">
+            <label htmlFor="nobp" className="block text-sm font-medium text-white/90">
+              NoBP / NPM / NIS <span className="text-status-warning">*</span>
+            </label>
+            <input
+              id="nobp"
+              type="text"
+              value={data.metadata?.nobp || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, nobp: e.target.value } })}
+              placeholder="Contoh: 21101152630xxx"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
+            />
+            {errors['metadata.nobp'] && (
+              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                <AlertCircle size={14} /> {errors['metadata.nobp']}
+              </p>
+            )}
+          </div>
           </div>
         </GlassCard>
       )}

@@ -36,7 +36,7 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
     }
 
     if (!draft.participant.institution.trim()) {
-      return { success: false, error: "Asal institusi wajib diisi." };
+      return { success: false, error: "Data wajib diisi." };
     }
 
     // Custom Validation for Futsal SLTA
