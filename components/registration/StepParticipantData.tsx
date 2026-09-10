@@ -780,7 +780,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               </p>
             )}
           </div>
-          </div>
         </GlassCard>
       )}
 
