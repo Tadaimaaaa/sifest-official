@@ -58,7 +58,7 @@ export function Footer() {
         <div className="border-t border-white/10 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
           <p>&copy; 2026 HMJ Sistem Informasi UPI YPTK Padang. Hak Cipta Dilindungi.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <p>Developed by Tim IT SI FEST</p>
+            <p>Developed by Tadaimaaaa</p>
           </div>
         </div>
       </Container>
