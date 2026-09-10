@@ -73,6 +73,36 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
       return { success: false, error: `Gagal menyimpan data peserta: ${participantError.message}` };
     }
 
+    // Step 4: Auto-create transaction for FREE events
+    const isFree = event.slug === 'seminar-nasional' || event.slug === 'mtq'; 
+    // Or we could fetch the event.price from the database if we had it, but we can also use getAllEvents()
+    // Wait, the easiest way is to check the imported catalog:
+    const allEvents = (await import("@/lib/events")).getAllEvents();
+    const eventCatalogData = allEvents.find(e => e.slug === draft.eventSlug);
+    const isGratis = eventCatalogData?.price?.toLowerCase().includes("gratis") || 
+                     eventCatalogData?.price?.toLowerCase() === "free" || 
+                     eventCatalogData?.price === "Rp 0";
+
+    if (isGratis) {
+      const { error: txError } = await supabasePublic
+        .from("transactions")
+        .insert({
+          registration_id: registration.id,
+          amount: 0,
+          status: "PAID",
+          payment_method: "FREE",
+          provider: "SYSTEM",
+          paid_at: new Date().toISOString()
+        });
+      
+      if (txError) {
+        console.error("Gagal membuat transaksi FREE:", txError);
+      } else {
+        // Automatically mark registration as confirmed
+        await supabasePublic.from("registrations").update({ status: "CONFIRMED" }).eq("id", registration.id);
+      }
+    }
+
     return {
       success: true,
       registrationId: registration.id,
