@@ -1093,6 +1093,20 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               />
               {errors['teamData.captainWhatsapp'] && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.captainWhatsapp']}</p>}
             </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/90">
+                Email Kapten / Perwakilan <span className="text-status-warning">*</span>
+              </label>
+              <input
+                type="email"
+                value={data.email || ''}
+                onChange={(e) => onUpdate({ ...data, email: e.target.value })}
+                placeholder="email@contoh.com"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors.email && <p className="text-sm text-status-warning mt-1"><AlertCircle size={14} className="inline mr-1"/>{errors.email}</p>}
+            </div>
           </div>
         </GlassCard>
       )}
