@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import Link from "next/link";
 import React from "react";
+import { Instagram, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
@@ -32,11 +33,19 @@ export function Footer() {
 
           <div>
             <h4 className="font-semibold text-white mb-4">Hubungi Kami</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">Instagram @SIFEST_HMJSI</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">TikTok @HMJSI_UPIYPTK</a></li>
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">YouTube HMJ SI</a></li>
-            </ul>
+            <div className="flex gap-4 items-center">
+              <a href="https://www.instagram.com/sifest.hmjsi?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/80 hover:text-white transition-colors border border-white/10 hover:border-brand-primary">
+                <Instagram size={20} />
+              </a>
+              <a href="https://www.tiktok.com/@hmjsi_upiyptk?_r=1&_t=ZS-99cMlonPOWj" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/80 hover:text-white transition-colors border border-white/10 hover:border-brand-primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.23-.9 4.45-2.43 5.92-1.11 1.05-2.58 1.72-4.14 1.89-1.58.19-3.21.05-4.66-.56-2.15-.9-3.79-2.73-4.32-4.96-.54-2.22-.05-4.64 1.25-6.46 1.09-1.54 2.71-2.58 4.54-3.04 1.4-.33 2.87-.31 4.25-.03v4.21c-.81-.31-1.74-.35-2.61-.17-1.11.23-2.07 1.01-2.48 2.06-.41 1.03-.3 2.24.28 3.16.59.95 1.63 1.57 2.73 1.65 1.15.09 2.33-.21 3.19-1.01.88-.8 1.34-1.99 1.38-3.18.06-4.93.03-9.87.03-14.8z"/>
+                </svg>
+              </a>
+              <a href="https://youtube.com/@hmj-si?si=iaZKPTCdCbczL4j0" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-white/10 rounded-full text-white/80 hover:text-white transition-colors border border-white/10 hover:border-brand-primary">
+                <Youtube size={20} />
+              </a>
+            </div>
           </div>
         </div>
         
