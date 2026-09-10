@@ -56,7 +56,7 @@ export default function Home() {
               <span>Tiket Resmi SI FEST 2026</span>
             </div>
             
-            <h2 className="font-heading text-4xl md:text-6xl font-black mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-accent to-white drop-shadow-[0_2px_20px_rgba(245,183,22,0.4)]">
+            <h2 className="font-heading text-4xl md:text-6xl font-black mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-accent to-white animate-gradient-x drop-shadow-[0_2px_20px_rgba(245,183,22,0.4)]">
               SIAP BERGABUNG DENGAN SI FEST?
             </h2>
             
