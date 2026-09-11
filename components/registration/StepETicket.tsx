@@ -77,7 +77,8 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
   });
 
   const isFutsal = draft.eventSlug.includes('futsal');
-  const isEsport = draft.eventSlug.includes('esport') || draft.eventSlug === 'mlbb';
+  const isMlbb = draft.eventSlug === 'turnamen-esport-mlbb';
+  const isEfootball = draft.eventSlug === 'turnamen-esport-efootball';
 
   const schoolName = draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution;
   const coachName = draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName || '-';
@@ -156,7 +157,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
                     </div>
                   </>
-                ) : isEsport ? (
+                ) : isMlbb ? (
                   <>
                     <div style={{ gridColumn: 'span 2' }}>
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Tim</p>
@@ -170,6 +171,23 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>WhatsApp Kapten</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainWa}</p>
                     </div>
+                  </>
+                ) : isEfootball ? (
+                  <>
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Peserta</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.fullName}</p>
+                    </div>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Jumlah Slot</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.metadata?.slotCount || '1'} Slot</p>
+                    </div>
+                    {draft.participant.metadata?.slotCount === '2' && (
+                      <div style={{ gridColumn: 'span 1' }}>
+                        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>In-game Slot 2</p>
+                        <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.metadata?.teamName2}</p>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
