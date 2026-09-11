@@ -40,14 +40,26 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const pdfPageHeight = pdf.internal.pageSize.getHeight();
 
-      // Add a small margin
       const margin = 10;
-      const finalWidth = pdfWidth - (margin * 2);
-      const finalHeight = (canvas.height * finalWidth) / canvas.width;
+      const maxPdfWidth = pdfWidth - (margin * 2);
+      const maxPdfHeight = pdfPageHeight - (margin * 2);
 
-      pdf.addImage(imgData, 'JPEG', margin, margin, finalWidth, finalHeight);
+      let finalWidth = maxPdfWidth;
+      let finalHeight = (canvas.height * finalWidth) / canvas.width;
+
+      // Jika tiket terlalu tinggi untuk ukuran A4 (karena format mobile vertikal), 
+      // scale down berdasarkan max height agar tidak terpotong
+      if (finalHeight > maxPdfHeight) {
+        finalHeight = maxPdfHeight;
+        finalWidth = (canvas.width * finalHeight) / canvas.height;
+      }
+
+      // Center secara horizontal
+      const xOffset = margin + (maxPdfWidth - finalWidth) / 2;
+
+      pdf.addImage(imgData, 'JPEG', xOffset, margin, finalWidth, finalHeight);
       pdf.save(`SIFEST_Ticket_${successResult.code}.pdf`);
       
     } catch (error: any) {
