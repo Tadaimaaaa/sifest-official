@@ -90,26 +90,30 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
               <div className="flex items-start gap-3">
                 <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs text-white/50 mb-0.5">Nama Sekolah</p>
+                  <p className="text-xs text-white/50 mb-0.5">{draft.eventSlug === 'turnamen-futsal-umum' ? 'Nama Tim' : 'Nama Sekolah'}</p>
                   <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs text-white/50 mb-0.5">Penanggung Jawab / Pembina</p>
-                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName}</p>
-                </div>
-              </div>
+              {draft.eventSlug === 'turnamen-futsal-slta' && (
+                <>
+                  <div className="flex items-start gap-3">
+                    <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs text-white/50 mb-0.5">Penanggung Jawab / Pembina</p>
+                      <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName}</p>
+                    </div>
+                  </div>
 
-              <div className="flex items-start gap-3">
-                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-xs text-white/50 mb-0.5">No WA Penanggung Jawab / Pembina</p>
-                  <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachWhatsapp || draft.participant.whatsapp}</p>
-                </div>
-              </div>
+                  <div className="flex items-start gap-3">
+                    <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs text-white/50 mb-0.5">No WA Penanggung Jawab / Pembina</p>
+                      <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.coachWhatsapp || draft.participant.whatsapp}</p>
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-brand-primary shrink-0 mt-0.5" />
