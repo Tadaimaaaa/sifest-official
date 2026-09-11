@@ -158,6 +158,10 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                   </>
                 ) : isEsport ? (
                   <>
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Tim</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.metadata?.teamData?.teamName || draft.participant.institution}</p>
+                    </div>
                     <div style={{ gridColumn: 'span 1' }}>
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Kapten</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
