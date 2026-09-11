@@ -72,6 +72,14 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       }
     }
 
+    // Custom Validation for E-Football
+    if (draft.eventSlug === 'turnamen-esport-efootball') {
+      const meta = draft.participant.metadata;
+      if (meta?.slotCount === '2' && !meta.teamName2?.trim()) {
+        return { success: false, error: "Nama in-game slot 2 wajib diisi untuk pendaftaran 2 slot." };
+      }
+    }
+
     // 2. Validate Event (ensure it's a real event from our catalog)
     // We check against the static catalog to ensure they aren't passing a fake slug.
     const allEvents = getAllEvents();

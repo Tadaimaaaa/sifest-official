@@ -149,6 +149,11 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
       const meta = data.metadata || {};
       if (!meta.fotoKtpUrl) { newErrors['metadata.fotoKtpUrl'] = "Foto KTP wajib diunggah."; isValid = false; }
+      
+      if (meta.slotCount === '2' && !meta.teamName2?.trim()) {
+        newErrors['metadata.teamName2'] = "Nama in-game slot 2 wajib diisi.";
+        isValid = false;
+      }
     }
 
     if (eventSlug.startsWith('open-bazaar') && mode === 'bazaar') {
@@ -381,6 +386,37 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               </p>
             )}
           </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-white/90">Jumlah Slot <span className="text-status-warning">*</span></label>
+            <select
+              value={data.metadata?.slotCount || '1'}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, slotCount: e.target.value } })}
+              className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:outline-none focus:border-brand-accent transition-all"
+            >
+              <option value="1">1 Slot (Rp 75.000)</option>
+              <option value="2">2 Slot (Rp 125.000)</option>
+            </select>
+          </div>
+
+          {data.metadata?.slotCount === '2' && (
+            <div className="space-y-2">
+              <label htmlFor="efTeamName2" className="block text-sm font-medium text-white/90">Nama In-game Slot 2 <span className="text-status-warning">*</span></label>
+              <input
+                id="efTeamName2"
+                type="text"
+                value={data.metadata?.teamName2 || ''}
+                onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, teamName2: e.target.value } })}
+                placeholder="Masukkan nama in-game untuk slot ke-2 (harus beda)"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors['metadata.teamName2'] && (
+                <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                  <AlertCircle size={14} /> {errors['metadata.teamName2']}
+                </p>
+              )}
+            </div>
+          )}
 
           <div className="space-y-2">
             <label htmlFor="efWhatsapp" className="block text-sm font-medium text-white/90">Nomor WhatsApp <span className="text-status-warning">*</span></label>

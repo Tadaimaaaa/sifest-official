@@ -412,7 +412,9 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   {!isEventFree() && (
                     <div className="bg-[#0A192F] border border-brand-accent/30 rounded-xl p-6 mb-8 text-left space-y-4">
                       <h3 className="font-bold text-white mb-2">Instruksi Pembayaran Manual</h3>
-                      <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">{selectedEvent.price}</strong> ke rekening berikut:</p>
+                      <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">
+                        {draft.eventSlug === 'turnamen-esport-efootball' ? (draft.participant.metadata?.slotCount === '2' ? 'Rp 125.000' : 'Rp 75.000') : selectedEvent.price}
+                      </strong> ke rekening berikut:</p>
                       
                       <div className="space-y-3">
                         <div className="bg-white/5 p-3 sm:p-4 rounded-lg border border-white/10 flex items-center gap-3 sm:gap-4">
