@@ -47,8 +47,14 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       }
       
       const school = meta.schoolData;
-      if (!school || !school.schoolName || !school.level || !school.address || !school.city || !school.coachName || !school.coachWhatsapp) {
-        return { success: false, error: "Semua kolom Data Sekolah wajib diisi." };
+      if (!school || !school.schoolName || !school.level || !school.address || !school.city) {
+        return { success: false, error: "Semua kolom Data Sekolah / Tim wajib diisi." };
+      }
+
+      if (draft.eventSlug === 'turnamen-futsal-slta') {
+        if (!school.coachName || !school.coachWhatsapp) {
+          return { success: false, error: "Nama dan WhatsApp Penanggung Jawab wajib diisi." };
+        }
       }
 
       const players = meta.players;
