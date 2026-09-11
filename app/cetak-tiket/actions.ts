@@ -81,7 +81,7 @@ export async function checkTicketData(selectedEventSlug: string, nameInput: stri
     return {
       success: true,
       draftData: {
-        eventSlug: targetEvent.slug,
+        eventSlug: (matchedReg.events as any).slug || targetEvent.slug,
         participant: {
           fullName: p.full_name,
           email: p.email,
