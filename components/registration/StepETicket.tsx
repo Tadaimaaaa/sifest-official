@@ -87,32 +87,32 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
       </div>
 
       {/* Ticket Container to be Captured - use pure inline styles to avoid oklab css color parsing errors in html2canvas */}
-      <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
-        <div style={{ position: 'relative', padding: '4px', background: 'linear-gradient(135deg, rgba(245,183,22,0.5), rgba(10,25,47,0.5))', borderRadius: '24px', boxShadow: '0 0 40px rgba(245,183,22,0.15)', minWidth: '600px' }}>
+      <div className="w-full pb-4">
+        <div style={{ position: 'relative', padding: '4px', background: 'linear-gradient(135deg, rgba(245,183,22,0.5), rgba(10,25,47,0.5))', borderRadius: '24px', boxShadow: '0 0 40px rgba(245,183,22,0.15)' }}>
           <div 
           ref={ticketRef}
           style={{ background: '#0f172a', borderRadius: '20px', overflow: 'hidden', position: 'relative' }}
         >
           {/* Header */}
-          <div style={{ background: '#1e293b', padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              {/* Using native img tag for html2canvas compatibility */}
-              <img src="/logo-sifest.png" alt="SI FEST" style={{ width: '48px', height: '48px', objectFit: 'contain' }} crossOrigin="anonymous" />
-              <div>
-                <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>E-Ticket SI FEST 2026</p>
-                <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700, margin: 0 }}>{event.title}</h3>
+            <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start text-center sm:text-left" style={{ background: '#1e293b', padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', gap: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'center' }}>
+                {/* Using native img tag for html2canvas compatibility */}
+                <img src="/logo-sifest.png" alt="SI FEST" style={{ width: '48px', height: '48px', objectFit: 'contain' }} crossOrigin="anonymous" />
+                <div style={{ textAlign: 'left' }}>
+                  <p style={{ color: '#f5b716', fontSize: '12px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>E-Ticket SI FEST 2026</p>
+                  <h3 style={{ color: '#ffffff', fontSize: '18px', fontWeight: 700, margin: 0 }}>{event.title}</h3>
+                </div>
+              </div>
+              <div className="text-center sm:text-right w-full sm:w-auto">
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>KODE REGISTRASI</p>
+                <p style={{ color: '#ffffff', fontFamily: 'monospace', fontWeight: 700, fontSize: '16px', background: 'rgba(255,255,255,0.05)', padding: '4px 12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', display: 'inline-block' }}>
+                  {successResult.code}
+                </p>
               </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>KODE REGISTRASI</p>
-              <p style={{ color: '#ffffff', fontFamily: 'monospace', fontWeight: 700, fontSize: '16px', background: 'rgba(255,255,255,0.05)', padding: '4px 12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', display: 'inline-block' }}>
-                {successResult.code}
-              </p>
-            </div>
-          </div>
 
           {/* Body */}
-          <div style={{ padding: '32px', display: 'flex', flexDirection: 'row', gap: '32px', alignItems: 'flex-start' }}>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start" style={{ padding: '32px', gap: '32px' }}>
             
             {/* QR Code */}
             <div style={{ background: '#ffffff', padding: '16px', borderRadius: '16px', flexShrink: 0 }}>
@@ -130,14 +130,16 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                 {isFutsal ? (
                   <>
                     <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Asal Sekolah</p>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>{draft.eventSlug === 'turnamen-futsal-umum' ? 'Nama Tim' : 'Asal Sekolah'}</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{schoolName}</p>
                     </div>
-                    <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab</p>
-                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{coachName}</p>
-                    </div>
-                    <div style={{ gridColumn: 'span 2' }}>
+                    {draft.eventSlug === 'turnamen-futsal-slta' && (
+                      <div style={{ gridColumn: 'span 1' }}>
+                        <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab</p>
+                        <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{coachName}</p>
+                      </div>
+                    )}
+                    <div style={{ gridColumn: draft.eventSlug === 'turnamen-futsal-slta' ? 'span 2' : 'span 1' }}>
                       <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Nama Kapten</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{captainName}</p>
                     </div>
