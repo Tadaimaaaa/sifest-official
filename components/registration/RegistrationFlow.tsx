@@ -415,22 +415,22 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                       <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">{selectedEvent.price}</strong> ke rekening berikut:</p>
                       
                       <div className="space-y-3">
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-4">
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-3 sm:gap-4">
                           <div className="bg-white rounded-lg p-2 flex-shrink-0">
-                            <Image src="/images/banks/logo-bri.jpg" alt="BRI" width={64} height={42} className="object-contain" />
+                            <Image src="/images/banks/logo-bri.jpg" alt="BRI" width={64} height={42} className="object-contain w-12 sm:w-16" />
                           </div>
-                          <div>
-                            <p className="text-white font-mono text-lg font-bold">817301013354530</p>
-                            <p className="text-white/60 text-sm">a.n. ZHARA DELVIA PUTRI</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-mono text-base sm:text-lg font-bold break-all">817301013354530</p>
+                            <p className="text-white/60 text-xs sm:text-sm truncate">a.n. ZHARA DELVIA PUTRI</p>
                           </div>
                         </div>
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-4">
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 flex items-center gap-3 sm:gap-4">
                           <div className="bg-white rounded-lg p-2 flex-shrink-0">
-                            <Image src="/images/banks/logo-bank-nagari.jpg" alt="Bank Nagari" width={64} height={42} className="object-contain" />
+                            <Image src="/images/banks/logo-bank-nagari.jpg" alt="Bank Nagari" width={64} height={42} className="object-contain w-12 sm:w-16" />
                           </div>
-                          <div>
-                            <p className="text-white font-mono text-lg font-bold">10030234000065</p>
-                            <p className="text-white/60 text-sm">a.n. FACHRATUN RAHIMA</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-mono text-base sm:text-lg font-bold break-all">10030234000065</p>
+                            <p className="text-white/60 text-xs sm:text-sm truncate">a.n. FACHRATUN RAHIMA</p>
                           </div>
                         </div>
                       </div>
