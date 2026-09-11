@@ -87,8 +87,9 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
       </div>
 
       {/* Ticket Container to be Captured - use pure inline styles to avoid oklab css color parsing errors in html2canvas */}
-      <div style={{ position: 'relative', padding: '4px', background: 'linear-gradient(135deg, rgba(245,183,22,0.5), rgba(10,25,47,0.5))', borderRadius: '24px', boxShadow: '0 0 40px rgba(245,183,22,0.15)' }}>
-        <div 
+      <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
+        <div style={{ position: 'relative', padding: '4px', background: 'linear-gradient(135deg, rgba(245,183,22,0.5), rgba(10,25,47,0.5))', borderRadius: '24px', boxShadow: '0 0 40px rgba(245,183,22,0.15)', minWidth: '600px' }}>
+          <div 
           ref={ticketRef}
           style={{ background: '#0f172a', borderRadius: '20px', overflow: 'hidden', position: 'relative' }}
         >
@@ -192,6 +193,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
             </p>
           </div>
         </div>
+      </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 pt-4">
