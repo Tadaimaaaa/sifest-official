@@ -166,6 +166,65 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
                 </div>
               </div>
             </div>
+          ) : draft.eventSlug.startsWith('open-bazaar') ? (
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Penanggung Jawab</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.fullName}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">WhatsApp</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.whatsapp}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Usaha/Brand</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.institution}</p>
+                </div>
+              </div>
+            </div>
+          ) : draft.eventSlug === 'turnamen-esport-efootball' ? (
+            <div className="space-y-5">
+              <div className="flex items-start gap-3">
+                <User size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Nama Lengkap</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.fullName}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">WhatsApp</p>
+                  <p className="text-sm font-medium text-white/90">{draft.participant.whatsapp}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-white/50 mb-0.5">Detail Slot</p>
+                  <p className="text-sm font-medium text-white/90">
+                    {draft.participant.metadata?.slotCount === '2' ? '2 Slot' : '1 Slot'}
+                  </p>
+                  {draft.participant.metadata?.slotCount === '2' && (
+                    <div className="inline-block mt-1 px-2 py-0.5 rounded border border-white/20 bg-white/5 text-[10px] text-white/70">
+                      Slot 2: {draft.participant.metadata?.teamName2 || "-"}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="space-y-5">
               <div className="flex items-start gap-3">
