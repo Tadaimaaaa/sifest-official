@@ -82,7 +82,11 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
           </div>
           
           <h3 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-6">
-            {draft.eventSlug.startsWith('turnamen-futsal') ? 'Data Sekolah' : draft.eventSlug === 'turnamen-esport-mlbb' ? 'Data Tim' : 'Data Peserta'}
+            {draft.eventSlug === 'turnamen-futsal-umum' || draft.eventSlug === 'turnamen-esport-mlbb' 
+              ? 'Data Tim' 
+              : draft.eventSlug.startsWith('turnamen-futsal') 
+                ? 'Data Sekolah' 
+                : 'Data Peserta'}
           </h3>
           
           {draft.eventSlug.startsWith('turnamen-futsal') ? (
