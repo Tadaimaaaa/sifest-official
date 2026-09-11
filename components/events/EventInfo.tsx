@@ -46,11 +46,11 @@ export function EventInfo({ event }: { event: EventData }) {
               <Gift className="text-brand-accent" size={32} />
               Penghargaan & Benefit
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4">
               {event.benefits.map((benefit, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
                   <Gift className="text-brand-accent shrink-0 mt-0.5" size={20} />
-                  <span className="text-white/90 font-medium">{benefit}</span>
+                  <span className="text-white/90 font-medium leading-relaxed">{benefit}</span>
                 </div>
               ))}
             </div>
