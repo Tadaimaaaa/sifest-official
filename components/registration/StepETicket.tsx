@@ -79,6 +79,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
   const isFutsal = draft.eventSlug.includes('futsal');
   const isMlbb = draft.eventSlug === 'turnamen-esport-mlbb';
   const isEfootball = draft.eventSlug === 'turnamen-esport-efootball';
+  const isBazaar = draft.eventSlug.startsWith('open-bazaar');
 
   const schoolName = draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution;
   const coachName = draft.participant.metadata?.schoolData?.coachName || draft.participant.fullName || '-';
@@ -188,6 +189,17 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                         <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.metadata?.teamName2}</p>
                       </div>
                     )}
+                  </>
+                ) : isBazaar ? (
+                  <>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Penanggung Jawab</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.fullName}</p>
+                    </div>
+                    <div style={{ gridColumn: 'span 1' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>Usaha / Brand</p>
+                      <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{draft.participant.institution}</p>
+                    </div>
                   </>
                 ) : (
                   <>
