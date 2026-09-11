@@ -118,10 +118,11 @@ export const OFFICIAL_EVENTS: EventData[] = [
       { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
     ],
     benefits: [
-      "Total Hadiah Jutaan Rupiah",
-      "Piala Bergilir & Medali",
-      "Sertifikat Tingkat Provinsi",
-      "Top Scorer: Plakat + Sertifikat"
+      "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "JUARA 2 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "JUARA 3 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "TOP SCORE",
+      "BEST PLAYER"
     ],
     contacts: [
       { name: "Fio", phone: "082252888250" },
@@ -167,10 +168,11 @@ export const OFFICIAL_EVENTS: EventData[] = [
       { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
     ],
     benefits: [
-      "Total Hadiah Jutaan Rupiah",
-      "Piala Bergilir & Medali",
-      "Sertifikat Tingkat Provinsi",
-      "Top Scorer: Plakat + Sertifikat"
+      "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "JUARA 2 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "JUARA 3 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
+      "TOP SCORE",
+      "BEST PLAYER"
     ],
     contacts: [
       { name: "Fio", phone: "082252888250" },
