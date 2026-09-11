@@ -82,7 +82,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute left-4 right-4 top-full mt-4 flex flex-col gap-4 rounded-3xl glass-strong p-6 md:hidden">
+        <div className="absolute left-4 right-4 top-full mt-4 flex flex-col gap-4 rounded-3xl bg-[#1856C9]/95 backdrop-blur-2xl border border-white/20 shadow-2xl shadow-blue-900/50 p-6 md:hidden z-50">
           {navLinks.map((link) => (
             <Link
               key={link.name}
