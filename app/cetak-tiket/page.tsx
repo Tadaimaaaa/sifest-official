@@ -28,7 +28,7 @@ export default function CetakTiketPage() {
     const evt = events.find(e => e.slug === selectedEvent);
     if (!evt) return { name: 'Nama Lengkap', wa: 'No. WhatsApp' };
     
-    if (evt.slug.includes('futsal') || evt.slug === 'mlbb' || evt.slug.includes('esport')) {
+    if (evt.slug.includes('futsal')) {
       return { name: 'Nama Kapten', wa: 'No. WhatsApp Kapten' };
     }
     
