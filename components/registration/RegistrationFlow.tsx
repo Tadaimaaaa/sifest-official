@@ -121,12 +121,13 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
       const submissionDraft = { ...draft };
       if (draft.eventSlug.startsWith('turnamen-futsal')) {
         const school = draft.participant.metadata?.schoolData;
+        const team = draft.participant.metadata?.teamData;
         if (school) {
           submissionDraft.participant = {
             ...submissionDraft.participant,
-            fullName: school.coachName || '',
+            fullName: school.coachName || team?.coachName || 'Official Tim',
             email: school.email || '',
-            whatsapp: school.coachWhatsapp || '',
+            whatsapp: school.coachWhatsapp || team?.coachWhatsapp || '',
             institution: school.schoolName || '',
           };
         }
