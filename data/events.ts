@@ -89,7 +89,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar pelajar SLTA.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk pelajar tingkat atas di Sumatera Barat.",
     icon: "Trophy",
-    date: "03 - 06 November 2026",
+    date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 350.000 / Tim",
@@ -115,7 +115,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
       { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
-      { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
+      { title: "Pelaksanaan Pertandingan", date: "02 - 06 November 2026" }
     ],
     benefits: [
       "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
@@ -139,7 +139,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Ajang kompetisi olahraga futsal bergengsi kategori Mahasiswa dan Umum.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk kalangan mahasiswa dan masyarakat umum di Sumatera Barat.",
     icon: "Trophy",
-    date: "03 - 06 November 2026",
+    date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 350.000 / Tim",
@@ -165,7 +165,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
       { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
-      { title: "Pelaksanaan Pertandingan", date: "03 - 06 November 2026" }
+      { title: "Pelaksanaan Pertandingan", date: "02 - 06 November 2026" }
     ],
     benefits: [
       "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
@@ -189,7 +189,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     shortDescription: "Ajang kompetisi olahraga futsal bergengsi antar mahasiswa dan pelajar.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini dibagi menjadi dua kategori: Tingkat SLTA dan UMUM.",
     icon: "Trophy",
-    date: "03 - 06 November 2026",
+    date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "SLTA: Rp 350.000 / Tim\nUmum: Rp 350.000 / Tim",
