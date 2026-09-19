@@ -2,6 +2,8 @@ import { OFFICIAL_EVENTS } from "@/data/events";
 import { Download, BookOpen, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
+import { Navbar } from "@/components/navigation/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Buku Panduan | SI FEST 2026",
@@ -13,7 +15,9 @@ export default function BukuPanduanPage() {
   const eventsWithoutGuidebook = OFFICIAL_EVENTS.filter(e => !e.guidebookUrl);
 
   return (
-    <div className="min-h-screen bg-[#001235] text-white pt-28 pb-20 relative overflow-hidden">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-[#001235] text-white pt-28 pb-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#1856C9] blur-[150px] opacity-20 pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#3B82F6] blur-[150px] opacity-10 pointer-events-none" />
@@ -97,6 +101,7 @@ export default function BukuPanduanPage() {
           </div>
         )}
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
