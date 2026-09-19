@@ -39,7 +39,7 @@ export default function EventsIndexPage() {
             </h1>
             
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed block w-full mb-8">
-              <span className="font-semibold text-brand-accent/90">26 – 30 Oktober 2026</span>
+              <span className="font-semibold text-brand-accent/90">2 – 6 November 2026</span>
               <br />
               Universitas Putra Indonesia &quot;YPTK&quot; Padang
             </p>
