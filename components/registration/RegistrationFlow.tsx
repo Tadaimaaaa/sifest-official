@@ -12,8 +12,10 @@ import { Container } from "@/components/ui/Container";
 import { registerParticipant } from "@/app/actions/registrationActions";
 import { updatePaymentProofUrl } from "@/app/actions/paymentProofActions";
 import { createClient } from "@/lib/supabase/client";
-import { UploadCloud, CheckCircle } from "lucide-react";
+import { UploadCloud, CheckCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
+import { RegistrationCountdown } from "@/components/events/RegistrationCountdown";
+import { Button } from "@/components/ui/Button";
 
 interface RegistrationFlowProps {
   initialEventSlug?: string;
@@ -113,6 +115,10 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const goToStep = (step: number) => setCurrentStep(step);
 
   const handleSubmit = async () => {
+    // BLOKIR SEMENTARA PENDAFTARAN
+    setCurrentStep(99);
+    return;
+
     setIsSubmitting(true);
     setSubmitError(null);
 
@@ -380,6 +386,33 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                     onSubmit={handleSubmit}
                     isSubmitting={isSubmitting}
                   />
+                </div>
+              )}
+
+              {/* Pendaftaran Ditutup / Belum Dibuka Step */}
+              {currentStep === 99 && (
+                <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-brand-accent/20 animate-in fade-in zoom-in duration-500">
+                  <div className="w-20 h-20 bg-status-warning/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <AlertCircle className="w-10 h-10 text-status-warning" />
+                  </div>
+                  <h2 className="font-heading text-3xl font-bold text-white mb-2">
+                    Pendaftaran Belum Dibuka
+                  </h2>
+                  <p className="text-white/80 leading-relaxed mb-6">
+                    Mohon maaf, pendaftaran untuk {selectedEvent?.title} saat ini sedang ditutup atau belum dibuka. Silakan kembali pada tanggal pembukaan resmi.
+                  </p>
+                  
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6 my-6">
+                    <p className="text-sm font-semibold text-white/60 mb-3 uppercase tracking-widest">Waktu Menuju Pembukaan</p>
+                    <RegistrationCountdown 
+                      targetDate={selectedEvent?.registrationStartDate || "2026-09-28T00:00:00+07:00"} 
+                      onComplete={() => {}} 
+                    />
+                  </div>
+
+                  <Button onClick={() => window.location.href = '/'} variant="glass" className="w-full">
+                    Kembali ke Beranda
+                  </Button>
                 </div>
               )}
 
