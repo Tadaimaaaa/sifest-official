@@ -24,6 +24,7 @@ export function Navbar() {
     { name: "Acara", href: "/#events" },
     { name: "Jadwal", href: "/#timeline" },
     { name: "Sponsor", href: "/#sponsors" },
+    { name: "Buku Panduan", href: "/buku-panduan" },
     { name: "Cetak Tiket", href: "/cetak-tiket" },
   ];
 
