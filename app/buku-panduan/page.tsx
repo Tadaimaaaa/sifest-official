@@ -101,7 +101,8 @@ export default function BukuPanduanPage() {
           </div>
         )}
       </div>
-      <Footer />
-    </>
+    </div>
+    <Footer />
+  </>
   );
 }
