@@ -63,10 +63,15 @@ export default function BukuPanduanPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center bg-white/5 border border-white/10 rounded-3xl p-12 backdrop-blur-sm mb-16">
-            <BookOpen className="w-12 h-12 text-slate-400 mx-auto mb-4 opacity-50" />
-            <h3 className="text-xl font-bold text-white mb-2">Belum Ada Buku Panduan</h3>
-            <p className="text-slate-400">Saat ini belum ada buku panduan yang dirilis. Silakan kembali lagi nanti.</p>
+          <div className="text-center bg-white/5 border border-white/10 rounded-3xl p-12 backdrop-blur-sm mb-16 relative overflow-hidden group">
+            {/* Animasi latar belakang tipis */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-brand-primary/0 via-brand-primary/5 to-brand-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            
+            <BookOpen className="w-14 h-14 text-brand-accent mx-auto mb-5 opacity-80 animate-pulse" />
+            <h3 className="text-2xl font-black text-white mb-3 text-glow">Guidebook Sedang Dirampungkan</h3>
+            <p className="text-slate-300 max-w-xl mx-auto leading-relaxed">
+              Tim kami sedang menyusun panduan dan regulasi terbaik untuk memastikan pengalaman kompetisi yang luar biasa. Persiapkan dirimu, aturan main resminya akan segera mendarat di sini!
+            </p>
           </div>
         )}
 
