@@ -172,8 +172,8 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
       
       if (result.success && result.registrationCode && result.registrationId) {
         setSuccessResult({
-          code: result.registrationCode,
-          id: result.registrationId
+          code: result.registrationCode as string,
+          id: result.registrationId as string
         });
         setCurrentStep(steps.length);
       } else {
@@ -403,10 +403,10 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   </p>
                   
                   <div className="bg-white/5 border border-white/10 rounded-xl p-6 my-6">
-                    <p className="text-sm font-semibold text-white/60 mb-3 uppercase tracking-widest">Waktu Menuju Pembukaan</p>
+                    <p className="text-sm font-semibold text-white/60 mb-3 uppercase tracking-widest">Status Pendaftaran</p>
                     <RegistrationCountdown 
-                      targetDate={selectedEvent?.registrationStartDate || "2026-09-28T00:00:00+07:00"} 
-                      onComplete={() => {}} 
+                      startDate={selectedEvent?.registrationStartDate || "2026-09-28T00:00:00+07:00"} 
+                      closeDate={selectedEvent?.registrationCloseDate || "2026-10-31T23:59:59+07:00"}
                     />
                   </div>
 
