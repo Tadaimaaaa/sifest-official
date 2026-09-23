@@ -40,7 +40,7 @@ export function Countdown({ targetDate }: { targetDate: string }) {
     // Initial server render to prevent hydration mismatch
     return (
       <Badge variant="glass" className="animate-float mb-6 inline-flex px-6 py-3">
-        <span className="font-medium tracking-widest text-white/90">02—06 NOVEMBER 2026</span>
+        <span className="font-medium tracking-widest text-white/90">01—25 OKTOBER 2026</span>
       </Badge>
     );
   }
