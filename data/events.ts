@@ -47,6 +47,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "UPI Convention Center",
     price: "Gratis",
+    registrationStartDate: "2026-10-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam Talk Show SI-FEST 2026.",

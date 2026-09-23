@@ -405,8 +405,8 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   <div className="bg-white/5 border border-white/10 rounded-xl p-8 my-6 flex flex-col items-center">
                     <p className="text-sm font-semibold text-white/60 mb-5 uppercase tracking-widest text-center">Status Pendaftaran</p>
                     <RegistrationCountdown 
-                      startDate={selectedEvent?.registrationStartDate || "2026-09-28T00:00:00+07:00"} 
-                      closeDate={selectedEvent?.registrationCloseDate || "2026-10-31T23:59:59+07:00"}
+                      startDate={selectedEvent?.registrationStartDate || "2026-10-01T00:00:00+07:00"} 
+                      closeDate={selectedEvent?.registrationCloseDate || "2026-10-25T23:59:59+07:00"}
                       variant="hero"
                     />
                   </div>
