@@ -47,7 +47,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "UPI Convention Center",
     price: "Gratis",
-    registrationCloseDate: "2026-10-31T23:59:59+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam Talk Show SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
@@ -65,7 +65,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Bergabung ke Grup WhatsApp peserta melalui tautan yang disediakan."
     ],
     timeline: [
-      { title: "Pendaftaran", date: "28 September - 28 Oktober 2026" },
+      { title: "Pendaftaran", date: "01 - 25 Oktober 2026" },
       { title: "Open Gate & Registrasi", date: "03 November 2026" },
       { title: "Pelaksanaan Talk Show", date: "03 November 2026" }
     ],
@@ -92,12 +92,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 350.000 / Tim",
-    registrationStartDate: "2026-09-28T00:00:00+07:00",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    price: "Rp 350.000 (Gel 1) / Rp 370.000 (Gel 2)",
+    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
-      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+      { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -113,8 +113,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
     ],
     timeline: [
-      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
-      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting", date: "26 - 28 Oktober 2026" },
       { title: "Pelaksanaan Pertandingan", date: "02 - 06 November 2026" }
     ],
     benefits: [
@@ -142,12 +143,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "Rp 350.000 / Tim",
-    registrationStartDate: "2026-09-28T00:00:00+07:00",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    price: "Rp 350.000 (Gel 1) / Rp 370.000 (Gel 2)",
+    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
-      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+      { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -163,8 +164,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Hadir pada saat Technical Meeting untuk pengundian bracket pertandingan."
     ],
     timeline: [
-      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
-      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting", date: "26 - 28 Oktober 2026" },
       { title: "Pelaksanaan Pertandingan", date: "02 - 06 November 2026" }
     ],
     benefits: [
@@ -207,12 +209,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Rp 50.000 / Tim",
-    registrationStartDate: "2026-09-28T00:00:00+07:00",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    price: "Rp 50.000 (Gel 1) / Rp 70.000 (Gel 2)",
+    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
-      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+      { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -231,8 +233,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Menunggu jadwal drawing dan bracket dari panitia."
     ],
     timeline: [
-      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
-      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting", date: "26 - 28 Oktober 2026" },
       { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
       { title: "Grand Final", date: "05 November 2026" }
     ],
@@ -261,12 +264,12 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "03 - 05 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
-    price: "Single Slot: Rp 75.000\nDouble Slot: Rp 125.000",
-    registrationStartDate: "2026-09-28T00:00:00+07:00",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    price: "Single Slot: Rp 75.000 (Gel 1) / Rp 95.000 (Gel 2)\nDouble Slot: Rp 125.000 (Gel 1) / Rp 145.000 (Gel 2)",
+    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
-      { name: "Gelombang 1", startDate: "2026-09-28T00:00:00+07:00", endDate: "2026-10-11T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-12T00:00:00+07:00", endDate: "2026-10-28T23:59:59+07:00" }
+      { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -285,8 +288,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Menunggu jadwal drawing dan bracket dari panitia."
     ],
     timeline: [
-      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
-      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting", date: "26 - 28 Oktober 2026" },
       { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
       { title: "Grand Final", date: "05 November 2026" }
     ],
@@ -329,7 +333,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Gratis",
-    registrationCloseDate: "2026-10-28T23:59:59+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam MTQ SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
@@ -348,8 +352,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Mengambil nomor urut tampil saat hari H perlombaan."
     ],
     timeline: [
-      { title: "Pendaftaran Gelombang 1", date: "28 September - 11 Oktober 2026" },
-      { title: "Pendaftaran Gelombang 2", date: "12 - 28 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
       { title: "Pelaksanaan Lomba", date: "02 November 2026" },
       { title: "Pengumuman Juara", date: "06 November 2026 (Closing)" }
     ],
@@ -377,7 +381,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
     price: "Rp 250.000",
-    registrationCloseDate: "2026-10-15T23:59:59+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Pendaftaran tenant terbuka khusus untuk mahasiswa aktif",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
@@ -422,7 +426,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
     price: "Rp 300.000",
-    registrationCloseDate: "2026-10-15T23:59:59+07:00",
+    registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Pendaftaran tenant terbuka untuk pelaku UMKM umum",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
