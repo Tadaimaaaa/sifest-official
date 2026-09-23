@@ -60,13 +60,18 @@ export function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full mt-8">
             <Link href="#events" className="w-full sm:w-auto">
-              <Button size="lg" variant="primary" className="w-full shadow-lg shadow-brand-accent/20">
+              <Button size="lg" variant="glass" className="w-full">
                 Jelajahi Acara
               </Button>
             </Link>
             <Link href="/registration" className="w-full sm:w-auto">
-              <Button size="lg" variant="glass" className="w-full">
+              <Button size="lg" variant="primary" className="w-full shadow-lg shadow-brand-accent/20">
                 Daftar Sekarang
+              </Button>
+            </Link>
+            <Link href="/buku-panduan" className="w-full sm:w-auto">
+              <Button size="lg" variant="glass" className="w-full">
+                Buku Panduan
               </Button>
             </Link>
           </div>

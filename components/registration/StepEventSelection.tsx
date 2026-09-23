@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { CheckCircle2, Trophy, GraduationCap, Gamepad2, BookOpen, Store } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface StepEventSelectionProps {
   events: EventData[];
@@ -20,6 +21,14 @@ const IconMap: Record<string, React.ReactNode> = {
 };
 
 export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext }: StepEventSelectionProps) {
+  const router = useRouter();
+
+  const handleContinue = () => {
+    if (selectedEventSlug) {
+      router.push(`/events/${selectedEventSlug}`);
+    }
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-8">
@@ -71,7 +80,7 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
         <Button 
           variant="primary" 
           size="lg" 
-          onClick={onNext}
+          onClick={handleContinue}
           disabled={!selectedEventSlug}
           className="w-full sm:w-auto px-12"
         >

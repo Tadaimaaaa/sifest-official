@@ -1,74 +1,64 @@
-import { Users, UserPlus, Eye, Activity } from "lucide-react";
+import { Sparkles, CheckCircle2 } from "lucide-react";
+import { RegistrationCountdown } from "@/components/events/RegistrationCountdown";
+import { DashboardStats } from "@/components/admin/DashboardStats";
 
 export default function AdminDashboardOverview() {
   return (
-    <div className="space-y-8 animate-fade-in-up">
-      <div>
-        <h1 className="text-3xl font-semibold text-slate-900">Dashboard Overview</h1>
-        <p className="text-slate-500 mt-1">Selamat datang di pusat kendali SI FEST 2026.</p>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4">
+            <Sparkles size={12} className="animate-pulse" />
+            Official Portal
+          </div>
+          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Dashboard</h1>
+          <p className="text-slate-500 mt-2 text-lg">Pusat kontrol informasi publik <strong className="text-slate-800">SI FEST 2026</strong>.</p>
+        </div>
+
+        <div className="bg-white/60 backdrop-blur-md p-4 rounded-2xl border border-white shadow-sm flex items-center gap-4">
+          <div className="hidden sm:block">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 text-right">Menuju Hari H</p>
+            <p className="text-sm font-semibold text-slate-800">02 Nov 2026</p>
+          </div>
+          <div className="w-px h-10 bg-slate-200 hidden sm:block"></div>
+          <RegistrationCountdown 
+            startDate="2026-11-02T00:00:00+07:00" 
+            closeDate="2026-11-06T23:59:59+07:00" 
+          />
+        </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-brand-accent/50 transition-all group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-accent group-hover:text-white transition-colors">
-              <Users size={24} />
-            </div>
-            <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">+12%</span>
-          </div>
-          <p className="text-slate-500 text-sm mb-1">Total Panitia Aktif</p>
-          <h3 className="text-3xl font-semibold text-slate-900">128</h3>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-500/50 transition-all group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-              <Eye size={24} />
-            </div>
-            <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">+45%</span>
-          </div>
-          <p className="text-slate-500 text-sm mb-1">Kunjungan Web Bulan Ini</p>
-          <h3 className="text-3xl font-semibold text-slate-900">4.2K</h3>
-        </div>
-        
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-              <UserPlus size={24} />
-            </div>
-          </div>
-          <p className="text-slate-500 text-sm mb-1">Pendaftar Lomba (External)</p>
-          <h3 className="text-3xl font-semibold text-slate-900">85</h3>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-purple-500/50 transition-all group">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-              <Activity size={24} />
-            </div>
-          </div>
-          <p className="text-slate-500 text-sm mb-1">Status Server & Database</p>
-          <h3 className="text-2xl font-semibold text-green-600 mt-2 flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" /> Optimal
-          </h3>
-        </div>
-      </div>
+      <DashboardStats />
 
       {/* System Status Banner */}
-      <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div>
-          <h4 className="text-lg font-semibold text-blue-900 mb-1 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-            Sistem Utama Online
-          </h4>
-          <p className="text-slate-600 text-sm max-w-2xl">
-            Database dan penyimpanan awan (Cloud Storage) telah terhubung secara penuh. Anda kini memiliki kontrol akses penuh untuk mengelola modul kepanitiaan dan fitur *website* lainnya.
-          </p>
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 to-brand-primary rounded-3xl p-8 sm:p-10 shadow-2xl">
+        {/* Background Patterns */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-accent/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="flex items-start gap-5">
+            <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shrink-0 shadow-inner">
+              <CheckCircle2 className="w-7 h-7 text-emerald-400" />
+            </div>
+            <div>
+              <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-3">
+                Sistem Utama Terhubung
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Live
+                </span>
+              </h4>
+              <p className="text-blue-100/80 text-sm max-w-2xl leading-relaxed">
+                Database pusat dan penyimpanan awan (Cloud Storage) untuk <strong className="text-white">SI FEST Official</strong> telah disinkronisasi. Semua data publik siap ditampilkan kepada audiens. Pengelolaan lanjutan dilakukan di web panitia.
+              </p>
+            </div>
+          </div>
+          <button className="px-6 py-3 bg-white text-brand-primary font-bold rounded-xl hover:bg-blue-50 active:scale-95 transition-all shrink-0 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+            Cek Log Sinkronisasi
+          </button>
         </div>
-        <button className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors shrink-0 shadow-sm text-sm">
-          Lihat Log Server
-        </button>
       </div>
 
     </div>

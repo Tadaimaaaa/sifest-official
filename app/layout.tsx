@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fredoka, Plus_Jakarta_Sans } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
 // Y2K Bubbly & Youthful Display Font
 const fredoka = Fredoka({
@@ -60,6 +62,9 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${fredoka.variable} ${plusJakartaSans.variable}`}>
       <body className="font-body antialiased">
+        <Suspense fallback={null}>
+          <AnalyticsTracker />
+        </Suspense>
         {children}
       </body>
     </html>
