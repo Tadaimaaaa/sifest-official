@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 
 export default function FutsalCategoryPage() {
   const sltaEvent = getEventBySlug("turnamen-futsal-slta");
-  const umumEvent = getEventBySlug("turnamen-futsal-umum");
+  const mahasiswaEvent = getEventBySlug("turnamen-futsal-mahasiswa");
 
-  if (!sltaEvent || !umumEvent) {
+  if (!sltaEvent || !mahasiswaEvent) {
     notFound();
   }
 
-  const futsalEvents = [sltaEvent, umumEvent];
+  const futsalEvents = [sltaEvent, mahasiswaEvent];
 
   return (
     <main className="relative min-h-[100svh] w-full overflow-hidden bg-[#0A192F]/40 flex flex-col">
