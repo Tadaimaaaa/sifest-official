@@ -1,4 +1,6 @@
-import { OFFICIAL_EVENTS, EventData } from "@/data/events";
+import { OFFICIAL_EVENTS, type EventData } from "@/data/events";
+
+export type { EventData };
 
 export function getAllEvents(): EventData[] {
   return OFFICIAL_EVENTS;
