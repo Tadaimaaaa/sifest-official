@@ -123,8 +123,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
       "JUARA 2 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
       "JUARA 3 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
-      "TOP SCORE",
-      "BEST PLAYER"
+      "TOP SCORE"
     ],
     contacts: [
       { name: "Fio", phone: "082252888250" },
@@ -174,8 +173,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "JUARA 1 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
       "JUARA 2 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
       "JUARA 3 : UANG PEMBINAAN + PIALA + SERTIFIKAT",
-      "TOP SCORE",
-      "BEST PLAYER"
+      "TOP SCORE"
     ],
     contacts: [
       { name: "Fio", phone: "082252888250" },
