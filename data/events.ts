@@ -195,7 +195,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
-    price: "SLTA: Rp 350.000 (Gel 1) / Rp 370.000 (Gel 2)\nMahasiswa: Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
+    price: "SLTA: Rp 350.000 / Tim\nMahasiswa: Rp 300.000 / Tim",
   },
   {
     id: "evt-03",
