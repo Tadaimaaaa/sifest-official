@@ -10,7 +10,7 @@ export function Hero() {
     <section className="relative w-full min-h-[100svh] overflow-hidden pt-32 md:pt-40 pb-24">
       <Container className="relative z-10">
         <div className="mx-auto text-center max-w-4xl">
-          <Countdown targetDate="2026-10-25T23:59:59+07:00" />
+          <Countdown targetDate="2026-11-02T08:00:00+07:00" />
           
           <h1 className="relative font-heading text-6xl font-bold tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl text-glow leading-[1.1] mb-6 min-h-[1em]">
             {/* The Magic Bouncing Orbs */}
