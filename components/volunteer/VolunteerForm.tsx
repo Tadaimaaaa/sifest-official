@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Upload, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
+import { Upload, CheckCircle2, Loader2, ArrowRight, ChevronDown } from "lucide-react";
 
 export function VolunteerForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,14 +26,11 @@ export function VolunteerForm() {
   const [sertifikatFiles, setSertifikatFiles] = useState<File[]>([]);
 
   const eventOptions = [
-    "Futsal Mahasiswa",
-    "Futsal SLTA",
-    "MLBB",
-    "PUBGM",
-    "Lomba Desain Poster",
-    "Lomba Cerdas Cermat",
-    "Bazaar",
-    "Seminar"
+    "Talk Show",
+    "Turnamen Futsal (SLTA & Mahasiswa)",
+    "Turnamen E-Sport (MLBB & E-Football)",
+    "Lomba Keagamaan / MTQ",
+    "Open Bazaar"
   ];
 
   const handleMultipleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,21 +125,31 @@ export function VolunteerForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-300">Pilihan Utama <span className="text-rose-500">*</span></label>
-            <select required value={pilihanUtama} onChange={e => setPilihanUtama(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none">
-              <option value="" disabled className="text-slate-900">Pilih Event...</option>
-              {eventOptions.map(opt => (
-                <option key={opt} value={opt} className="text-slate-900" disabled={pilihanKedua === opt}>{opt}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select required value={pilihanUtama} onChange={e => setPilihanUtama(e.target.value)} className="w-full bg-[#112240] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none shadow-inner cursor-pointer">
+                <option value="" disabled className="text-slate-400">Pilih Event...</option>
+                {eventOptions.map(opt => (
+                  <option key={opt} value={opt} className="bg-[#0A192F] text-white" disabled={pilihanKedua === opt}>{opt}</option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                <ChevronDown className="w-5 h-5" />
+              </div>
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-300">Pilihan Kedua <span className="text-rose-500">*</span></label>
-            <select required value={pilihanKedua} onChange={e => setPilihanKedua(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none">
-              <option value="" disabled className="text-slate-900">Pilih Event...</option>
-              {eventOptions.map(opt => (
-                <option key={opt} value={opt} className="text-slate-900" disabled={pilihanUtama === opt}>{opt}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select required value={pilihanKedua} onChange={e => setPilihanKedua(e.target.value)} className="w-full bg-[#112240] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none shadow-inner cursor-pointer">
+                <option value="" disabled className="text-slate-400">Pilih Event...</option>
+                {eventOptions.map(opt => (
+                  <option key={opt} value={opt} className="bg-[#0A192F] text-white" disabled={pilihanUtama === opt}>{opt}</option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                <ChevronDown className="w-5 h-5" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
