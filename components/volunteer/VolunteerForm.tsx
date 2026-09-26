@@ -48,6 +48,21 @@ export function VolunteerForm() {
     }
   };
 
+  const fileToBase64 = (file: File): Promise<{ data: string, name: string, mime: string }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve({
+          data: reader.result as string,
+          name: file.name,
+          mime: file.type
+        });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!pilihanUtama || !pilihanKedua) {
@@ -65,12 +80,59 @@ export function VolunteerForm() {
 
     setIsSubmitting(true);
     
-    // Simulate submission / Upload files
-    // In real app: upload files to Supabase Storage, then insert row to Supabase Table
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
+    try {
+      // 1. Convert files to Base64
+      const buktiData = await fileToBase64(buktiFollow);
+      const krsData = await fileToBase64(krs);
+      
+      const sertifDataArray = [];
+      for (const file of sertifikatFiles) {
+        sertifDataArray.push(await fileToBase64(file));
+      }
+
+      // 2. Prepare payload
+      const payload = {
+        action: "addVolunteer",
+        nama,
+        no_bp: noBp,
+        jurusan,
+        alamat,
+        no_hp: noHp,
+        link_ig: linkIg,
+        event_1: pilihanUtama,
+        event_2: pilihanKedua,
+        motivasi,
+        buktiData: buktiData.data,
+        buktiName: buktiData.name,
+        buktiMime: buktiData.mime,
+        krsData: krsData.data,
+        krsName: krsData.name,
+        krsMime: krsData.mime,
+        sertifikatFiles: sertifDataArray
+      };
+
+      // 3. Send to Google Apps Script
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoAvxRHV7jzm3AZstFIocKRNa1b_aFKppF4kt1CUfY_Ylw-oSkUiGOzKalR18eI2L5Qg/exec";
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      const result = await res.json();
+      if (result.status === "success") {
+        setIsSuccess(true);
+      } else {
+        alert("Pendaftaran gagal: " + result.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Terjadi kesalahan saat mendaftar. Silakan coba lagi nanti.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
