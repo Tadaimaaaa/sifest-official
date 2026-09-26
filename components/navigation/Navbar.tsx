@@ -26,6 +26,7 @@ export function Navbar() {
     { name: "Sponsor", href: "/#sponsors" },
     { name: "Buku Panduan", href: "/buku-panduan" },
     { name: "Cetak Tiket", href: "/cetak-tiket" },
+    { name: "Volunteer", href: "/volunteer" },
   ];
 
   return (
