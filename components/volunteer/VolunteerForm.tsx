@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Upload, CheckCircle2, Loader2, ArrowRight, ChevronDown } from "lucide-react";
+import { Upload, CheckCircle2, Loader2, ArrowRight, ChevronDown, Plus } from "lucide-react";
 
 export function VolunteerForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +35,10 @@ export function VolunteerForm() {
 
   const handleMultipleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setSertifikatFiles(Array.from(e.target.files));
+      const newFiles = Array.from(e.target.files);
+      setSertifikatFiles(prev => [...prev, ...newFiles]);
+      // Reset input value so the same file can be selected again if needed
+      e.target.value = "";
     }
   };
 
@@ -179,10 +182,20 @@ export function VolunteerForm() {
 
           <div className="relative group">
             <input type="file" multiple accept="image/*,.pdf" onChange={handleMultipleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div className={`p-4 rounded-xl border-2 border-dashed flex flex-col items-center justify-center text-center transition-colors h-32 ${sertifikatFiles.length > 0 ? 'border-emerald-500/50 bg-emerald-500/10' : 'border-white/20 bg-white/5 group-hover:border-blue-500/50 group-hover:bg-blue-500/5'}`}>
+            <div className={`p-4 rounded-xl border-2 border-dashed flex flex-col items-center justify-center text-center transition-colors min-h-[8rem] ${sertifikatFiles.length > 0 ? 'border-emerald-500/50 bg-emerald-500/10 hover:border-emerald-400/80' : 'border-white/20 bg-white/5 group-hover:border-blue-500/50 group-hover:bg-blue-500/5'}`}>
               <Upload className={`w-6 h-6 mb-2 ${sertifikatFiles.length > 0 ? 'text-emerald-400' : 'text-slate-400'}`} />
               <p className="text-xs font-semibold text-white mb-1">Sertifikat Prestasi</p>
-              <p className="text-[10px] text-slate-400 max-w-full truncate px-2">{sertifikatFiles.length > 0 ? `${sertifikatFiles.length} file terpilih` : '(Bisa pilih > 1)'}</p>
+              
+              {sertifikatFiles.length > 0 ? (
+                <div className="flex flex-col items-center gap-2 mt-1">
+                  <p className="text-[10px] text-emerald-300 font-medium">{sertifikatFiles.length} file terpilih</p>
+                  <span className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-semibold text-white flex items-center gap-1 transition-colors">
+                     <Plus className="w-3 h-3" /> Tambah Lagi
+                  </span>
+                </div>
+              ) : (
+                <p className="text-[10px] text-slate-400 max-w-full truncate px-2">(Bisa pilih {'>'} 1)</p>
+              )}
             </div>
           </div>
 
