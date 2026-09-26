@@ -11,7 +11,7 @@ export function VolunteerForm() {
   const [nama, setNama] = useState("");
   const [noBp, setNoBp] = useState("");
   const [jurusan, setJurusan] = useState("");
-  const [asal, setAsal] = useState("");
+  const [alamat, setAlamat] = useState("");
   const [noHp, setNoHp] = useState("");
   const [linkIg, setLinkIg] = useState("");
   const [motivasi, setMotivasi] = useState("");
@@ -108,8 +108,8 @@ export function VolunteerForm() {
             <input required type="text" value={jurusan} onChange={e => setJurusan(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Contoh: Sistem Informasi" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-slate-300">Asal (Universitas/Sekolah) <span className="text-rose-500">*</span></label>
-            <input required type="text" value={asal} onChange={e => setAsal(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Contoh: UPI YPTK Padang" />
+            <label className="text-sm font-semibold text-slate-300">Alamat Lengkap <span className="text-rose-500">*</span></label>
+            <input required type="text" value={alamat} onChange={e => setAlamat(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="Contoh: Jl. Sudirman No. 1..." />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-slate-300">No HP / WhatsApp <span className="text-rose-500">*</span></label>
