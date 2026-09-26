@@ -46,17 +46,17 @@ export function Navbar() {
       >
         
         {/* Logo - Flex 1 (Left aligned) */}
-        <Link href="/" className="flex items-center gap-2 flex-1">
-          <span className="font-heading text-xl font-bold text-white text-glow tracking-wide">SI FEST</span>
+        <Link href="/" className="flex items-center gap-2 flex-1 shrink-0">
+          <span className="font-heading text-xl font-bold text-white text-glow tracking-wide whitespace-nowrap">SI FEST</span>
         </Link>
 
         {/* Desktop Nav - Flex 1 (Centered) */}
-        <div className="hidden items-center justify-center gap-8 md:flex flex-auto">
+        <div className="hidden items-center justify-center gap-4 lg:gap-8 md:flex flex-none">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-white/70 transition-colors hover:text-white hover:text-glow"
+              className="text-sm font-medium text-white/70 transition-colors hover:text-white hover:text-glow whitespace-nowrap"
             >
               {link.name}
             </Link>
