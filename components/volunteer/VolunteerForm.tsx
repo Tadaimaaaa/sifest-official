@@ -17,12 +17,13 @@ export function VolunteerForm() {
   const [motivasi, setMotivasi] = useState("");
   
   // Multiple Choice for Events
-  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
+  const [pilihanUtama, setPilihanUtama] = useState("");
+  const [pilihanKedua, setPilihanKedua] = useState("");
   
   // Files
   const [buktiFollow, setBuktiFollow] = useState<File | null>(null);
   const [krs, setKrs] = useState<File | null>(null);
-  const [sertifikat, setSertifikat] = useState<File | null>(null);
+  const [sertifikatFiles, setSertifikatFiles] = useState<File[]>([]);
 
   const eventOptions = [
     "Futsal Mahasiswa",
@@ -35,15 +36,9 @@ export function VolunteerForm() {
     "Seminar"
   ];
 
-  const handleEventToggle = (event: string) => {
-    if (selectedEvents.includes(event)) {
-      setSelectedEvents(selectedEvents.filter(e => e !== event));
-    } else {
-      if (selectedEvents.length >= 2) {
-        alert("Maksimal memilih 2 event!");
-        return;
-      }
-      setSelectedEvents([...selectedEvents, event]);
+  const handleMultipleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSertifikatFiles(Array.from(e.target.files));
     }
   };
 
@@ -55,8 +50,12 @@ export function VolunteerForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedEvents.length !== 2) {
-      alert("Harap memilih tepat 2 event!");
+    if (!pilihanUtama || !pilihanKedua) {
+      alert("Harap memilih Pilihan Utama dan Pilihan Kedua!");
+      return;
+    }
+    if (pilihanUtama === pilihanKedua) {
+      alert("Pilihan Utama dan Pilihan Kedua tidak boleh sama!");
       return;
     }
     if (!buktiFollow || !krs) {
@@ -126,27 +125,25 @@ export function VolunteerForm() {
       {/* Pilihan Event */}
       <div className="space-y-6">
         <h2 className="text-xl font-bold text-white border-b border-white/10 pb-2">2. Pilihan Event</h2>
-        <div className="space-y-3">
-          <label className="text-sm font-semibold text-slate-300">Pilih 2 Event yang ingin Anda tangani: <span className="text-rose-500">*</span></label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {eventOptions.map((opt) => {
-              const isSelected = selectedEvents.includes(opt);
-              return (
-                <button
-                  type="button"
-                  key={opt}
-                  onClick={() => handleEventToggle(opt)}
-                  className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all text-left flex justify-between items-center ${
-                    isSelected ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:border-white/20'
-                  }`}
-                >
-                  {opt}
-                  {isSelected && <CheckCircle2 className="w-4 h-4" />}
-                </button>
-              );
-            })}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-300">Pilihan Utama <span className="text-rose-500">*</span></label>
+            <select required value={pilihanUtama} onChange={e => setPilihanUtama(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none">
+              <option value="" disabled className="text-slate-900">Pilih Event...</option>
+              {eventOptions.map(opt => (
+                <option key={opt} value={opt} className="text-slate-900" disabled={pilihanKedua === opt}>{opt}</option>
+              ))}
+            </select>
           </div>
-          <p className="text-xs text-slate-400">Terpilih: {selectedEvents.length}/2</p>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-slate-300">Pilihan Kedua <span className="text-rose-500">*</span></label>
+            <select required value={pilihanKedua} onChange={e => setPilihanKedua(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none">
+              <option value="" disabled className="text-slate-900">Pilih Event...</option>
+              {eventOptions.map(opt => (
+                <option key={opt} value={opt} className="text-slate-900" disabled={pilihanUtama === opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -174,11 +171,11 @@ export function VolunteerForm() {
           </div>
 
           <div className="relative group">
-            <input type="file" accept="image/*,.pdf" onChange={e => handleFileChange(e, setSertifikat)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-            <div className={`p-4 rounded-xl border-2 border-dashed flex flex-col items-center justify-center text-center transition-colors h-32 ${sertifikat ? 'border-emerald-500/50 bg-emerald-500/10' : 'border-white/20 bg-white/5 group-hover:border-blue-500/50 group-hover:bg-blue-500/5'}`}>
-              <Upload className={`w-6 h-6 mb-2 ${sertifikat ? 'text-emerald-400' : 'text-slate-400'}`} />
+            <input type="file" multiple accept="image/*,.pdf" onChange={handleMultipleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+            <div className={`p-4 rounded-xl border-2 border-dashed flex flex-col items-center justify-center text-center transition-colors h-32 ${sertifikatFiles.length > 0 ? 'border-emerald-500/50 bg-emerald-500/10' : 'border-white/20 bg-white/5 group-hover:border-blue-500/50 group-hover:bg-blue-500/5'}`}>
+              <Upload className={`w-6 h-6 mb-2 ${sertifikatFiles.length > 0 ? 'text-emerald-400' : 'text-slate-400'}`} />
               <p className="text-xs font-semibold text-white mb-1">Sertifikat Prestasi</p>
-              <p className="text-[10px] text-slate-400 max-w-full truncate px-2">{sertifikat ? sertifikat.name : '(Opsional)'}</p>
+              <p className="text-[10px] text-slate-400 max-w-full truncate px-2">{sertifikatFiles.length > 0 ? `${sertifikatFiles.length} file terpilih` : '(Bisa pilih > 1)'}</p>
             </div>
           </div>
 
@@ -198,7 +195,7 @@ export function VolunteerForm() {
       <div className="pt-4">
         <button 
           type="submit" 
-          disabled={isSubmitting || selectedEvents.length !== 2}
+          disabled={isSubmitting || !pilihanUtama || !pilihanKedua}
           className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-lg transition-all transform hover:scale-[1.01] hover:shadow-[0_0_20px_rgba(79,70,229,0.4)] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
         >
           {isSubmitting ? (
