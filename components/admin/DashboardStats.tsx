@@ -37,11 +37,11 @@ export function DashboardStats() {
           setPageViews((prev) => prev + 1);
           const el = document.getElementById("page-views-counter");
           if (el) {
-            el.classList.remove("text-[#fafafa]");
-            el.classList.add("text-blue-500");
+            el.classList.remove("text-slate-900");
+            el.classList.add("text-blue-600");
             setTimeout(() => {
-              el.classList.remove("text-blue-500");
-              el.classList.add("text-[#fafafa]");
+              el.classList.remove("text-blue-600");
+              el.classList.add("text-slate-900");
             }, 500);
           }
         }
@@ -58,68 +58,68 @@ export function DashboardStats() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Card 1 */}
-      <div className="bg-[#09090b] p-5 rounded-lg border border-[#27272a] shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Eye size={48} className="text-[#fafafa] -rotate-12 translate-x-2 -translate-y-2" />
+      <div className="bg-white p-5 rounded-lg border border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+          <Eye size={48} className="text-slate-900 -rotate-12 translate-x-2 -translate-y-2" />
         </div>
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-semibold text-[#a1a1aa] uppercase tracking-wider">Kunjungan Web</p>
-            <div className="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kunjungan Web</p>
+            <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Live
             </div>
           </div>
-          <h3 id="page-views-counter" className="text-3xl font-semibold text-[#fafafa] tracking-tight transition-colors duration-300">
+          <h3 id="page-views-counter" className="text-3xl font-semibold text-slate-900 tracking-tight transition-colors duration-300">
             {loading ? "..." : displayViews}
           </h3>
         </div>
       </div>
 
       {/* Card 2 */}
-      <div className="bg-[#09090b] p-5 rounded-lg border border-[#27272a] shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Users size={48} className="text-[#fafafa] -rotate-12 translate-x-2 -translate-y-2" />
+      <div className="bg-white p-5 rounded-lg border border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+          <Users size={48} className="text-slate-900 -rotate-12 translate-x-2 -translate-y-2" />
         </div>
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-semibold text-[#a1a1aa] uppercase tracking-wider">Panitia Aktif</p>
-            <div className="flex items-center gap-1 text-blue-400 bg-blue-400/10 border border-blue-400/20 px-1.5 py-0.5 rounded text-[10px] font-bold">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Panitia Aktif</p>
+            <div className="flex items-center gap-1 text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded text-[10px] font-bold">
               <ArrowUpRight size={12} /> 12%
             </div>
           </div>
-          <h3 className="text-3xl font-semibold text-[#fafafa] tracking-tight">128</h3>
+          <h3 className="text-3xl font-semibold text-slate-900 tracking-tight">128</h3>
         </div>
       </div>
       
       {/* Card 3 */}
-      <div className="bg-[#09090b] p-5 rounded-lg border border-[#27272a] shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Sparkles size={48} className="text-[#fafafa] -rotate-12 translate-x-2 -translate-y-2" />
+      <div className="bg-white p-5 rounded-lg border border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+          <Sparkles size={48} className="text-slate-900 -rotate-12 translate-x-2 -translate-y-2" />
         </div>
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-semibold text-[#a1a1aa] uppercase tracking-wider">Sponsor & Media</p>
-            <div className="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-1.5 py-0.5 rounded text-[10px] font-bold">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sponsor & Media</p>
+            <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded text-[10px] font-bold">
               <ArrowUpRight size={12} /> 5
             </div>
           </div>
-          <h3 className="text-3xl font-semibold text-[#fafafa] tracking-tight">24</h3>
+          <h3 className="text-3xl font-semibold text-slate-900 tracking-tight">24</h3>
         </div>
       </div>
 
       {/* Card 4 */}
-      <div className="bg-[#09090b] p-5 rounded-lg border border-[#27272a] shadow-sm relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Server size={48} className="text-[#fafafa] -rotate-12 translate-x-2 -translate-y-2" />
+      <div className="bg-white p-5 rounded-lg border border-slate-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+          <Server size={48} className="text-slate-900 -rotate-12 translate-x-2 -translate-y-2" />
         </div>
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-semibold text-[#a1a1aa] uppercase tracking-wider">Response Time</p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Response Time</p>
           </div>
           <div className="flex items-baseline gap-1">
-            <h3 className="text-3xl font-semibold text-[#fafafa] tracking-tight">42</h3>
-            <span className="text-sm text-[#71717a] font-medium">ms</span>
+            <h3 className="text-3xl font-semibold text-slate-900 tracking-tight">42</h3>
+            <span className="text-sm text-slate-400 font-medium">ms</span>
           </div>
         </div>
       </div>
