@@ -99,36 +99,36 @@ export default function CommitteeCMSPage() {
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-white">Manajemen Panitia</h1>
-          <p className="text-slate-400 mt-1">Kelola data dan struktur kepanitiaan SI FEST 2026</p>
+          <h1 className="text-3xl font-semibold text-slate-900">Manajemen Panitia</h1>
+          <p className="text-slate-500 mt-1">Kelola data dan struktur kepanitiaan SI FEST 2026</p>
         </div>
         <button 
           onClick={handleAdd}
-          className="px-5 py-2.5 bg-brand-primary text-white font-medium rounded-xl flex items-center justify-center gap-2 hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30"
+          className="px-5 py-2.5 bg-brand-primary-white font-medium rounded-xl flex items-center justify-center gap-2 hover:bg-brand-primary/90 transition-colors shadow-lg shadow-brand-primary/30"
         >
           <Plus size={20} /> Tambah Panitia
         </button>
       </div>
 
-      <div className="bg-[#0F172A] rounded-2xl border border-slate-700/50 shadow-sm overflow-hidden">
+      <div className="bg-slate-50 rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="p-4 border-b border-slate-700/50 bg-slate-50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
           <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" />
             <input 
               type="text" 
               placeholder="Cari nama atau jabatan..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-[#0F172A] border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 text-sm focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all"
             />
           </div>
           <div className="hidden md:flex items-center gap-3">
-            <span className="text-sm text-slate-400">Filter Divisi:</span>
+            <span className="text-sm text-slate-500">Filter Divisi:</span>
             <select 
               value={filterDivision}
               onChange={(e) => setFilterDivision(e.target.value)}
-              className="bg-[#0F172A] border border-slate-700/50 rounded-lg text-slate-300 text-sm px-3 py-2 outline-none focus:border-brand-primary"
+              className="bg-slate-50 border border-slate-200 rounded-lg text-slate-700 text-sm px-3 py-2 outline-none focus:border-brand-primary"
             >
               <option value="all">Semua Divisi</option>
               <option value="sc">Steering Committee</option>
@@ -147,7 +147,7 @@ export default function CommitteeCMSPage() {
         <div className="overflow-x-auto min-h-[300px]">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-700/50 text-slate-400 text-xs uppercase tracking-wider font-semibold">
+              <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wider font-semibold">
                 <th className="p-4 font-medium">Panitia</th>
                 <th className="p-4 font-medium">Jabatan</th>
                 <th className="p-4 font-medium">NIM</th>
@@ -158,16 +158,16 @@ export default function CommitteeCMSPage() {
             <tbody className="divide-y divide-slate-100">
               {isLoading ? (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-slate-400">
+                  <td colSpan={5} className="p-12 text-center text-slate-500">
                     <div className="flex flex-col items-center justify-center">
-                      <div className="w-8 h-8 border-2 border-slate-700/50 border-t-brand-primary rounded-full animate-spin mb-2" />
+                      <div className="w-8 h-8 border-2 border-slate-200 border-t-brand-primary rounded-full animate-spin mb-2" />
                       Memuat data dari database...
                     </div>
                   </td>
                 </tr>
               ) : filteredMembers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-12 text-center text-slate-400">
+                  <td colSpan={5} className="p-12 text-center text-slate-500">
                     Tidak ada data panitia yang ditemukan.
                   </td>
                 </tr>
@@ -176,24 +176,24 @@ export default function CommitteeCMSPage() {
                   <tr key={member.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700/50 overflow-hidden shrink-0 flex items-center justify-center relative">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center relative">
                           {member.image_url ? (
                             <Image src={member.image_url} alt={member.name} fill sizes="40px" className="object-cover" />
                           ) : (
-                            <span className="text-slate-400 text-xs font-semibold">{member.name.charAt(0)}</span>
+                            <span className="text-slate-500 text-xs font-semibold">{member.name.charAt(0)}</span>
                           )}
                         </div>
-                        <span className="font-medium text-white group-hover:text-brand-primary transition-colors">
+                        <span className="font-medium text-slate-900 group-hover:text-brand-primary transition-colors">
                           {member.name}
                         </span>
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="px-2 py-1 bg-slate-800 rounded-md text-sm text-slate-400">
+                      <span className="px-2 py-1 bg-slate-100 rounded-md text-sm text-slate-500">
                         {member.role}
                       </span>
                     </td>
-                    <td className="p-4 text-slate-400 font-mono text-sm">
+                    <td className="p-4 text-slate-500 font-mono text-sm">
                       {member.nim || "-"}
                     </td>
                     <td className="p-4">
@@ -203,7 +203,7 @@ export default function CommitteeCMSPage() {
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => handleEdit(member)} className="p-2 bg-slate-800 hover:bg-slate-200 rounded-lg text-slate-400 hover:text-white transition-colors">
+                        <button onClick={() => handleEdit(member)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-500 hover:text-slate-900 transition-colors">
                           <Edit2 size={16} />
                         </button>
                         <button onClick={() => handleDelete(member.id, member.image_url)} className="p-2 bg-red-50 hover:bg-red-100 rounded-lg text-red-500 hover:text-red-600 transition-colors">
