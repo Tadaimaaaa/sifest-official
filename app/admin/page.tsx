@@ -5,22 +5,22 @@ import { DashboardStats } from "@/components/admin/DashboardStats";
 export default function AdminDashboardOverview() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#27272a]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-4">
             <Sparkles size={12} className="animate-pulse" />
             Official Portal
           </div>
-          <h1 className="text-4xl font-black text-white tracking-tight">Dashboard</h1>
-          <p className="text-slate-400 mt-2 text-lg">Pusat kontrol informasi publik <strong className="text-slate-200">SI FEST 2026</strong>.</p>
+          <h1 className="text-3xl font-semibold text-[#fafafa] tracking-tight">Dashboard</h1>
+          <p className="text-[#a1a1aa] mt-1 text-sm">Pusat kontrol informasi publik <strong className="text-[#e4e4e7] font-medium">SI FEST 2026</strong>.</p>
         </div>
 
-        <div className="bg-[#131B2F]/70 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-sm flex items-center gap-4">
-          <div className="hidden sm:block">
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 text-right">Menuju Hari H</p>
-            <p className="text-sm font-semibold text-slate-200">02 Nov 2026</p>
+        <div className="bg-[#09090b] p-3 rounded-lg border border-[#27272a] shadow-sm flex items-center gap-4">
+          <div className="hidden sm:block text-right">
+            <p className="text-[9px] font-bold text-[#71717a] uppercase tracking-widest mb-0.5">Menuju Hari H</p>
+            <p className="text-xs font-semibold text-[#e4e4e7]">02 Nov 2026</p>
           </div>
-          <div className="w-px h-10 bg-slate-200 hidden sm:block"></div>
+          <div className="w-px h-8 bg-[#27272a] hidden sm:block"></div>
           <RegistrationCountdown 
             startDate="2026-11-02T00:00:00+07:00" 
             closeDate="2026-11-06T23:59:59+07:00" 
@@ -32,35 +32,34 @@ export default function AdminDashboardOverview() {
       <DashboardStats />
 
       {/* System Status Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 to-brand-primary rounded-3xl p-8 sm:p-10 shadow-2xl">
+      <div className="relative overflow-hidden bg-[#18181b] border border-[#27272a] rounded-xl p-6 sm:p-8 mt-4">
         {/* Background Patterns */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-accent/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
         
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex items-start gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-[#0F172A]/10 backdrop-blur-md flex items-center justify-center border border-white/5/20 shrink-0 shadow-inner">
-              <CheckCircle2 className="w-7 h-7 text-emerald-400" />
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-lg bg-[#09090b] flex items-center justify-center border border-[#27272a] shrink-0">
+              <CheckCircle2 className="w-6 h-6 text-emerald-400" />
             </div>
             <div>
-              <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-3">
+              <h4 className="text-[15px] font-semibold text-[#fafafa] mb-1.5 flex items-center gap-3">
                 Sistem Utama Terhubung
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold tracking-widest uppercase">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold tracking-widest uppercase">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   Live
                 </span>
               </h4>
-              <p className="text-blue-100/80 text-sm max-w-2xl leading-relaxed">
-                Database pusat dan penyimpanan awan (Cloud Storage) untuk <strong className="text-white">SI FEST Official</strong> telah disinkronisasi. Semua data publik siap ditampilkan kepada audiens. Pengelolaan lanjutan dilakukan di web panitia.
+              <p className="text-[#a1a1aa] text-[13px] max-w-2xl leading-relaxed">
+                Database pusat dan penyimpanan awan (Cloud Storage) untuk <strong className="text-[#e4e4e7] font-medium">SI FEST Official</strong> telah disinkronisasi. Semua data publik siap ditampilkan kepada audiens. Pengelolaan lanjutan dilakukan di web panitia.
               </p>
             </div>
           </div>
-          <button className="px-6 py-3 bg-[#0F172A] text-brand-primary font-bold rounded-xl hover:bg-blue-50 active:scale-95 transition-all shrink-0 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+          <button className="px-4 py-2 bg-[#fafafa] text-[#09090b] text-[13px] font-medium rounded-md hover:bg-[#e4e4e7] transition-colors shrink-0">
             Cek Log Sinkronisasi
           </button>
         </div>
       </div>
-
     </div>
   );
 }
