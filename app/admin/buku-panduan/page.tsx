@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getRegisterableEvents, EventData } from "@/lib/events";
 import { createClient } from "@/lib/supabase/client";
-import { BookOpen, Save, Check, Link as LinkIcon, AlertCircle } from "lucide-react";
+import { BookOpen, Save, Check, Link as LinkIcon, AlertCircle, Upload } from "lucide-react";
 
 export default function AdminBukuPanduan() {
   const [loading, setLoading] = useState(true);
@@ -44,24 +44,48 @@ export default function AdminBukuPanduan() {
     setUrls(prev => ({ ...prev, [eventId]: url }));
   };
 
-  const saveUrl = async (eventId: string) => {
-    setSaving(eventId);
+  const handleFileUpload = async (eventId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setSaving(eventId); // Using 'saving' state for loading indicator
     try {
-      const url = urls[eventId] || "";
+      const fileExt = file.name.split('.').pop();
+      const fileName = `guidebook_${eventId}_${Date.now()}.${fileExt}`;
       
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('registration_files')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from('registration_files')
+        .getPublicUrl(fileName);
+
+      const uploadedUrl = publicUrlData.publicUrl;
+      handleUrlChange(eventId, uploadedUrl);
+      
+      // Auto save after upload is complete to make it seamless
+      await saveUrlToDb(eventId, uploadedUrl);
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Gagal mengunggah file. Pastikan ukuran file tidak terlalu besar.");
+      setSaving(null);
+    }
+  };
+
+  const saveUrlToDb = async (eventId: string, url: string) => {
+    try {
       if (!url) {
-        // If empty, we can delete the record or just save empty string. 
-        // Let's delete it so it falls back to 'Segera Hadir'
         await supabase.from("guidebooks").delete().eq("event_id", eventId);
       } else {
-        // Upsert
         await supabase.from("guidebooks").upsert({
           event_id: eventId,
           url: url,
           updated_at: new Date().toISOString()
         }, { onConflict: "event_id" });
       }
-      
       setSaved(eventId);
       setTimeout(() => setSaved(null), 2000);
     } catch (error) {
@@ -70,6 +94,11 @@ export default function AdminBukuPanduan() {
     } finally {
       setSaving(null);
     }
+  };
+
+  const saveUrl = async (eventId: string) => {
+    setSaving(eventId);
+    await saveUrlToDb(eventId, urls[eventId] || "");
   };
 
   return (
@@ -118,6 +147,19 @@ export default function AdminBukuPanduan() {
                         onChange={(e) => handleUrlChange(event.id, e.target.value)}
                       />
                     </div>
+                    
+                    <label className={`cursor-pointer shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-medium text-sm flex items-center gap-2 hover:bg-slate-50 transition-colors ${saving === event.id ? "opacity-50 pointer-events-none" : ""}`}>
+                      <Upload size={16} />
+                      <span className="hidden md:inline">Upload</span>
+                      <input 
+                        type="file" 
+                        accept=".pdf,.doc,.docx"
+                        className="hidden" 
+                        onChange={(e) => handleFileUpload(event.id, e)} 
+                        disabled={saving === event.id}
+                      />
+                    </label>
+
                     <button
                       onClick={() => saveUrl(event.id)}
                       disabled={saving === event.id}
