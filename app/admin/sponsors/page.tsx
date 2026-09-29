@@ -75,8 +75,8 @@ export default function SponsorsAdmin() {
       {/* Header & Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Mitra & Sponsor</h1>
-          <p className="text-slate-500 text-sm mt-1">Kelola data mitra, sponsor, dan media partner SI FEST 2026</p>
+          <h1 className="text-2xl font-bold text-white">Mitra & Sponsor</h1>
+          <p className="text-slate-400 text-sm mt-1">Kelola data mitra, sponsor, dan media partner SI FEST 2026</p>
         </div>
         <button 
           onClick={handleAdd}
@@ -88,7 +88,7 @@ export default function SponsorsAdmin() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 bg-[#0F172A] p-4 rounded-2xl border border-slate-700/50 shadow-sm">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input 
@@ -96,16 +96,16 @@ export default function SponsorsAdmin() {
             placeholder="Cari nama mitra..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-700/50 rounded-xl focus:bg-[#0F172A] focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all text-sm"
           />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-[#0F172A] rounded-2xl border border-slate-700/50 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
+            <thead className="bg-slate-50 text-slate-400 font-medium border-b border-slate-700/50">
               <tr>
                 <th className="px-6 py-4">Logo Mitra</th>
                 <th className="px-6 py-4 text-right">Aksi</th>
@@ -116,7 +116,7 @@ export default function SponsorsAdmin() {
                 <tr>
                   <td colSpan={3} className="px-6 py-12 text-center text-slate-400">
                     <div className="flex flex-col items-center justify-center">
-                      <div className="w-8 h-8 border-4 border-slate-200 border-t-brand-primary rounded-full animate-spin mb-3" />
+                      <div className="w-8 h-8 border-4 border-slate-700/50 border-t-brand-primary rounded-full animate-spin mb-3" />
                       Memuat data...
                     </div>
                   </td>
@@ -132,7 +132,7 @@ export default function SponsorsAdmin() {
                   <tr key={sponsor.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 p-2">
+                        <div className="w-16 h-16 rounded-xl bg-slate-800 border border-slate-700/50 flex items-center justify-center overflow-hidden shrink-0 p-2">
                           {sponsor.logo_url ? (
                             <img src={sponsor.logo_url} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
                           ) : (
@@ -140,7 +140,7 @@ export default function SponsorsAdmin() {
                           )}
                         </div>
                         <div>
-                          <div className="font-semibold text-slate-900">{sponsor.name}</div>
+                          <div className="font-semibold text-white">{sponsor.name}</div>
                         </div>
                       </div>
                     </td>

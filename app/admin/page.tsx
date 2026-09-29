@@ -11,14 +11,14 @@ export default function AdminDashboardOverview() {
             <Sparkles size={12} className="animate-pulse" />
             Official Portal
           </div>
-          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Dashboard</h1>
-          <p className="text-slate-500 mt-2 text-lg">Pusat kontrol informasi publik <strong className="text-slate-800">SI FEST 2026</strong>.</p>
+          <h1 className="text-4xl font-black text-white tracking-tight">Dashboard</h1>
+          <p className="text-slate-400 mt-2 text-lg">Pusat kontrol informasi publik <strong className="text-slate-200">SI FEST 2026</strong>.</p>
         </div>
 
-        <div className="bg-white/60 backdrop-blur-md p-4 rounded-2xl border border-white shadow-sm flex items-center gap-4">
+        <div className="bg-[#131B2F]/70 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-sm flex items-center gap-4">
           <div className="hidden sm:block">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 text-right">Menuju Hari H</p>
-            <p className="text-sm font-semibold text-slate-800">02 Nov 2026</p>
+            <p className="text-sm font-semibold text-slate-200">02 Nov 2026</p>
           </div>
           <div className="w-px h-10 bg-slate-200 hidden sm:block"></div>
           <RegistrationCountdown 
@@ -39,7 +39,7 @@ export default function AdminDashboardOverview() {
         
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="flex items-start gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shrink-0 shadow-inner">
+            <div className="w-14 h-14 rounded-2xl bg-[#0F172A]/10 backdrop-blur-md flex items-center justify-center border border-white/5/20 shrink-0 shadow-inner">
               <CheckCircle2 className="w-7 h-7 text-emerald-400" />
             </div>
             <div>
@@ -55,7 +55,7 @@ export default function AdminDashboardOverview() {
               </p>
             </div>
           </div>
-          <button className="px-6 py-3 bg-white text-brand-primary font-bold rounded-xl hover:bg-blue-50 active:scale-95 transition-all shrink-0 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+          <button className="px-6 py-3 bg-[#0F172A] text-brand-primary font-bold rounded-xl hover:bg-blue-50 active:scale-95 transition-all shrink-0 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
             Cek Log Sinkronisasi
           </button>
         </div>
