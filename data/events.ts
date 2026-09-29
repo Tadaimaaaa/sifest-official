@@ -37,11 +37,11 @@ export const OFFICIAL_EVENTS: EventData[] = [
   {
     id: "evt-01",
     slug: "seminar-nasional",
-    title: "Talk Show",
+    title: "Seminar",
     category: "Seminar",
     status: "Open",
     shortDescription: "Sinergi Inovasi: Menautkan Teknologi, Merangkul Keberagaman.",
-    description: "Talk Show SI FEST 2026 menghadirkan pakar teknologi terkemuka untuk membahas tren terkini dalam dunia Sistem Informasi dan bagaimana teknologi dapat menyatukan berbagai elemen masyarakat untuk mencapai masa depan yang inklusif.",
+    description: "Seminar SI FEST 2026 menghadirkan pakar teknologi terkemuka untuk membahas tren terkini dalam dunia Sistem Informasi dan bagaimana teknologi dapat menyatukan berbagai elemen masyarakat untuk mencapai masa depan yang inklusif.",
     icon: "GraduationCap",
     date: "03 November 2026",
     time: "08.00 - 17.30 WIB",
@@ -50,17 +50,17 @@ export const OFFICIAL_EVENTS: EventData[] = [
     registrationStartDate: "2026-10-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
-      "Peserta merupakan peserta yang telah terdaftar dalam Talk Show SI-FEST 2026.",
+      "Peserta merupakan peserta yang telah terdaftar dalam Seminar SI-FEST 2026.",
       "Peserta wajib memberikan data pendaftaran yang benar.",
-      "Peserta wajib mengikuti seluruh rangkaian kegiatan Talk Show.",
+      "Peserta wajib mengikuti seluruh rangkaian kegiatan Seminar.",
       "Peserta wajib hadir sesuai waktu yang telah ditentukan.",
       "Peserta wajib menjaga ketertiban selama kegiatan berlangsung.",
-      "Peserta wajib menjaga nama baik Talk Show SI-FEST 2026, panitia, dan institusi penyelenggara.",
+      "Peserta wajib menjaga nama baik Seminar SI-FEST 2026, panitia, dan institusi penyelenggara.",
       "Peserta wajib mematuhi arahan panitia selama kegiatan berlangsung."
     ],
     registrationFlow: [
       "Peserta membuat akun dan login di website resmi SI FEST.",
-      "Mengisi formulir pendaftaran pada halaman event Talk Show.",
+      "Mengisi formulir pendaftaran pada halaman event Seminar.",
       "Menyelesaikan pembayaran tiket melalui sistem terintegrasi (Duitku) atau manual.",
       "Mendapatkan E-Ticket (QR Code) di dashboard akun.",
       "Bergabung ke Grup WhatsApp peserta melalui tautan yang disediakan."
@@ -68,11 +68,11 @@ export const OFFICIAL_EVENTS: EventData[] = [
     timeline: [
       { title: "Pendaftaran", date: "01 - 25 Oktober 2026" },
       { title: "Open Gate & Registrasi", date: "03 November 2026" },
-      { title: "Pelaksanaan Talk Show", date: "03 November 2026" }
+      { title: "Pelaksanaan Seminar", date: "03 November 2026" }
     ],
     benefits: [
       "E-Certificate Tingkat Nasional",
-      "Talk Show Kit & Snack Box",
+      "Seminar Kit & Snack Box",
       "Doorprize Menarik",
       "Relasi & Ilmu Bermanfaat"
     ],

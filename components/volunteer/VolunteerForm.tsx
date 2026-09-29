@@ -26,7 +26,7 @@ export function VolunteerForm() {
   const [sertifikatFiles, setSertifikatFiles] = useState<File[]>([]);
 
   const eventOptions = [
-    "Talk Show",
+    "Seminar",
     "Turnamen Futsal (SLTA & Mahasiswa)",
     "Turnamen E-Sport (MLBB & E-Football)",
     "Lomba Keagamaan / MTQ",
@@ -122,7 +122,7 @@ export function VolunteerForm() {
       });
       
       const result = await res.json();
-      if (result.status === "success") {
+      if (result.success === true) {
         setIsSuccess(true);
       } else {
         alert("Pendaftaran gagal: " + result.message);
