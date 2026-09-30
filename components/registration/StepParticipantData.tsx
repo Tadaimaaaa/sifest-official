@@ -184,7 +184,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
       
       if (eventSlug === 'open-bazaar-mahasiswa') {
-        if (!meta.ktmUrl) { newErrors['metadata.ktmUrl'] = "Lampiran Kartu Tanda Mahasiswa (KTM) wajib diunggah."; isValid = false; }
+        if (!meta.fotoKtmUrl) { newErrors['metadata.fotoKtmUrl'] = "Lampiran Kartu Tanda Mahasiswa (KTM) wajib diunggah."; isValid = false; }
         if (!meta.krsUrl) { newErrors['metadata.krsUrl'] = "Lampiran Kartu Rencana Studi (KRS) wajib diunggah."; isValid = false; }
       }
     }
@@ -312,7 +312,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
   };
 
-  const handleSingleFileUpload = async (field: 'fotoKtpUrl' | 'fotoKtmUrl' | 'studentCardUrl', e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSingleFileUpload = async (field: 'fotoKtpUrl' | 'fotoKtmUrl' | 'studentCardUrl' | 'krsUrl', e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -325,7 +325,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     try {
       const supabase = createClient();
       const fileExt = file.name.split('.').pop();
-      const prefix = field === 'fotoKtpUrl' ? 'ktp' : field === 'fotoKtmUrl' ? 'ktm' : 'pelajar';
+      const prefix = field === 'fotoKtpUrl' ? 'ktp' : field === 'fotoKtmUrl' ? 'ktm' : field === 'krsUrl' ? 'krs' : 'pelajar';
       const fileName = `${prefix}_${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
       
       const { data: uploadData, error: uploadError } = await supabase.storage
@@ -553,18 +553,18 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               <div className="space-y-3">
                 <label className="block text-sm font-medium text-white/90">Lampiran KTM <span className="text-status-warning">*</span></label>
                 <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-                  <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('ktmUrl', e)} disabled={uploadingState?.field === 'ktmUrl'} />
-                  {uploadingState?.field === 'ktmUrl' ? (
+                  <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('fotoKtmUrl', e)} disabled={uploadingState?.field === 'fotoKtmUrl'} />
+                  {uploadingState?.field === 'fotoKtmUrl' ? (
                     <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
-                  ) : data.metadata?.ktmUrl ? (
+                  ) : data.metadata?.fotoKtmUrl ? (
                     <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
                   ) : (
                     <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
                   )}
                 </label>
-                {errors['metadata.ktmUrl'] && (
+                {errors['metadata.fotoKtmUrl'] && (
                   <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
-                    <AlertCircle size={14} /> {errors['metadata.ktmUrl']}
+                    <AlertCircle size={14} /> {errors['metadata.fotoKtmUrl']}
                   </p>
                 )}
               </div>
