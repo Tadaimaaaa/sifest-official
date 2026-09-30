@@ -86,8 +86,10 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
       if (mode === 'players') {
         const teamData = meta.teamData || {};
-        if (!teamData.coachName?.trim()) { newErrors['teamData.coachName'] = "Nama Pelatih wajib diisi."; isValid = false; }
-        if (!teamData.coachWhatsapp?.trim()) { newErrors['teamData.coachWhatsapp'] = "No WhatsApp Pelatih wajib diisi."; isValid = false; }
+        if (eventSlug !== 'turnamen-futsal-mahasiswa') {
+          if (!teamData.coachName?.trim()) { newErrors['teamData.coachName'] = "Nama Pelatih wajib diisi."; isValid = false; }
+          if (!teamData.coachWhatsapp?.trim()) { newErrors['teamData.coachWhatsapp'] = "No WhatsApp Pelatih wajib diisi."; isValid = false; }
+        }
 
         const players = meta.players || [];
         if (players.length === 0) {
@@ -955,12 +957,12 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 <h3 className="font-heading text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">1. Data Pelatih</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">Nama Pelatih <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">Nama Pelatih {eventSlug !== 'turnamen-futsal-mahasiswa' ? <span className="text-status-warning">*</span> : <span className="text-xs text-white/50 font-normal">(Opsional)</span>}</label>
                     <input type="text" value={data.metadata.teamData?.coachName || ''} onChange={(e) => updateTeamData('coachName', e.target.value)} placeholder="Nama Pelatih" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['teamData.coachName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.coachName']}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Pelatih <span className="text-status-warning">*</span></label>
+                    <label className="block text-sm font-medium text-white/90">No. WhatsApp Pelatih {eventSlug !== 'turnamen-futsal-mahasiswa' ? <span className="text-status-warning">*</span> : <span className="text-xs text-white/50 font-normal">(Opsional)</span>}</label>
                     <input type="tel" value={data.metadata.teamData?.coachWhatsapp || ''} onChange={(e) => updateTeamData('coachWhatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['teamData.coachWhatsapp'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['teamData.coachWhatsapp']}</p>}
                   </div>
