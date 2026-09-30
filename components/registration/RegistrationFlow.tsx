@@ -114,6 +114,34 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
   const goToStep = (step: number) => setCurrentStep(step);
 
+  const getDynamicPrice = () => {
+    if (!selectedEvent || !selectedEvent.price || selectedEvent.price === 'Gratis') return 'Gratis';
+    
+    let activePhase = 1;
+    if (selectedEvent.registrationPhases) {
+      const now = new Date();
+      const phase2 = selectedEvent.registrationPhases.find(p => p.name.includes('2'));
+      if (phase2 && now >= new Date(phase2.startDate)) {
+        activePhase = 2;
+      }
+    }
+
+    if (selectedEvent.slug === 'turnamen-esport-efootball') {
+      const isDoubleSlot = draft.participant.metadata?.slotCount === '2';
+      if (activePhase === 1) return isDoubleSlot ? 'Rp 125.000' : 'Rp 75.000';
+      if (activePhase === 2) return isDoubleSlot ? 'Rp 145.000' : 'Rp 95.000';
+    }
+
+    if (selectedEvent.price.includes('(Gel 1)')) {
+      const matches = selectedEvent.price.match(/Rp\s*[\d.]+/g);
+      if (matches && matches.length >= 2) {
+        return activePhase === 1 ? matches[0] : matches[1];
+      }
+    }
+
+    return selectedEvent.price;
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setSubmitError(null);
@@ -443,7 +471,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                     <div className="bg-[#0A192F] border border-brand-accent/30 rounded-xl p-6 mb-8 text-left space-y-4">
                       <h3 className="font-bold text-white mb-2">Instruksi Pembayaran Manual</h3>
                       <p className="text-white/80 text-sm">Silakan transfer biaya sebesar <strong className="text-brand-accent">
-                        {draft.eventSlug === 'turnamen-esport-efootball' ? (draft.participant.metadata?.slotCount === '2' ? 'Rp 125.000' : 'Rp 75.000') : selectedEvent.price}
+                        {getDynamicPrice()}
                       </strong> ke rekening berikut:</p>
                       
                       <div className="space-y-3">
