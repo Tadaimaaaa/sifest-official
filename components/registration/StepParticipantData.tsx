@@ -109,7 +109,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             }
 
             if (idx === 0 && !p.whatsapp?.trim()) { newErrors[`players.0.whatsapp`] = "No WhatsApp Kapten wajib diisi."; isValid = false; }
-            if (!p.photoUrl) { newErrors[`players.${idx}.photoUrl`] = "Pas Foto Pemain wajib diunggah."; isValid = false; }
+            if (!p.photoUrl) { newErrors[`players.${idx}.photoUrl`] = "Foto Pemain wajib diunggah."; isValid = false; }
             if (!p.jerseyNumber?.trim()) { newErrors[`players.${idx}.jerseyNumber`] = "Nomor Punggung wajib diisi."; isValid = false; }
           }
         }
@@ -262,7 +262,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     onUpdate({ ...data, metadata: { ...meta, players: newPlayers } });
   };
 
-  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'nickname' | 'idGame' | 'whatsapp' | 'studentCardUrl' | 'posisi' | 'photoUrl' | 'birthCertificateUrl' | 'jerseyNumber', value: string) => {
+  const updatePlayer = (index: number, field: 'name' | 'nisn' | 'nickname' | 'idGame' | 'whatsapp' | 'studentCardUrl' | 'posisi' | 'photoUrl' | 'birthCertificateUrl' | 'jerseyNumber' | 'university', value: string) => {
     const meta = data.metadata;
     if (!meta) return;
     const newPlayers = [...meta.players];
@@ -1043,9 +1043,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
-                      {/* Upload Pas Foto */}
+                      {/* Upload Foto Pemain */}
                       <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Pas Foto Pemain <span className="text-status-warning">*</span></label>
+                        <label className="block text-sm font-medium text-white/90">Foto Pemain <span className="text-status-warning">*</span></label>
                         <div className="flex flex-col gap-2">
                           <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.photoUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
                             <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(idx, 'photoUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'photoUrl'} />
@@ -1057,7 +1057,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                             ) : (
                               <div className="flex items-center gap-2 text-white/80">
                                 <UploadCloud size={18} />
-                                <span className="text-sm">{player.photoUrl ? 'Ganti Pas Foto' : 'Unggah Pas Foto'}</span>
+                                <span className="text-sm">{player.photoUrl ? 'Ganti Foto' : 'Unggah Foto'}</span>
                               </div>
                             )}
                           </label>
