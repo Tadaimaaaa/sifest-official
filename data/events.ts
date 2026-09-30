@@ -47,7 +47,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "UPI Convention Center",
     price: "Gratis",
-    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     requirements: [
       "Peserta merupakan peserta yang telah terdaftar dalam Seminar SI-FEST 2026.",
@@ -94,7 +94,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 350.000 (Gel 1) / Rp 370.000 (Gel 2)",
-    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
@@ -144,7 +144,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
-    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
@@ -209,7 +209,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Rp 50.000 (Gel 1) / Rp 70.000 (Gel 2)",
-    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
@@ -264,7 +264,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Single Slot: Rp 75.000 (Gel 1) / Rp 95.000 (Gel 2)\nDouble Slot: Rp 125.000 (Gel 1) / Rp 145.000 (Gel 2)",
-    registrationStartDate: "2026-10-01T00:00:00+07:00",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-10-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
