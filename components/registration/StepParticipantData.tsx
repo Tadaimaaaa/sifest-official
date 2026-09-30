@@ -367,7 +367,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center mb-8">
         <h2 className="font-heading text-3xl font-bold text-white mb-3">
-          {mode === 'school' ? 'Data Sekolah' : mode === 'mlbb-team' ? 'Data Tim' : (mode === 'players' || mode === 'mlbb-players') ? 'Data Pemain' : mode === 'bazaar' ? 'Data Usaha' : 'Data Peserta'}
+          {mode === 'school' ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Data Tim' : 'Data Sekolah') : mode === 'mlbb-team' ? 'Data Tim' : (mode === 'players' || mode === 'mlbb-players') ? 'Data Pemain' : mode === 'bazaar' ? 'Data Usaha' : 'Data Peserta'}
         </h2>
         <p className="text-white/70">Pastikan data yang Anda masukkan sudah benar dan dapat dihubungi.</p>
       </div>
