@@ -59,8 +59,8 @@ export function RegistrationCountdown({
           targetTime = startTime;
         } else if (closeTime > now) {
           newStatus = "open";
-          text = "Sisa";
-          targetTime = closeTime;
+          text = "Telah Dibuka";
+          targetTime = 0;
         } else {
           newStatus = "closed";
           text = "Pendaftaran Ditutup";
