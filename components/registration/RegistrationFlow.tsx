@@ -115,10 +115,6 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const goToStep = (step: number) => setCurrentStep(step);
 
   const handleSubmit = async () => {
-    // BLOKIR SEMENTARA PENDAFTARAN
-    setCurrentStep(99);
-    return;
-
     setIsSubmitting(true);
     setSubmitError(null);
 
