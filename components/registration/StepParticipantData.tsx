@@ -162,7 +162,6 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         isValid = false;
       }
       const meta = data.metadata || {};
-      if (!meta.fotoKtpUrl) { newErrors['metadata.fotoKtpUrl'] = "Foto KTP wajib diunggah."; isValid = false; }
       
       if (meta.slotCount === '2' && !meta.teamName2?.trim()) {
         newErrors['metadata.teamName2'] = "Nama in-game slot 2 wajib diisi.";
@@ -450,40 +449,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
-            <div className="space-y-3">
-              <label className="block text-sm font-medium text-white/90">Foto KTP <span className="text-status-warning">*</span></label>
-              <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-                <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('fotoKtpUrl', e)} disabled={uploadingState?.field === 'fotoKtpUrl'} />
-                {uploadingState?.field === 'fotoKtpUrl' ? (
-                  <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
-                ) : data.metadata?.fotoKtpUrl ? (
-                  <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
-                )}
-              </label>
-              {errors['metadata.fotoKtpUrl'] && (
-                <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
-                  <AlertCircle size={14} /> {errors['metadata.fotoKtpUrl']}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-3">
-              <label className="block text-sm font-medium text-white/90">Foto KTM <span className="text-white/50">(Opsional)</span></label>
-              <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-                <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('fotoKtmUrl', e)} disabled={uploadingState?.field === 'fotoKtmUrl'} />
-                {uploadingState?.field === 'fotoKtmUrl' ? (
-                  <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
-                ) : data.metadata?.fotoKtmUrl ? (
-                  <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
-                )}
-              </label>
-            </div>
-          </div>
+          {/* File uploads removed for E-Football */}
         </GlassCard>
       )}
 
