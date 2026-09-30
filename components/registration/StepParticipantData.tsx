@@ -55,6 +55,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         newErrors['metadata.institutionType'] = "Silakan pilih instansi.";
         isValid = false;
       }
+    }
 
     if (eventSlug.startsWith('turnamen-futsal')) {
       const meta = data.metadata || { schoolData: {}, players: [] };
