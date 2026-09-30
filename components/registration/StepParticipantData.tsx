@@ -174,6 +174,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     if (mode === 'mtq') {
       if (!data.fullName.trim()) { newErrors.fullName = "Nama Peserta wajib diisi."; isValid = false; }
       const meta = data.metadata || {};
+      if (!meta.nisn?.trim()) { newErrors['metadata.nisn'] = "NISN wajib diisi."; isValid = false; }
       if (!meta.gender) { newErrors['metadata.gender'] = "Jenis Kelamin wajib dipilih."; isValid = false; }
       if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
       if (!data.institution.trim()) { newErrors.institution = "Asal Sekolah wajib diisi."; isValid = false; }
@@ -566,7 +567,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       {mode === 'mtq' && (
         <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Nama Peserta */}
-          <div className="space-y-2 md:col-span-2">
+          <div className="space-y-2">
             <label htmlFor="mtqFullName" className="block text-sm font-medium text-white/90">Nama Peserta <span className="text-status-warning">*</span></label>
             <input
               id="mtqFullName"
@@ -577,6 +578,20 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
             {errors.fullName && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.fullName}</p>}
+          </div>
+
+          {/* NISN */}
+          <div className="space-y-2">
+            <label htmlFor="mtqNisn" className="block text-sm font-medium text-white/90">NISN <span className="text-status-warning">*</span></label>
+            <input
+              id="mtqNisn"
+              type="text"
+              value={data.metadata?.nisn || ''}
+              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, nisn: e.target.value } })}
+              placeholder="Masukkan NISN peserta"
+              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+            />
+            {errors['metadata.nisn'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.nisn']}</p>}
           </div>
 
           {/* Jenis Kelamin */}
