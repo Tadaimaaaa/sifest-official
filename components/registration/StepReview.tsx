@@ -82,7 +82,7 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
           </div>
           
           <h3 className="text-sm font-semibold text-white/50 uppercase tracking-widest mb-6">
-            {draft.eventSlug === 'turnamen-futsal-umum' || draft.eventSlug === 'turnamen-esport-mlbb' 
+            {draft.eventSlug === 'turnamen-futsal-mahasiswa' || draft.eventSlug === 'turnamen-esport-mlbb' 
               ? 'Data Tim' 
               : draft.eventSlug.startsWith('turnamen-futsal') 
                 ? 'Data Sekolah' 
@@ -94,7 +94,7 @@ export function StepReview({ draft, event, onEditStep, onSubmit, isSubmitting = 
               <div className="flex items-start gap-3">
                 <Building2 size={18} className="text-brand-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs text-white/50 mb-0.5">{draft.eventSlug === 'turnamen-futsal-umum' ? 'Nama Tim' : 'Nama Sekolah'}</p>
+                  <p className="text-xs text-white/50 mb-0.5">{draft.eventSlug === 'turnamen-futsal-mahasiswa' ? 'Nama Tim' : 'Nama Sekolah'}</p>
                   <p className="text-sm font-medium text-white/90">{draft.participant.metadata?.schoolData?.schoolName || draft.participant.institution}</p>
                 </div>
               </div>

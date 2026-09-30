@@ -144,7 +144,7 @@ export function StepETicket({ event, draft, successResult }: StepETicketProps) {
                 {isFutsal ? (
                   <>
                     <div style={{ gridColumn: 'span 1' }}>
-                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>{draft.eventSlug === 'turnamen-futsal-umum' ? 'Nama Tim' : 'Asal Sekolah'}</p>
+                      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', textTransform: 'uppercase', marginBottom: '4px' }}>{draft.eventSlug === 'turnamen-futsal-mahasiswa' ? 'Nama Tim' : 'Asal Sekolah'}</p>
                       <p style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px', lineHeight: '1.3' }}>{schoolName}</p>
                     </div>
                     {draft.eventSlug === 'turnamen-futsal-slta' && (
