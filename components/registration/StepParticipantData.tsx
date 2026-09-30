@@ -63,8 +63,10 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       
       if (mode === 'school') {
         if (!school.schoolName?.trim()) { newErrors['schoolData.schoolName'] = eventSlug === 'turnamen-futsal-mahasiswa' ? "Nama Tim wajib diisi." : "Nama Sekolah wajib diisi."; isValid = false; }
-        if (!school.level?.trim()) { newErrors['schoolData.level'] = "Kategori/Jenjang wajib dipilih."; isValid = false; }
-        if (!school.address?.trim()) { newErrors['schoolData.address'] = "Alamat wajib diisi."; isValid = false; }
+        if (eventSlug !== 'turnamen-futsal-mahasiswa') {
+          if (!school.level?.trim()) { newErrors['schoolData.level'] = "Kategori/Jenjang wajib dipilih."; isValid = false; }
+          if (!school.address?.trim()) { newErrors['schoolData.address'] = "Alamat wajib diisi."; isValid = false; }
+        }
         if (!school.city?.trim()) { newErrors['schoolData.city'] = "Kota/Kabupaten wajib diisi."; isValid = false; }
         
         if (eventSlug === 'turnamen-futsal-slta') {
@@ -883,30 +885,25 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                     <input type="text" value={data.metadata.schoolData?.schoolName || ''} onChange={(e) => updateSchoolData('schoolName', e.target.value)} placeholder={eventSlug === 'turnamen-futsal-mahasiswa' ? "Nama Tim" : "SMA Negeri 1 Padang"} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                     {errors['schoolData.schoolName'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.schoolName']}</p>}
                   </div>
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Kategori Tim' : 'Jenjang'} <span className="text-status-warning">*</span></label>
-                    <select value={data.metadata.schoolData?.level || ''} onChange={(e) => updateSchoolData('level', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
-                      <option value="" disabled>Pilih {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Kategori' : 'Jenjang'}</option>
-                      {eventSlug === 'turnamen-futsal-mahasiswa' ? (
-                        <>
-                          <option value="Mahasiswa">Mahasiswa</option>
-                          <option value="Umum">Umum</option>
-                        </>
-                      ) : (
-                        <>
+                  {eventSlug !== 'turnamen-futsal-mahasiswa' && (
+                    <>
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Jenjang <span className="text-status-warning">*</span></label>
+                        <select value={data.metadata.schoolData?.level || ''} onChange={(e) => updateSchoolData('level', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
+                          <option value="" disabled>Pilih Jenjang</option>
                           <option value="SMA">SMA</option>
                           <option value="SMK">SMK</option>
                           <option value="MA">MA</option>
-                        </>
-                      )}
-                    </select>
-                    {errors['schoolData.level'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.level']}</p>}
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Alamat Tim / Basecamp' : 'Alamat Sekolah'} <span className="text-status-warning">*</span></label>
-                    <input type="text" value={data.metadata.schoolData?.address || ''} onChange={(e) => updateSchoolData('address', e.target.value)} placeholder="Jl. Sudirman No. 1" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                    {errors['schoolData.address'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.address']}</p>}
-                  </div>
+                        </select>
+                        {errors['schoolData.level'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.level']}</p>}
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="block text-sm font-medium text-white/90">Alamat Sekolah <span className="text-status-warning">*</span></label>
+                        <input type="text" value={data.metadata.schoolData?.address || ''} onChange={(e) => updateSchoolData('address', e.target.value)} placeholder="Jl. Sudirman No. 1" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        {errors['schoolData.address'] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors['schoolData.address']}</p>}
+                      </div>
+                    </>
+                  )}
                   <div className="space-y-2">
                     <label className="block text-sm font-medium text-white/90">Kota/Kabupaten <span className="text-status-warning">*</span></label>
                     <input type="text" value={data.metadata.schoolData?.city || ''} onChange={(e) => updateSchoolData('city', e.target.value)} placeholder="Kota Padang" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
