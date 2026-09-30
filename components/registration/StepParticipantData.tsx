@@ -182,6 +182,11 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
       }
       const meta = data.metadata || {};
       if (!meta.address?.trim()) { newErrors['metadata.address'] = "Alamat wajib diisi."; isValid = false; }
+      
+      if (eventSlug === 'open-bazaar-mahasiswa') {
+        if (!meta.ktmUrl) { newErrors['metadata.ktmUrl'] = "Lampiran Kartu Tanda Mahasiswa (KTM) wajib diunggah."; isValid = false; }
+        if (!meta.krsUrl) { newErrors['metadata.krsUrl'] = "Lampiran Kartu Rencana Studi (KRS) wajib diunggah."; isValid = false; }
+      }
     }
 
     if (mode === 'mtq') {
@@ -541,6 +546,50 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
             />
           </div>
+
+          {eventSlug === 'open-bazaar-mahasiswa' && (
+            <>
+              {/* Upload KTM */}
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-white/90">Lampiran KTM <span className="text-status-warning">*</span></label>
+                <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+                  <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('ktmUrl', e)} disabled={uploadingState?.field === 'ktmUrl'} />
+                  {uploadingState?.field === 'ktmUrl' ? (
+                    <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+                  ) : data.metadata?.ktmUrl ? (
+                    <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+                  )}
+                </label>
+                {errors['metadata.ktmUrl'] && (
+                  <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                    <AlertCircle size={14} /> {errors['metadata.ktmUrl']}
+                  </p>
+                )}
+              </div>
+
+              {/* Upload KRS */}
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-white/90">Lampiran KRS <span className="text-status-warning">*</span></label>
+                <label className="relative flex flex-col items-center justify-center p-6 border-2 border-white/20 border-dashed rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+                  <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleSingleFileUpload('krsUrl', e)} disabled={uploadingState?.field === 'krsUrl'} />
+                  {uploadingState?.field === 'krsUrl' ? (
+                    <div className="animate-spin w-6 h-6 border-2 border-brand-accent border-t-transparent rounded-full" />
+                  ) : data.metadata?.krsUrl ? (
+                    <div className="flex items-center gap-2 text-status-success"><FileImage size={20} /> <span>File Terunggah</span></div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-white/60"><UploadCloud size={24} /> <span className="text-sm">Pilih File</span></div>
+                  )}
+                </label>
+                {errors['metadata.krsUrl'] && (
+                  <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
+                    <AlertCircle size={14} /> {errors['metadata.krsUrl']}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
         </GlassCard>
       )}
 
