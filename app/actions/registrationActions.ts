@@ -47,8 +47,13 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       }
       
       const school = meta.schoolData;
-      if (!school || !school.schoolName || !school.level || !school.address || !school.city) {
+      if (!school || !school.schoolName || !school.city) {
         return { success: false, error: "Semua kolom Data Sekolah / Tim wajib diisi." };
+      }
+      if (draft.eventSlug !== 'turnamen-futsal-mahasiswa') {
+        if (!school.level || !school.address) {
+          return { success: false, error: "Semua kolom Data Sekolah / Tim wajib diisi." };
+        }
       }
 
       if (draft.eventSlug === 'turnamen-futsal-slta') {
@@ -64,7 +69,10 @@ export async function registerParticipant(draft: RegistrationDraft): Promise<Reg
       for (let i = 0; i < players.length; i++) {
         const p = players[i];
         if (!p.name || !p.nisn) {
-          return { success: false, error: "Nama dan NISN setiap pemain wajib diisi." };
+          return { success: false, error: "Nama dan NIM/NISN setiap pemain wajib diisi." };
+        }
+        if (draft.eventSlug === 'turnamen-futsal-mahasiswa' && !p.university) {
+          return { success: false, error: "Asal Perguruan Tinggi setiap pemain wajib diisi." };
         }
         if (i === 0 && !p.whatsapp) {
           return { success: false, error: "Nomor WhatsApp Pemain 1 (Kapten) wajib diisi." };
