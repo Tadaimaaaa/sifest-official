@@ -100,6 +100,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             
             if (eventSlug === 'turnamen-futsal-mahasiswa') {
               if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NIM / NoBP pemain wajib diisi."; isValid = false; }
+              if (!p.university?.trim()) { newErrors[`players.${idx}.university`] = "Asal Perguruan Tinggi wajib diisi."; isValid = false; }
               if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Lampiran Kartu Tanda Mahasiswa wajib diunggah."; isValid = false; }
               if (!p.birthCertificateUrl) { newErrors[`players.${idx}.birthCertificateUrl`] = "Lampiran Kartu Rencana Studi (KRS) wajib diunggah."; isValid = false; }
             } else {
@@ -1003,6 +1004,14 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                         {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                       </div>
                     </div>
+
+                    {eventSlug === 'turnamen-futsal-mahasiswa' && (
+                      <div className="w-full space-y-2">
+                        <label className="block text-sm font-medium text-white/90">Asal Perguruan Tinggi <span className="text-status-warning">*</span></label>
+                        <input type="text" value={player.university || ''} onChange={(e) => updatePlayer(idx, 'university', e.target.value)} placeholder="Contoh: Universitas Andalas" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        {errors[`players.${idx}.university`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                      </div>
+                    )}
 
                     {idx === 0 && (
                       <div className="w-full sm:w-1/2 pr-0 sm:pr-2 space-y-2">
