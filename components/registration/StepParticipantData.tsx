@@ -97,10 +97,18 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
           for (let idx = 0; idx < players.length; idx++) {
             const p = players[idx];
             if (!p.name?.trim()) { newErrors[`players.${idx}.name`] = "Nama pemain wajib diisi."; isValid = false; }
-            if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NISN pemain wajib diisi."; isValid = false; }
+            
+            if (eventSlug === 'turnamen-futsal-mahasiswa') {
+              if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NIM / NoBP pemain wajib diisi."; isValid = false; }
+              if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Lampiran Kartu Tanda Mahasiswa wajib diunggah."; isValid = false; }
+              if (!p.birthCertificateUrl) { newErrors[`players.${idx}.birthCertificateUrl`] = "Lampiran Kartu Rencana Studi (KRS) wajib diunggah."; isValid = false; }
+            } else {
+              if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NISN pemain wajib diisi."; isValid = false; }
+              if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Kartu Tanda Pelajar wajib diunggah."; isValid = false; }
+            }
+
             if (idx === 0 && !p.whatsapp?.trim()) { newErrors[`players.0.whatsapp`] = "No WhatsApp Kapten wajib diisi."; isValid = false; }
             if (!p.photoUrl) { newErrors[`players.${idx}.photoUrl`] = "Pas Foto Pemain wajib diunggah."; isValid = false; }
-            if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Kartu Tanda Pelajar wajib diunggah."; isValid = false; }
             if (!p.jerseyNumber?.trim()) { newErrors[`players.${idx}.jerseyNumber`] = "Nomor Punggung wajib diisi."; isValid = false; }
           }
         }
@@ -990,8 +998,8 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                         {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                       </div>
                       <div className="flex-1 w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">NISN <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.nisn} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder="00123..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'NIM / NoBP' : 'NISN'} <span className="text-status-warning">*</span></label>
+                        <input type="text" value={player.nisn || ''} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder={eventSlug === 'turnamen-futsal-mahasiswa' ? 'Contoh: 211011526...' : '00123...'} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
                         {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
                       </div>
                     </div>
@@ -1053,9 +1061,9 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                         {errors[`players.${idx}.photoUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                       </div>
 
-                      {/* Upload Kartu Tanda Pelajar */}
+                      {/* Upload Kartu Tanda Pelajar / KTM */}
                       <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Kartu Tanda Pelajar <span className="text-status-warning">*</span></label>
+                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lampiran Kartu Tanda Mahasiswa' : 'Kartu Tanda Pelajar'} <span className="text-status-warning">*</span></label>
                         <div className="flex flex-col gap-2">
                           <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
                             <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
@@ -1067,22 +1075,28 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                             ) : (
                               <div className="flex items-center gap-2 text-white/80">
                                 <UploadCloud size={18} />
-                                <span className="text-sm">{player.studentCardUrl ? 'Ganti KTP/KTS' : 'Unggah KTP/KTS'}</span>
+                                <span className="text-sm">{player.studentCardUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KTM' : 'Ganti KTP/KTS') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KTM' : 'Unggah KTP/KTS')}</span>
                               </div>
                             )}
                           </label>
                           {player.studentCardUrl && (
                             <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> Lihat KTP/KTS
+                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KTM' : 'Lihat KTP/KTS'}
                             </a>
                           )}
                         </div>
                         {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                       </div>
 
-                      {/* Upload Akta Kelahiran */}
+                      {/* Upload Akta Kelahiran / KRS */}
                       <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                        <label className="block text-sm font-medium text-white/90">
+                          {eventSlug === 'turnamen-futsal-mahasiswa' ? (
+                            <>Lampiran Kartu Rencana Studi (KRS) <span className="text-status-warning">*</span></>
+                          ) : (
+                            <>Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></>
+                          )}
+                        </label>
                         <div className="flex flex-col gap-2">
                           <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
                             <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
@@ -1094,16 +1108,17 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                             ) : (
                               <div className="flex items-center gap-2 text-white/80">
                                 <UploadCloud size={18} />
-                                <span className="text-sm">{player.birthCertificateUrl ? 'Ganti Akta' : 'Unggah Akta'}</span>
+                                <span className="text-sm">{player.birthCertificateUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KRS' : 'Ganti Akta') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KRS' : 'Unggah Akta')}</span>
                               </div>
                             )}
                           </label>
                           {player.birthCertificateUrl && (
                             <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> Lihat Akta
+                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KRS' : 'Lihat Akta'}
                             </a>
                           )}
                         </div>
+                        {errors[`players.${idx}.birthCertificateUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                       </div>
                     </div>
                   </div>
