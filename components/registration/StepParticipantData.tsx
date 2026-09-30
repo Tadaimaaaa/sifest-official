@@ -45,16 +45,16 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         isValid = false;
       }
 
-      if (!data.institution.trim()) {
-        newErrors.institution = "Data wajib diisi.";
+      if (data.metadata?.institutionType === 'UPI YPTK Padang') {
+        if (!data.metadata?.jurusan?.trim()) { newErrors['metadata.jurusan'] = "Jurusan wajib diisi."; isValid = false; }
+        if (!data.metadata?.nobp?.trim()) { newErrors['metadata.nobp'] = "NoBP wajib diisi."; isValid = false; }
+        if (!data.metadata?.kelas?.trim()) { newErrors['metadata.kelas'] = "Kelas wajib diisi."; isValid = false; }
+      } else if (data.metadata?.institutionType === 'Lainnya') {
+        if (!data.institution.trim() || data.institution === 'UPI YPTK Padang') { newErrors.institution = "Asal Universitas/Sekolah wajib diisi."; isValid = false; }
+      } else {
+        newErrors['metadata.institutionType'] = "Silakan pilih instansi.";
         isValid = false;
       }
-
-      if (!data.metadata?.nobp?.trim()) {
-        newErrors['metadata.nobp'] = "NoBP / NPM / NIS wajib diisi.";
-        isValid = false;
-      }
-    }
 
     if (eventSlug.startsWith('turnamen-futsal')) {
       const meta = data.metadata || { schoolData: {}, players: [] };
@@ -789,51 +789,81 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
             )}
           </div>
 
-          {/* Institution */}
-          <div className="space-y-2">
-            <label htmlFor="institution" className="block text-sm font-medium text-white/90">
-              {eventSlug === 'open-bazaar' 
-                ? "Kategori Usaha (F&B, Fashion, dll)" 
-                : "Kelas"} <span className="text-status-warning">*</span>
-            </label>
-            <input
-              id="institution"
-              type="text"
-              value={data.institution}
-              onChange={(e) => onUpdate({ ...data, institution: e.target.value })}
-              placeholder={
-                eventSlug === 'open-bazaar' 
-                  ? "Contoh: Makanan & Minuman" 
-                  : "Contoh: SI 1"
-              }
-              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
-            />
-            {errors.institution && (
-              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
-                <AlertCircle size={14} /> {errors.institution}
-              </p>
-            )}
+          {/* Dropdown Instansi */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="block text-sm font-medium text-white/90">Asal Instansi <span className="text-status-warning">*</span></label>
+            <select
+              value={data.metadata?.institutionType || ''}
+              onChange={(e) => {
+                const type = e.target.value;
+                onUpdate({ 
+                  ...data, 
+                  institution: type === 'UPI YPTK Padang' ? 'UPI YPTK Padang' : '',
+                  metadata: { ...data.metadata, institutionType: type } 
+                });
+              }}
+              className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:outline-none focus:border-brand-accent transition-all"
+            >
+              <option value="" disabled>Pilih instansi...</option>
+              <option value="UPI YPTK Padang">UPI "YPTK" Padang</option>
+              <option value="Lainnya">Universitas/Sekolah lain</option>
+            </select>
+            {errors['metadata.institutionType'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.institutionType']}</p>}
           </div>
 
-          {/* NoBP */}
-          <div className="space-y-2">
-            <label htmlFor="nobp" className="block text-sm font-medium text-white/90">
-              NoBP / NPM / NIS <span className="text-status-warning">*</span>
-            </label>
-            <input
-              id="nobp"
-              type="text"
-              value={data.metadata?.nobp || ''}
-              onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, nobp: e.target.value } })}
-              placeholder="Contoh: 21101152630xxx"
-              className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all"
-            />
-            {errors['metadata.nobp'] && (
-              <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5">
-                <AlertCircle size={14} /> {errors['metadata.nobp']}
-              </p>
-            )}
-          </div>
+          {data.metadata?.institutionType === 'UPI YPTK Padang' && (
+            <>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-white/90">Jurusan <span className="text-status-warning">*</span></label>
+                <input
+                  type="text"
+                  value={data.metadata?.jurusan || ''}
+                  onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, jurusan: e.target.value } })}
+                  placeholder="Contoh: Sistem Informasi"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+                {errors['metadata.jurusan'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.jurusan']}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-white/90">NoBP <span className="text-status-warning">*</span></label>
+                <input
+                  type="text"
+                  value={data.metadata?.nobp || ''}
+                  onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, nobp: e.target.value } })}
+                  placeholder="Contoh: 21101152630xxx"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+                {errors['metadata.nobp'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.nobp']}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-white/90">Kelas <span className="text-status-warning">*</span></label>
+                <input
+                  type="text"
+                  value={data.metadata?.kelas || ''}
+                  onChange={(e) => onUpdate({ ...data, metadata: { ...data.metadata, kelas: e.target.value } })}
+                  placeholder="Contoh: SI 1"
+                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+                />
+                {errors['metadata.kelas'] && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors['metadata.kelas']}</p>}
+              </div>
+            </>
+          )}
+
+          {data.metadata?.institutionType === 'Lainnya' && (
+            <div className="space-y-2 md:col-span-2">
+              <label className="block text-sm font-medium text-white/90">Asal Universitas/Sekolah <span className="text-status-warning">*</span></label>
+              <input
+                type="text"
+                value={data.institution !== 'UPI YPTK Padang' ? data.institution : ''}
+                onChange={(e) => onUpdate({ ...data, institution: e.target.value })}
+                placeholder="Contoh: Universitas Andalas"
+                className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-white/30 focus:outline-none focus:border-brand-accent transition-all"
+              />
+              {errors.institution && <p className="flex items-center gap-1.5 text-sm text-status-warning mt-1.5"><AlertCircle size={14} /> {errors.institution}</p>}
+            </div>
+          )}
         </GlassCard>
       )}
 
