@@ -127,9 +127,9 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
         if (school) {
           submissionDraft.participant = {
             ...submissionDraft.participant,
-            fullName: school.coachName || team?.coachName || 'Official Tim',
+            fullName: school.coachName || team?.coachName || draft.participant.metadata?.players?.[0]?.name || 'Official Tim',
             email: school.email || '',
-            whatsapp: school.coachWhatsapp || team?.coachWhatsapp || '',
+            whatsapp: school.coachWhatsapp || team?.coachWhatsapp || draft.participant.metadata?.players?.[0]?.whatsapp || '',
             institution: school.schoolName || '',
           };
         }
