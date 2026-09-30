@@ -28,10 +28,15 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
     const registrationCode = generateRegistrationCode();
 
     // Step 1: Find the event by slug
+    let dbSlug = draft.eventSlug;
+    if (dbSlug === 'turnamen-futsal-mahasiswa') {
+      dbSlug = 'turnamen-futsal-umum';
+    }
+
     const { data: event, error: eventError } = await supabasePublic
       .from("events")
       .select("id, registration_open")
-      .eq("slug", draft.eventSlug)
+      .eq("slug", dbSlug)
       .single();
 
     if (eventError || !event) {
