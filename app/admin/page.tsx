@@ -1,6 +1,7 @@
-import { Sparkles, CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { RegistrationCountdown } from "@/components/events/RegistrationCountdown";
 import { DashboardStats } from "@/components/admin/DashboardStats";
+import { WebVisitsGraph } from "@/components/admin/WebVisitsGraph";
 
 export default function AdminDashboardOverview() {
   return (
@@ -31,35 +32,8 @@ export default function AdminDashboardOverview() {
       {/* Stats Grid */}
       <DashboardStats />
 
-      {/* System Status Banner */}
-      <div className="relative overflow-hidden bg-white border border-slate-200/80 rounded-xl p-6 sm:p-8 mt-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
-        {/* Background Patterns */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-        
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center border border-emerald-100 shrink-0">
-              <CheckCircle2 className="w-6 h-6 text-emerald-500" />
-            </div>
-            <div>
-              <h4 className="text-[15px] font-semibold text-slate-900 mb-1.5 flex items-center gap-3">
-                Sistem Utama Terhubung
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-100 border border-emerald-200 text-emerald-600 text-[10px] font-semibold tracking-widest uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Live
-                </span>
-              </h4>
-              <p className="text-slate-500 text-[13px] max-w-2xl leading-relaxed">
-                Database pusat dan penyimpanan awan (Cloud Storage) untuk <strong className="text-slate-800 font-medium">SI FEST Official</strong> telah disinkronisasi. Semua data publik siap ditampilkan kepada audiens. Pengelolaan lanjutan dilakukan di web panitia.
-              </p>
-            </div>
-          </div>
-          <button className="px-4 py-2 bg-slate-900 text-white text-[13px] font-medium rounded-md hover:bg-slate-800 transition-colors shrink-0 shadow-sm">
-            Cek Log Sinkronisasi
-          </button>
-        </div>
-      </div>
+      {/* Web Visits Graph */}
+      <WebVisitsGraph />
     </div>
   );
 }
