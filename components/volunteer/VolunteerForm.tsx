@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Upload, CheckCircle2, Loader2, ArrowRight, ChevronDown, Plus } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export function VolunteerForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,21 +49,6 @@ export function VolunteerForm() {
     }
   };
 
-  const fileToBase64 = (file: File): Promise<{ data: string, name: string, mime: string }> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        resolve({
-          data: reader.result as string,
-          name: file.name,
-          mime: file.type
-        });
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!pilihanUtama || !pilihanKedua) {
@@ -81,13 +67,32 @@ export function VolunteerForm() {
     setIsSubmitting(true);
     
     try {
-      // 1. Convert files to Base64
-      const buktiData = await fileToBase64(buktiFollow);
-      const krsData = await fileToBase64(krs);
+      // 1. Upload files to Supabase
+      const supabase = createClient();
       
-      const sertifDataArray = [];
-      for (const file of sertifikatFiles) {
-        sertifDataArray.push(await fileToBase64(file));
+      const uploadFile = async (file: File, prefix: string) => {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `volunteer_${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+        
+        const { error } = await supabase.storage
+          .from('registration_files')
+          .upload(fileName, file);
+          
+        if (error) throw error;
+        
+        const { data } = supabase.storage
+          .from('registration_files')
+          .getPublicUrl(fileName);
+          
+        return data.publicUrl;
+      };
+
+      const linkBukti = await uploadFile(buktiFollow, 'ig');
+      const linkKrs = await uploadFile(krs, 'krs');
+      
+      const linkSertifikatArray = [];
+      for (let i = 0; i < sertifikatFiles.length; i++) {
+        linkSertifikatArray.push(await uploadFile(sertifikatFiles[i], `sertif_${i+1}`));
       }
 
       // 2. Prepare payload
@@ -102,13 +107,9 @@ export function VolunteerForm() {
         event_1: pilihanUtama,
         event_2: pilihanKedua,
         motivasi,
-        buktiData: buktiData.data,
-        buktiName: buktiData.name,
-        buktiMime: buktiData.mime,
-        krsData: krsData.data,
-        krsName: krsData.name,
-        krsMime: krsData.mime,
-        sertifikatFiles: sertifDataArray
+        link_bukti: linkBukti,
+        link_krs: linkKrs,
+        link_sertifikat: linkSertifikatArray.join(', ')
       };
 
       // 3. Send to Google Apps Script
