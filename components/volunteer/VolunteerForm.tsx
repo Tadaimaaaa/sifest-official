@@ -112,7 +112,7 @@ export function VolunteerForm() {
       };
 
       // 3. Send to Google Apps Script
-      const SCRIPT_URL = process.env.NEXT_PUBLIC_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbzJfiEuqxyBt2uT1mg2ukqgDLtxWsLA2eLgRUYU9m_N6y_EjSe3bBkXZIwvssGGLvfx4w/exec";
+      const SCRIPT_URL = process.env.NEXT_PUBLIC_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbw4UVTeqWldKdfsCyfbfYBpepIjjm08PVSndA19MuCqrV30PktJ1y5-1oFD1lL2KYfgEg/exec";
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: {
