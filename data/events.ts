@@ -102,7 +102,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
-      "Pemain wajib melampirkan Kartu Pelajar (KTS) yang aktif, Akta Kelahiran, dan Pas Foto",
+      "Pemain wajib melampirkan Kartu Pelajar (KTS) / Surat Keterangan Dari Sekolah yang aktif",
       "Setiap tim wajib mengikuti Technical Meeting sebelum pertandingan",
       "Melunasi biaya pendaftaran sebelum tenggat waktu"
     ],

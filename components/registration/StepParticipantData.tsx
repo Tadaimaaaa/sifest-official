@@ -107,11 +107,10 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
               if (!p.birthCertificateUrl) { newErrors[`players.${idx}.birthCertificateUrl`] = "Lampiran Kartu Rencana Studi (KRS) wajib diunggah."; isValid = false; }
             } else {
               if (!p.nisn?.trim()) { newErrors[`players.${idx}.nisn`] = "NISN pemain wajib diisi."; isValid = false; }
-              if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Kartu Tanda Pelajar wajib diunggah."; isValid = false; }
+              if (!p.studentCardUrl) { newErrors[`players.${idx}.studentCardUrl`] = "Kartu Tanda Pelajar / Surat Keterangan Dari Sekolah wajib diunggah."; isValid = false; }
             }
 
             if (idx === 0 && !p.whatsapp?.trim()) { newErrors[`players.0.whatsapp`] = "No WhatsApp Kapten wajib diisi."; isValid = false; }
-            if (!p.photoUrl) { newErrors[`players.${idx}.photoUrl`] = "Foto Pemain wajib diunggah."; isValid = false; }
             if (!p.jerseyNumber?.trim()) { newErrors[`players.${idx}.jerseyNumber`] = "Nomor Punggung wajib diisi."; isValid = false; }
           }
         }
@@ -1059,37 +1058,10 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
-                      {/* Upload Foto Pemain */}
-                      <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Foto Pemain <span className="text-status-warning">*</span></label>
-                        <div className="flex flex-col gap-2">
-                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.photoUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                            <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(idx, 'photoUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'photoUrl'} />
-                            {uploadingState?.idx === idx && uploadingState?.field === 'photoUrl' ? (
-                              <div className="flex items-center gap-2 text-brand-accent">
-                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                                <span className="text-sm">Mengunggah...</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center gap-2 text-white/80">
-                                <UploadCloud size={18} />
-                                <span className="text-sm">{player.photoUrl ? 'Ganti Foto' : 'Unggah Foto'}</span>
-                              </div>
-                            )}
-                          </label>
-                          {player.photoUrl && (
-                            <a href={player.photoUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> Lihat Foto
-                            </a>
-                          )}
-                        </div>
-                        {errors[`players.${idx}.photoUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
-                      </div>
-
+                    <div className={`grid grid-cols-1 ${eventSlug === 'turnamen-futsal-mahasiswa' ? 'md:grid-cols-2' : ''} gap-4 w-full mt-4`}>
                       {/* Upload Kartu Tanda Pelajar / KTM */}
                       <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lampiran Kartu Tanda Mahasiswa' : 'Kartu Tanda Pelajar'} <span className="text-status-warning">*</span></label>
+                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lampiran Kartu Tanda Mahasiswa' : 'Kartu Tanda Pelajar ( / Surat Keterangan Dari Sekolah )'} <span className="text-status-warning">*</span></label>
                         <div className="flex flex-col gap-2">
                           <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
                             <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
@@ -1101,13 +1073,13 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                             ) : (
                               <div className="flex items-center gap-2 text-white/80">
                                 <UploadCloud size={18} />
-                                <span className="text-sm">{player.studentCardUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KTM' : 'Ganti KTP/KTS') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KTM' : 'Unggah KTP/KTS')}</span>
+                                <span className="text-sm">{player.studentCardUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KTM' : 'Ganti KTP/KTS/Surket') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KTM' : 'Unggah KTP/KTS/Surket')}</span>
                               </div>
                             )}
                           </label>
                           {player.studentCardUrl && (
                             <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KTM' : 'Lihat KTP/KTS'}
+                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KTM' : 'Lihat KTP/KTS/Surket'}
                             </a>
                           )}
                         </div>
@@ -1115,37 +1087,35 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                       </div>
 
                       {/* Upload Akta Kelahiran / KRS */}
-                      <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">
-                          {eventSlug === 'turnamen-futsal-mahasiswa' ? (
-                            <>Lampiran Kartu Rencana Studi (KRS) <span className="text-status-warning">*</span></>
-                          ) : (
-                            <>Akta Kelahiran <span className="text-xs text-white/50 font-normal">(Opsional)</span></>
-                          )}
-                        </label>
-                        <div className="flex flex-col gap-2">
-                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                            <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
-                            {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
-                              <div className="flex items-center gap-2 text-brand-accent">
-                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                                <span className="text-sm">Mengunggah...</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center gap-2 text-white/80">
-                                <UploadCloud size={18} />
-                                <span className="text-sm">{player.birthCertificateUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KRS' : 'Ganti Akta') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KRS' : 'Unggah Akta')}</span>
-                              </div>
-                            )}
+                      {eventSlug === 'turnamen-futsal-mahasiswa' && (
+                        <div className="w-full space-y-2">
+                          <label className="block text-sm font-medium text-white/90">
+                            Lampiran Kartu Rencana Studi (KRS) <span className="text-status-warning">*</span>
                           </label>
-                          {player.birthCertificateUrl && (
-                            <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KRS' : 'Lihat Akta'}
-                            </a>
-                          )}
+                          <div className="flex flex-col gap-2">
+                            <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
+                              {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
+                                <div className="flex items-center gap-2 text-brand-accent">
+                                  <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                                  <span className="text-sm">Mengunggah...</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2 text-white/80">
+                                  <UploadCloud size={18} />
+                                  <span className="text-sm">{player.birthCertificateUrl ? 'Ganti KRS' : 'Unggah KRS'}</span>
+                                </div>
+                              )}
+                            </label>
+                            {player.birthCertificateUrl && (
+                              <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                                <FileImage size={16} /> Lihat KRS
+                              </a>
+                            )}
+                          </div>
+                          {errors[`players.${idx}.birthCertificateUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                         </div>
-                        {errors[`players.${idx}.birthCertificateUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
-                      </div>
+                      )}
                     </div>
                   </div>
                 ))}
