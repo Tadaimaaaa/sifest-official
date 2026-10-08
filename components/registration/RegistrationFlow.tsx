@@ -95,12 +95,22 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
         { id: 4, label: "Ulasan" },
         { id: 5, label: "Pembayaran" },
       ]
+    : draft.eventSlug === 'lomba-keagamaan'
+    ? [
+        { id: 1, label: "Acara" },
+        { id: 2, label: "Data Peserta" },
+        { id: 3, label: "Ulasan" },
+      ]
     : [
         { id: 1, label: "Acara" },
         { id: 2, label: "Data Peserta" },
         { id: 3, label: "Ulasan" },
         { id: 4, label: "Pembayaran" },
       ];
+
+  const reviewStepNum = steps.findIndex(s => s.label === "Ulasan") + 1;
+  const successStepNum = reviewStepNum + 1;
+  const eTicketStepNum = successStepNum + 2;
 
   const handleEventSelect = (slug: string) => {
     setDraft((prev) => ({ ...prev, eventSlug: slug }));
@@ -199,7 +209,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
           code: result.registrationCode as string,
           id: result.registrationId as string
         });
-        setCurrentStep(steps.length);
+        setCurrentStep(successStepNum);
       } else {
         setSubmitError(result.error || "Gagal melakukan pendaftaran.");
       }
@@ -396,7 +406,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                 />
               )}
 
-              {currentStep === steps.length - 1 && selectedEvent && !successResult && (
+              {currentStep === reviewStepNum && selectedEvent && !successResult && (
                 <div className="space-y-4">
                   {submitError && (
                     <div className="w-full bg-status-warning/10 border border-status-warning/20 text-status-warning p-4 rounded-xl flex items-center justify-center text-center">
@@ -442,7 +452,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Payment Step */}
-              {currentStep === steps.length && successResult && selectedEvent && (
+              {currentStep === successStepNum && successResult && selectedEvent && (
                 <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-brand-accent/20 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(245,183,22,0.3)]">
                     <svg className="w-10 h-10 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -528,7 +538,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                   
                   {isEventFree() ? (
                     <button
-                      onClick={() => goToStep(steps.length + 2)}
+                      onClick={() => goToStep(eTicketStepNum)}
                       className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-brand-primary text-brand-secondary hover:bg-brand-accent hover:shadow-[0_0_20px_rgba(245,183,22,0.4)]"
                     >
                       Lihat E-Ticket
@@ -551,7 +561,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                       </a>
                       {uploadSuccess ? (
                         <button
-                          onClick={() => goToStep(steps.length + 2)}
+                          onClick={() => goToStep(eTicketStepNum)}
                           className="block w-full py-4 rounded-xl font-bold text-lg text-center transition-all duration-300 bg-white/10 text-white hover:bg-white/20 border border-white/10"
                         >
                           Selesai & Lihat E-Ticket
@@ -570,7 +580,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Step 6: E-Ticket */}
-              {currentStep === steps.length + 2 && successResult && selectedEvent && (
+              {currentStep === eTicketStepNum && successResult && selectedEvent && (
                 <StepETicket 
                   event={selectedEvent} 
                   draft={draft} 
@@ -579,7 +589,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Edge case fallback */}
-              {(currentStep === steps.length - 1 || currentStep === steps.length || currentStep === steps.length + 1 || currentStep === steps.length + 2) && !selectedEvent && (
+              {(currentStep === reviewStepNum || currentStep === successStepNum || currentStep === successStepNum + 1 || currentStep === eTicketStepNum) && !selectedEvent && (
                 <div className="text-center py-20">
                   <p className="text-white/60 mb-6">Acara tidak valid atau belum dipilih.</p>
                   <button onClick={() => goToStep(1)} className="text-brand-accent hover:underline">
