@@ -1,17 +1,34 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, Settings, LogOut, Menu, X, Handshake, ImageIcon, BookOpen, Activity } from "lucide-react";
+import { LayoutDashboard, Users, Settings, LogOut, Menu, X, Handshake, ImageIcon, BookOpen, Activity, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   if (pathname === "/admin/login") {
     return <>{children}</>;
   }
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+      });
+    } catch (e) {
+      console.error("Logout error:", e);
+    } finally {
+      router.push("/admin/login");
+      router.refresh();
+    }
+  };
 
   const navItems = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
@@ -32,7 +49,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           <div className="font-semibold text-sm tracking-tight text-slate-900">SI FEST WORKSPACE</div>
         </div>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-500 hover:text-slate-900 transition-colors">
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          className="text-slate-500 hover:text-slate-900 transition-colors p-1"
+          aria-label="Toggle Menu"
+        >
           {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
@@ -46,7 +67,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       `}>
         {/* Workspace Header */}
         <div className="h-14 flex items-center px-4 border-b border-slate-200/80">
-          <div className="flex items-center gap-3 w-full hover:bg-slate-200/50 p-1.5 -ml-1.5 rounded-md cursor-pointer transition-colors">
+          <Link href="/admin" className="flex items-center gap-3 w-full hover:bg-slate-200/50 p-1.5 -ml-1.5 rounded-md cursor-pointer transition-colors">
             <div className="w-6 h-6 rounded-[5px] bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-[0_2px_10px_rgba(37,99,235,0.2)]">
               <Activity size={12} className="text-white" />
             </div>
@@ -54,7 +75,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span className="font-semibold text-[13px] leading-none text-slate-900">SI FEST 2026</span>
               <span className="text-[10px] font-medium text-slate-500 mt-1 uppercase tracking-wider">Admin Portal</span>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Navigation */}
@@ -85,7 +106,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        {/* User Profile Footer */}
+        {/* User Profile Footer & Logout */}
         <div className="p-4 border-t border-slate-200/80 bg-white">
           <div className="flex items-center justify-between group">
             <div className="flex items-center gap-3">
@@ -97,9 +118,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <span className="text-[11px] text-slate-500 font-medium">admin@sifest.id</span>
               </div>
             </div>
-            <Link href="/admin/login" className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors" title="Sign out">
-              <LogOut size={14} />
-            </Link>
+            <button 
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors cursor-pointer disabled:opacity-50" 
+              title="Keluar dari Portal"
+            >
+              {isLoggingOut ? <Loader2 size={14} className="animate-spin text-red-500" /> : <LogOut size={14} />}
+            </button>
           </div>
         </div>
       </aside>
