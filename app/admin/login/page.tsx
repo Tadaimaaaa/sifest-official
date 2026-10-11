@@ -1,6 +1,7 @@
 "use client";
 
-import { Lock, Mail, ArrowRight, ShieldCheck, Eye, EyeOff, AlertCircle, KeyRound } from "lucide-react";
+import { Lock, Mail, ArrowRight, Eye, EyeOff, AlertCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -56,12 +57,6 @@ function LoginForm() {
     }
   };
 
-  const handleQuickFill = () => {
-    setEmail("admin@sifest.id");
-    setPassword("sifest2026admin");
-    setErrorMessage(null);
-  };
-
   return (
     <main className="min-h-[100svh] w-full bg-slate-50 flex items-center justify-center relative overflow-hidden p-4">
       {/* Background Ambience */}
@@ -80,9 +75,16 @@ function LoginForm() {
 
       <div className="w-full max-w-md relative z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white border border-slate-200 mb-5 shadow-xl shadow-slate-200/50 relative overflow-hidden group">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white border border-slate-200 mb-5 shadow-xl shadow-slate-200/50 relative overflow-hidden group p-2.5">
             <div className="absolute inset-0 bg-blue-600/5 rounded-2xl group-hover:bg-blue-600/10 transition-colors" />
-            <ShieldCheck className="w-10 h-10 text-blue-600 relative z-10" />
+            <Image
+              src="/logo-sifest.png"
+              alt="Logo SI FEST"
+              width={64}
+              height={64}
+              className="w-full h-full object-contain relative z-10 drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+              priority
+            />
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-1.5 tracking-tight">
             Portal Admin SI FEST
@@ -169,21 +171,6 @@ function LoginForm() {
               )}
             </button>
           </form>
-
-          {/* Quick Credential Box for Convenience */}
-          <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span className="flex items-center gap-1.5 text-slate-400">
-              <KeyRound className="w-3.5 h-3.5" />
-              Kredensial Default:
-            </span>
-            <button
-              type="button"
-              onClick={handleQuickFill}
-              className="text-blue-600 hover:text-blue-800 font-medium hover:underline cursor-pointer"
-            >
-              Isi Otomatis
-            </button>
-          </div>
         </div>
 
         <div className="mt-6 text-center">
