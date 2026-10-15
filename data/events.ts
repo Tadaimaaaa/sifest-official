@@ -273,7 +273,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     guidebookUrl: "https://ihpgoxdgdhxnnpppasab.supabase.co/storage/v1/object/public/registration_files/guidebook_evt-03-efootball_1790957611180.pdf",
     requirements: [
       "Terbuka untuk umum (Pelajar, Mahasiswa, dan Umum) tanpa batasan komunitas atau domisili.",
-      "Format pertandingan 1 vs 1 menggunakan konsol PlayStation 5 (PS5) dengan sistem gugur (Single Elimination).",
+      "Format pertandingan 1 vs 1 menggunakan konsol PlayStation 4 (PS4) dengan sistem gugur (Single Elimination).",
       "Peserta wajib mengisi data pendaftaran yang valid (Nama Lengkap, Nickname in-game, dan No. WhatsApp aktif).",
       "Membawa kartu identitas diri (KTP / Kartu Pelajar / KTM) untuk verifikasi saat registrasi ulang di lokasi.",
       "Peserta wajib hadir dan melakukan check-in tepat waktu (keterlambatan melewati batas waktu dapat dikenakan WO).",
