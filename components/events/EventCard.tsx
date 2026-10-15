@@ -1,7 +1,9 @@
 import { EventData } from "@/data/events";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { EventRegistrationButton } from "@/components/events/EventRegistrationButton";
+import { Button } from "@/components/ui/Button";
+import { EventRegistrationButton } from "./EventRegistrationButton";
 import { BookOpen, Gamepad2, GraduationCap, Store, Trophy } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 
@@ -58,7 +60,12 @@ export function EventCard({ event }: { event: EventData }) {
           )}
         </div>
       )}
-      <EventRegistrationButton event={event} variant="card" />
+      <EventRegistrationButton 
+        slug={event.slug}
+        category={event.category}
+        href={`/events/${event.slug}`}
+        variant="card"
+      />
     </GlassCard>
   );
 }

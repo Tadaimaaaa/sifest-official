@@ -1,7 +1,7 @@
 import { EventData } from "@/data/events";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { EventRegistrationButton } from "@/components/events/EventRegistrationButton";
+import { EventRegistrationButton } from "./EventRegistrationButton";
 import Link from "next/link";
 import React from "react";
 
@@ -25,7 +25,12 @@ export function EventHero({ event }: { event: EventData }) {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full px-4 sm:px-0">
-            <EventRegistrationButton event={event} variant="hero" />
+            <EventRegistrationButton
+              slug={event.slug}
+              category={event.category}
+              href={`/registration?event=${event.slug}`}
+              variant="hero"
+            />
             <Link href={event.guidebookUrl || "#"} target={event.guidebookUrl ? "_blank" : "_self"} rel="noopener noreferrer" className="w-full sm:w-auto block">
               <Button size="lg" variant="glass" className="w-full sm:w-64 whitespace-nowrap text-white">
                 Buku Panduan

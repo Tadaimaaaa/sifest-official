@@ -2,71 +2,64 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import { Clock } from "lucide-react";
-import { EventData } from "@/data/events";
-
-// Target date for Gelombang 2: 17 Oktober 2026 00:00:00 WIB (UTC+7)
-const TARGET_DATE_STRING = "2026-10-17T00:00:00+07:00";
-
-/**
- * Checks if an event is exempt from the countdown (Seminar and MTQ/Keagamaan)
- */
-export function isExemptFromCountdown(event: { slug?: string; title?: string; category?: string }): boolean {
-  const slug = (event.slug || "").toLowerCase();
-  const title = (event.title || "").toLowerCase();
-  const category = (event.category || "").toLowerCase();
-
-  // Exclude Seminar
-  if (slug.includes("seminar") || title.includes("seminar") || category.includes("seminar")) {
-    return true;
-  }
-
-  // Exclude MTQ / Keagamaan
-  if (
-    slug.includes("mtq") || 
-    slug.includes("keagamaan") || 
-    title.includes("mtq") || 
-    title.includes("keagamaan")
-  ) {
-    return true;
-  }
-
-  return false;
-}
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 interface EventRegistrationButtonProps {
-  event: EventData;
-  variant?: "card" | "hero";
+  slug: string;
+  category?: string;
+  href?: string;
   className?: string;
+  variant?: "card" | "hero";
+}
+
+// Target Pendaftaran Gelombang ke-2: 17 Oktober 2026, 00:00:00 WIB
+const WAVE_2_START_TIME = new Date("2026-10-17T00:00:00+07:00").getTime();
+
+export function isWave2CountdownEvent(slug?: string, category?: string): boolean {
+  if (!slug) return false;
+  // Kecualikan Seminar dan MTQ (Lomba Keagamaan)
+  if (slug === "seminar-nasional" || slug === "lomba-keagamaan") {
+    return false;
+  }
+  if (category?.toLowerCase() === "seminar") {
+    return false;
+  }
+  return true;
+}
+
+interface TimeLeft {
+  d: number;
+  h: number;
+  m: number;
+  s: number;
 }
 
 export function EventRegistrationButton({
-  event,
+  slug,
+  category,
+  href,
+  className,
   variant = "card",
-  className = "",
 }: EventRegistrationButtonProps) {
   const [mounted, setMounted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number } | null>(null);
-  const [isCountdownActive, setIsCountdownActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
-  const isExempt = isExemptFromCountdown(event);
+  const isEligible = isWave2CountdownEvent(slug, category);
 
   useEffect(() => {
     setMounted(true);
 
-    if (isExempt) {
-      setIsCountdownActive(false);
-      return;
-    }
+    if (!isEligible) return;
 
     const calculateCountdown = () => {
-      const now = new Date().getTime();
-      const targetTime = new Date(TARGET_DATE_STRING).getTime();
-      const diff = targetTime - now;
+      const now = Date.now();
+      const diff = WAVE_2_START_TIME - now;
 
       if (diff > 0) {
-        setIsCountdownActive(true);
+        setIsPending(true);
         setTimeLeft({
           d: Math.floor(diff / (1000 * 60 * 60 * 24)),
           h: Math.floor((diff / (1000 * 60 * 60)) % 24),
@@ -74,68 +67,75 @@ export function EventRegistrationButton({
           s: Math.floor((diff / 1000) % 60),
         });
       } else {
-        // Countdown has finished, Gelombang 2 is open!
-        setIsCountdownActive(false);
+        setIsPending(false);
         setTimeLeft(null);
       }
     };
 
     calculateCountdown();
-    const interval = setInterval(calculateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, [isExempt]);
+    const timer = setInterval(calculateCountdown, 1000);
+    return () => clearInterval(timer);
+  }, [isEligible]);
 
-  // Card variant (homepage and /events cards)
-  if (variant === "card") {
-    // If exempt (Seminar or MTQ), or after countdown expires, show regular button
-    if (isExempt || !isCountdownActive) {
+  const defaultHref = variant === "hero" ? `/registration?event=${slug}` : `/events/${slug}`;
+  const targetHref = href || defaultHref;
+
+  // Jika event adalah non-Seminar & non-MTQ dan masih sebelum 17 Oktober 2026
+  if (isEligible && (isPending || !mounted)) {
+    if (variant === "card") {
       return (
-        <Link href={`/events/${event.slug}`} className="w-full mt-auto block">
-          <Button
-            variant="ghost"
-            className={`w-full min-h-[52px] border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium ${className}`}
+        <Link href={targetHref} className="w-full mt-auto block group/btn">
+          <div
+            className={cn(
+              "w-full rounded-[var(--radius-md)] border border-amber-400/40 bg-gradient-to-r from-amber-500/15 via-brand-accent/20 to-amber-500/15 backdrop-blur-md px-3 py-2.5 transition-all duration-300 group-hover/btn:border-brand-accent group-hover/btn:shadow-[0_0_20px_rgba(245,183,22,0.3)] flex flex-col items-center justify-center text-center",
+              className
+            )}
           >
-            Daftar Sekarang
-          </Button>
+            <span className="text-[11px] sm:text-xs font-semibold text-white/95 uppercase tracking-wide leading-tight mb-1">
+              Pendaftaran Gelombang ke-2 Dimulai :
+            </span>
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-brand-accent font-mono tracking-wider drop-shadow-[0_0_10px_rgba(245,183,22,0.5)]">
+              <Clock size={13} className="text-brand-accent animate-pulse" />
+              {timeLeft ? (
+                <span>
+                  {timeLeft.d}h {timeLeft.h}j {timeLeft.m}m {timeLeft.s}d
+                </span>
+              ) : (
+                <span className="opacity-75">Menghitung...</span>
+              )}
+            </div>
+          </div>
         </Link>
       );
     }
 
-    // Active countdown button for non-exempt events
+    // Variant Hero (Halaman detail event)
     return (
-      <Link href={`/events/${event.slug}`} className="w-full mt-auto block" title="Klik untuk melihat detail acara">
-        <Button
-          variant="ghost"
-          className={`w-full min-h-[52px] py-1.5 px-3 border border-brand-accent/50 bg-brand-accent/10 hover:bg-brand-accent/20 group-hover:border-brand-accent transition-all duration-300 glass-medium flex flex-col items-center justify-center gap-0.5 ${className}`}
-        >
-          <span className="text-[10px] sm:text-[11px] font-semibold text-brand-accent tracking-wide uppercase flex items-center justify-center gap-1.5 leading-tight">
-            <Clock className="w-3.5 h-3.5 animate-pulse text-brand-accent shrink-0" />
+      <div className={cn("w-full sm:w-auto block", className)}>
+        <div className="w-full sm:w-auto min-w-[280px] sm:min-w-[340px] px-6 py-3.5 rounded-[var(--radius-pill)] border border-amber-400/50 bg-gradient-to-r from-amber-500/20 via-brand-accent/25 to-amber-500/20 backdrop-blur-xl shadow-[0_0_25px_rgba(245,183,22,0.25)] flex flex-col items-center justify-center text-center">
+          <span className="text-xs sm:text-sm font-semibold text-white/95 uppercase tracking-wider mb-1">
             Pendaftaran Gelombang ke-2 Dimulai :
           </span>
-          <span className="text-xs sm:text-sm font-bold text-white font-mono tracking-wider leading-tight">
-            {!mounted || !timeLeft ? (
-              <span className="opacity-70 font-sans text-xs">Menghitung...</span>
+          <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-brand-accent font-mono tracking-wider drop-shadow-[0_0_12px_rgba(245,183,22,0.6)]">
+            <Clock size={16} className="text-brand-accent animate-pulse" />
+            {timeLeft ? (
+              <span>
+                {timeLeft.d} Hari : {String(timeLeft.h).padStart(2, "0")} Jam : {String(timeLeft.m).padStart(2, "0")} Menit : {String(timeLeft.s).padStart(2, "0")} Detik
+              </span>
             ) : (
-              <>
-                {timeLeft.d > 0 && `${timeLeft.d} Hari `}
-                {String(timeLeft.h).padStart(2, "0")} Jam {String(timeLeft.m).padStart(2, "0")} Menit {String(timeLeft.s).padStart(2, "0")} Detik
-              </>
+              <span>Menghitung...</span>
             )}
-          </span>
-        </Button>
-      </Link>
+          </div>
+        </div>
+      </div>
     );
   }
 
-  // Hero variant (event detail page)
-  if (isExempt || !isCountdownActive) {
+  // Kondisi Normal: Seminar, MTQ, atau setelah 17 Oktober 2026 (Gelombang 2 telah dibuka)
+  if (variant === "hero") {
     return (
-      <Link href={`/registration?event=${event.slug}`} className="w-full sm:w-auto block">
-        <Button
-          size="lg"
-          variant="primary"
-          className={`w-full sm:w-64 min-h-[48px] shadow-lg shadow-brand-accent/20 whitespace-nowrap ${className}`}
-        >
+      <Link href={targetHref} className={cn("w-full sm:w-auto block", className)}>
+        <Button size="lg" variant="primary" className="w-full sm:w-64 shadow-lg shadow-brand-accent/20 whitespace-nowrap">
           Daftar Sekarang
         </Button>
       </Link>
@@ -143,28 +143,16 @@ export function EventRegistrationButton({
   }
 
   return (
-    <div className="w-full sm:w-auto block">
+    <Link href={targetHref} className="w-full mt-auto block">
       <Button
-        size="lg"
-        variant="glass"
-        disabled
-        className={`w-full sm:w-auto min-w-[280px] min-h-[48px] py-2 px-5 border border-brand-accent/50 bg-brand-accent/10 shadow-[0_0_25px_rgba(245,183,22,0.15)] cursor-not-allowed flex flex-col items-center justify-center gap-0.5 ${className}`}
+        variant="ghost"
+        className={cn(
+          "w-full border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium",
+          className
+        )}
       >
-        <span className="text-[11px] sm:text-xs font-semibold text-brand-accent tracking-wide uppercase flex items-center gap-1.5 leading-tight">
-          <Clock className="w-3.5 h-3.5 animate-pulse text-brand-accent shrink-0" />
-          Pendaftaran Gelombang ke-2 Dimulai :
-        </span>
-        <span className="text-xs sm:text-sm font-bold text-white font-mono tracking-wider leading-tight">
-          {!mounted || !timeLeft ? (
-            <span className="opacity-70 font-sans text-xs">Menghitung...</span>
-          ) : (
-            <>
-              {timeLeft.d > 0 && `${timeLeft.d} Hari `}
-              {String(timeLeft.h).padStart(2, "0")} Jam {String(timeLeft.m).padStart(2, "0")} Menit {String(timeLeft.s).padStart(2, "0")} Detik
-            </>
-          )}
-        </span>
+        Daftar Sekarang
       </Button>
-    </div>
+    </Link>
   );
 }
