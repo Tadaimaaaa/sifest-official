@@ -270,34 +270,37 @@ export const OFFICIAL_EVENTS: EventData[] = [
       { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
       { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
     ],
+    guidebookUrl: "https://ihpgoxdgdhxnnpppasab.supabase.co/storage/v1/object/public/registration_files/guidebook_evt-03-efootball_1790957611180.pdf",
     requirements: [
-      "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
-      "Setiap pemain wajib menggunakan akun E-Football milik sendiri.",
-      "Dilarang menggunakan cheat, script, map hack, bug exploit, atau aplikasi ilegal.",
-      "Dilarang melakukan tindakan provokasi, penghinaan, atau tindakan yang mengganggu jalannya pertandingan.",
-      "Keterlambatan melewati batas waktu check-in dapat dikenakan WO.",
-      "Pergantian pemain hanya diperbolehkan sesuai ketentuan panitia.",
-      "Keputusan wasit/panitia terkait pertandingan bersifat final."
+      "Terbuka untuk umum (Pelajar, Mahasiswa, dan Umum) tanpa batasan komunitas atau domisili.",
+      "Format pertandingan 1 vs 1 menggunakan konsol PlayStation 5 (PS5) dengan sistem gugur (Single Elimination).",
+      "Peserta wajib mengisi data pendaftaran yang valid (Nama Lengkap, Nickname in-game, dan No. WhatsApp aktif).",
+      "Membawa kartu identitas diri (KTP / Kartu Pelajar / KTM) untuk verifikasi saat registrasi ulang di lokasi.",
+      "Peserta wajib hadir dan melakukan check-in tepat waktu (keterlambatan melewati batas waktu dapat dikenakan WO).",
+      "Dilarang menggunakan segala bentuk cheat, exploit, atau melakukan tindakan provokasi yang tidak sportif.",
+      "Dilarang mengganggu perangkat pertandingan seperti mematikan konsol, mencabut kabel, atau mengubah setelan sistem.",
+      "Penggunaan Nickname yang mengandung unsur SARA, kata kasar, atau pornografi dilarang dan tidak dapat diubah selama turnamen.",
+      "Keputusan wasit dan panitia pertandingan bersifat mutlak serta tidak dapat diganggu gugat."
     ],
     registrationFlow: [
-      "Ketua tim membuat akun dan mendaftarkan skuad di website SI FEST.",
-      "Mengisi ID Server dan Nickname masing-masing pemain dengan benar.",
-      "Membayar biaya registrasi secara online.",
-      "Masuk ke grup WhatsApp peserta melalui tautan yang dikirimkan.",
-      "Menunggu jadwal drawing dan bracket dari panitia."
+      "Peserta membaca Buku Panduan (Guidebook) Turnamen E-Football SI FEST 2026.",
+      "Mengisi formulir pendaftaran online di website SI FEST (pilihan Single Slot atau Double Slot).",
+      "Melakukan pembayaran biaya registrasi sesuai pilihan slot melalui metode yang tersedia.",
+      "Konfirmasi pembayaran dan bergabung ke grup WhatsApp peserta melalui tautan yang dikirimkan.",
+      "Mengunduh E-Ticket (QR Code) sebagai bukti pendaftaran untuk registrasi ulang saat hari H.",
+      "Mengikuti Technical Meeting untuk pengundian bracket pertandingan (16 Besar)."
     ],
     timeline: [
       { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
       { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
       { title: "Technical Meeting", date: "26 - 28 Oktober 2026" },
-      { title: "Babak Penyisihan", date: "03 - 04 November 2026" },
-      { title: "Grand Final", date: "05 November 2026" }
+      { title: "Babak Penyisihan (BO1)", date: "03 - 04 November 2026" },
+      { title: "Semifinal & Grand Final (BO3)", date: "05 November 2026" }
     ],
     benefits: [
       "Juara 1: Uang Tunai + Trophy + Sertifikat",
-      "Juara 2: Uang Tunai + Sertifikat",
-      "Juara 3: Uang Tunai + Sertifikat",
-      "MVP Final: Uang Tunai"
+      "Juara 2: Uang Tunai + Trophy + Sertifikat",
+      "Seluruh peserta mendapatkan E-Certificate resmi SI FEST 2026"
     ],
     contacts: [
       { name: "Nayla", phone: "0812-6753-72371" },
