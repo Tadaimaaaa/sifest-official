@@ -379,8 +379,13 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
-    price: "Rp 250.000",
+    price: "Rp 250.000 (Gel 1) / Rp 270.000 (Gel 2)",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
+    ],
     requirements: [
       "Pendaftaran tenant terbuka khusus untuk mahasiswa aktif",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
@@ -395,9 +400,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Mengikuti pengarahan (briefing) loading barang sebelum acara."
     ],
     timeline: [
-      { title: "Pendaftaran & Kurasi", date: "1 - 15 Oktober 2026" },
-      { title: "Pengumuman Lolos", date: "17 Oktober 2026" },
-      { title: "Technical Meeting Tenant", date: "20 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting Tenant", date: "28 Oktober 2026" },
       { title: "Pelaksanaan Bazaar", date: "02 - 06 November 2026" }
     ],
     benefits: [
@@ -424,8 +429,13 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
-    price: "Rp 300.000",
+    price: "Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
+    registrationStartDate: "2026-09-01T00:00:00+07:00",
     registrationCloseDate: "2026-10-25T23:59:59+07:00",
+    registrationPhases: [
+      { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
+      { name: "Gelombang 2", startDate: "2026-10-17T00:00:00+07:00", endDate: "2026-10-25T23:59:59+07:00" }
+    ],
     requirements: [
       "Pendaftaran tenant terbuka untuk pelaku UMKM umum",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
@@ -440,9 +450,9 @@ export const OFFICIAL_EVENTS: EventData[] = [
       "Mengikuti pengarahan (briefing) loading barang sebelum acara."
     ],
     timeline: [
-      { title: "Pendaftaran & Kurasi", date: "1 - 15 Oktober 2026" },
-      { title: "Pengumuman Lolos", date: "17 Oktober 2026" },
-      { title: "Technical Meeting Tenant", date: "20 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 1", date: "01 - 14 Oktober 2026" },
+      { title: "Pendaftaran Gelombang 2", date: "17 - 25 Oktober 2026" },
+      { title: "Technical Meeting Tenant", date: "28 Oktober 2026" },
       { title: "Pelaksanaan Bazaar", date: "02 - 06 November 2026" }
     ],
     benefits: [
@@ -469,6 +479,6 @@ export const OFFICIAL_EVENTS: EventData[] = [
     date: "02 - 06 November 2026",
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
-    price: "Mahasiswa: Rp 250.000\nUmum: Rp 300.000",
+    price: "Mahasiswa: Rp 250.000 (Gel 1) / Rp 270.000 (Gel 2)\nUmum: Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
   },
 ];
