@@ -1,8 +1,7 @@
 import { EventData } from "@/data/events";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Button } from "@/components/ui/Button";
+import { EventRegistrationButton } from "@/components/events/EventRegistrationButton";
 import { BookOpen, Gamepad2, GraduationCap, Store, Trophy } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 
@@ -59,11 +58,7 @@ export function EventCard({ event }: { event: EventData }) {
           )}
         </div>
       )}
-      <Link href={`/events/${event.slug}`} className="w-full mt-auto">
-        <Button variant="ghost" className="w-full border border-white/20 group-hover:border-brand-accent group-hover:text-brand-accent transition-all duration-300 glass-medium">
-          Daftar Sekarang
-        </Button>
-      </Link>
+      <EventRegistrationButton event={event} variant="card" />
     </GlassCard>
   );
 }
