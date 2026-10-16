@@ -114,9 +114,11 @@ export function EventRegistrationButton({
             disabled
             size="lg"
             variant="ghost"
-            className="w-full sm:w-64 border border-white/10 bg-white/5 text-white/40 cursor-not-allowed shadow-none whitespace-nowrap select-none disabled:opacity-40 disabled:pointer-events-none hover:border-white/10 hover:text-white/40"
+            className="w-full sm:w-64 border border-red-500/30 bg-red-500/10 text-red-300 cursor-not-allowed shadow-[0_0_20px_rgba(239,68,68,0.15)] whitespace-nowrap select-none disabled:opacity-90 disabled:pointer-events-none hover:border-red-500/30 hover:text-red-300"
           >
-            Daftar Sekarang ( Kuota Habis )
+            <span className="text-red-300 font-bold tracking-wider text-base [text-shadow:0_0_10px_rgba(248,113,113,0.85),0_0_20px_rgba(239,68,68,0.45)]">
+              Kuota Habis
+            </span>
           </Button>
         </div>
       );
@@ -128,11 +130,13 @@ export function EventRegistrationButton({
           disabled
           variant="ghost"
           className={cn(
-            "w-full text-xs sm:text-sm font-semibold border border-white/10 bg-white/5 text-white/40 cursor-not-allowed shadow-none select-none disabled:opacity-40 disabled:pointer-events-none hover:border-white/10 hover:text-white/40 group-hover:border-white/10 group-hover:text-white/40",
+            "w-full text-sm font-semibold border border-red-500/30 bg-red-500/10 text-red-300 cursor-not-allowed shadow-[0_0_15px_rgba(239,68,68,0.15)] select-none disabled:opacity-90 disabled:pointer-events-none hover:border-red-500/30 hover:text-red-300 group-hover:border-red-500/30 group-hover:text-red-300",
             className
           )}
         >
-          Daftar Sekarang ( Kuota Habis )
+          <span className="text-red-300 font-bold tracking-wider text-sm [text-shadow:0_0_8px_rgba(248,113,113,0.85),0_0_18px_rgba(239,68,68,0.45)]">
+            Kuota Habis
+          </span>
         </Button>
       </div>
     );
