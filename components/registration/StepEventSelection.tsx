@@ -39,14 +39,18 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {events.map((event) => {
           const isSelected = selectedEventSlug === event.slug;
+          const isFull = event.isQuotaFull || event.status === 'Closed' || event.slug === 'open-bazaar-mahasiswa';
           return (
             <button
               key={event.id}
               type="button"
-              onClick={() => onSelect(event.slug)}
+              disabled={isFull}
+              onClick={() => !isFull && onSelect(event.slug)}
               className={cn(
                 "relative text-left w-full rounded-3xl p-6 transition-all duration-300",
-                isSelected
+                isFull
+                  ? "glass-light opacity-50 cursor-not-allowed border-2 border-transparent"
+                  : isSelected
                   ? "bg-brand-primary/20 border-2 border-brand-accent shadow-[0_0_30px_rgba(245,183,22,0.15)] backdrop-blur-xl"
                   : "glass-light border-2 border-transparent hover:border-white/20 hover:bg-white/5"
               )}
@@ -55,7 +59,7 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
                 <div
                   className={cn(
                     "flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-colors",
-                    isSelected ? "bg-brand-accent" : "glass-strong"
+                    isFull ? "glass-light" : isSelected ? "bg-brand-accent" : "glass-strong"
                   )}
                 >
                   {IconMap[event.icon]}
@@ -65,7 +69,13 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
                     <span className="text-xs font-semibold tracking-wider text-brand-accent uppercase">
                       {event.category}
                     </span>
-                    {isSelected && <CheckCircle2 size={20} className="text-brand-accent" />}
+                    {isFull ? (
+                      <span className="text-[11px] font-semibold text-red-400 bg-red-500/20 px-2.5 py-0.5 rounded-full border border-red-500/30">
+                        Kuota Habis
+                      </span>
+                    ) : isSelected ? (
+                      <CheckCircle2 size={20} className="text-brand-accent" />
+                    ) : null}
                   </div>
                   <h3 className="font-heading text-xl font-bold text-white mb-2">{event.title}</h3>
                   <p className="text-sm text-white/60 line-clamp-2">{event.shortDescription}</p>

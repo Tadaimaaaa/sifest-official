@@ -12,6 +12,8 @@ interface EventRegistrationButtonProps {
   href?: string;
   className?: string;
   variant?: "card" | "hero";
+  status?: string;
+  isQuotaFull?: boolean;
 }
 
 // Target Pendaftaran Gelombang ke-2: 15 Oktober 2026, 21:30:00 WIB
@@ -42,12 +44,15 @@ export function EventRegistrationButton({
   href,
   className,
   variant = "card",
+  status,
+  isQuotaFull: propIsQuotaFull,
 }: EventRegistrationButtonProps) {
   const [mounted, setMounted] = useState(false);
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [isPending, setIsPending] = useState(false);
 
-  const isEligible = isWave2CountdownEvent(slug, category);
+  const isQuotaFull = propIsQuotaFull || status === "Closed" || slug === "open-bazaar-mahasiswa";
+  const isEligible = !isQuotaFull && isWave2CountdownEvent(slug, category);
 
   useEffect(() => {
     setMounted(true);
@@ -99,6 +104,39 @@ export function EventRegistrationButton({
     }
     return `${t.m} Menit : ${String(t.s).padStart(2, "0")} Detik`;
   };
+
+  // Jika Kuota Habis / Pendaftaran Ditutup
+  if (isQuotaFull) {
+    if (variant === "hero") {
+      return (
+        <div className={cn("w-full sm:w-auto block cursor-not-allowed", className)}>
+          <Button
+            disabled
+            size="lg"
+            variant="ghost"
+            className="w-full sm:w-64 border border-white/10 bg-white/5 text-white/40 cursor-not-allowed shadow-none whitespace-nowrap select-none disabled:opacity-40 disabled:pointer-events-none hover:border-white/10 hover:text-white/40"
+          >
+            Daftar Sekarang ( Kuota Habis )
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="w-full mt-auto block cursor-not-allowed">
+        <Button
+          disabled
+          variant="ghost"
+          className={cn(
+            "w-full text-xs sm:text-sm font-semibold border border-white/10 bg-white/5 text-white/40 cursor-not-allowed shadow-none select-none disabled:opacity-40 disabled:pointer-events-none hover:border-white/10 hover:text-white/40 group-hover:border-white/10 group-hover:text-white/40",
+            className
+          )}
+        >
+          Daftar Sekarang ( Kuota Habis )
+        </Button>
+      </div>
+    );
+  }
 
   // Jika event adalah non-Seminar & non-MTQ dan masih sebelum jam 21:30 WIB
   if (isEligible && (isPending || !mounted)) {

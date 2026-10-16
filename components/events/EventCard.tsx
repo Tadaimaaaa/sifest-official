@@ -63,6 +63,8 @@ export function EventCard({ event }: { event: EventData }) {
       <EventRegistrationButton 
         slug={event.slug}
         category={event.category}
+        status={event.status}
+        isQuotaFull={event.isQuotaFull}
         href={`/events/${event.slug}`}
         variant="card"
       />

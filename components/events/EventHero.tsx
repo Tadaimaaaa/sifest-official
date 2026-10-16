@@ -28,6 +28,8 @@ export function EventHero({ event }: { event: EventData }) {
             <EventRegistrationButton
               slug={event.slug}
               category={event.category}
+              status={event.status}
+              isQuotaFull={event.isQuotaFull}
               href={`/registration?event=${event.slug}`}
               variant="hero"
             />

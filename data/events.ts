@@ -31,6 +31,7 @@ export interface EventData {
   isSubEvent?: boolean;
   image?: string;
   guidebookUrl?: string;
+  isQuotaFull?: boolean;
 }
 
 export const OFFICIAL_EVENTS: EventData[] = [
@@ -375,7 +376,8 @@ export const OFFICIAL_EVENTS: EventData[] = [
     slug: "open-bazaar-mahasiswa",
     title: "Open Bazaar Mahasiswa",
     category: "Bazaar",
-    status: "Open",
+    status: "Closed",
+    isQuotaFull: true,
     shortDescription: "Bazaar kuliner dan produk kreatif khusus tenant mahasiswa.",
     description: "Dukung perekonomian lokal dan temukan berbagai inovasi kuliner serta produk kreatif dari mahasiswa di Open Bazaar SI FEST 2026. Area ini akan menjadi pusat berkumpulnya pengunjung selama festival berlangsung.",
     icon: "Store",

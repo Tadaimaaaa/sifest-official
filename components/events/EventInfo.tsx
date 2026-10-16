@@ -3,6 +3,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Calendar, Clock, MapPin, Tag, CheckCircle2, Hourglass, Gift, Phone } from "lucide-react";
 import React from "react";
 import { RegistrationCountdown } from "./RegistrationCountdown";
+import { cn } from "@/lib/utils";
 
 export function EventInfo({ event }: { event: EventData }) {
   return (
@@ -106,8 +107,15 @@ export function EventInfo({ event }: { event: EventData }) {
               </div>
               <div>
                 <p className="text-sm text-white/50 mb-1">Status Pendaftaran</p>
-                <div className="inline-flex mt-1 items-center px-3 py-1 rounded-full text-xs font-semibold bg-status-success/20 text-status-success border border-status-success/30">
-                  {event.status === "Open" && event.registrationCloseDate ? (
+                <div className={cn(
+                  "inline-flex mt-1 items-center px-3 py-1 rounded-full text-xs font-semibold border",
+                  (event.isQuotaFull || event.status === "Closed" || event.slug === "open-bazaar-mahasiswa")
+                    ? "bg-red-500/20 text-red-400 border-red-500/30"
+                    : "bg-status-success/20 text-status-success border-status-success/30"
+                )}>
+                  {event.isQuotaFull || event.status === "Closed" || event.slug === "open-bazaar-mahasiswa" ? (
+                    "Kuota Habis"
+                  ) : event.status === "Open" && event.registrationCloseDate ? (
                     <RegistrationCountdown 
                       startDate={event.registrationStartDate || "2026-09-01T00:00:00+07:00"} 
                       closeDate={event.registrationCloseDate}

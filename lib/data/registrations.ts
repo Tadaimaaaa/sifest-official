@@ -43,8 +43,8 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
       return { success: false, error: `Event tidak ditemukan: ${draft.eventSlug}` };
     }
 
-    if (event.registration_open === false) {
-      return { success: false, error: "Pendaftaran untuk event ini sudah ditutup." };
+    if (draft.eventSlug === 'open-bazaar-mahasiswa' || event.registration_open === false) {
+      return { success: false, error: "Pendaftaran untuk event ini telah ditutup karena kuota habis." };
     }
 
     // Step 2: Insert registration
