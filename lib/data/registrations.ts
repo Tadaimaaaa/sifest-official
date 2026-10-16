@@ -43,7 +43,7 @@ export async function submitRegistration(draft: RegistrationDraft): Promise<Regi
       return { success: false, error: `Event tidak ditemukan: ${draft.eventSlug}` };
     }
 
-    if (draft.eventSlug === 'open-bazaar-mahasiswa' || event.registration_open === false) {
+    if (draft.eventSlug.startsWith('open-bazaar') || event.registration_open === false) {
       return { success: false, error: "Pendaftaran untuk event ini telah ditutup karena kuota habis." };
     }
 

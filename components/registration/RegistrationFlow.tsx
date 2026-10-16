@@ -335,7 +335,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Bazaar Participant Data */}
-              {currentStep === 2 && draft.eventSlug.startsWith('open-bazaar') && draft.eventSlug !== 'open-bazaar-mahasiswa' && !selectedEvent?.isQuotaFull && selectedEvent?.status !== 'Closed' && (
+              {currentStep === 2 && draft.eventSlug.startsWith('open-bazaar') && !draft.eventSlug.startsWith('open-bazaar') && !selectedEvent?.isQuotaFull && selectedEvent?.status !== 'Closed' && (
                 <StepParticipantData
                   data={draft.participant}
                   eventSlug={draft.eventSlug}
@@ -347,7 +347,7 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               )}
 
               {/* Quota Full / Event Closed Screen */}
-              {currentStep >= 2 && (draft.eventSlug === 'open-bazaar-mahasiswa' || selectedEvent?.isQuotaFull || selectedEvent?.status === 'Closed') && (
+              {currentStep >= 2 && (draft.eventSlug.startsWith('open-bazaar') || selectedEvent?.isQuotaFull || selectedEvent?.status === 'Closed') && (
                 <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-red-500/30 animate-in fade-in zoom-in duration-500 shadow-[0_0_30px_rgba(239,68,68,0.15)]">
                   <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                     <AlertCircle className="w-10 h-10 text-red-400" />
@@ -356,10 +356,10 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
                     Kuota Pendaftaran Habis
                   </h2>
                   <p className="text-white/80 leading-relaxed mb-6">
-                    Mohon maaf, kuota pendaftaran untuk <span className="font-semibold text-white">{selectedEvent?.title || "Open Bazaar Mahasiswa"}</span> telah habis. Silakan mendaftar pada kategori umum atau ikuti kegiatan SI FEST 2026 lainnya.
+                    Mohon maaf, kuota pendaftaran untuk <span className="font-semibold text-white">{selectedEvent?.title || "Open Bazaar"}</span> telah habis. Silakan ikuti kegiatan SI FEST 2026 lainnya.
                   </p>
                   <Button onClick={() => window.location.href = '/events/open-bazaar'} variant="glass" className="w-full">
-                    Kembali ke Pilihan Kategori Bazaar
+                    Kembali ke Pilihan Acara
                   </Button>
                 </div>
               )}
