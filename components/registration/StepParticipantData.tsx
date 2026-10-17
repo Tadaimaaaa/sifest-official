@@ -16,8 +16,12 @@ interface StepParticipantDataProps {
 
 export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack, mode = 'default' }: StepParticipantDataProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const dataRef = React.useRef(data);
+  React.useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
 
-  const validate = () => {
+  const validate = (targetData: ParticipantData = data) => {
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
@@ -58,7 +62,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
 
     if (eventSlug.startsWith('turnamen-futsal')) {
-      const meta = data.metadata || { schoolData: {}, players: [] };
+      const meta = targetData.metadata || { schoolData: {}, players: [] };
       const school = meta.schoolData;
       
       if (mode === 'school') {
@@ -220,7 +224,31 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
   };
 
   const handleNext = () => {
-    if (validate()) {
+    let currentData = data;
+    if (mode === 'players' && currentData.metadata?.players) {
+      const players = [...currentData.metadata.players];
+      while (
+        players.length > 1 &&
+        !players[players.length - 1].name?.trim() &&
+        !players[players.length - 1].nisn?.trim() &&
+        !players[players.length - 1].studentCardUrl &&
+        !players[players.length - 1].jerseyNumber?.trim()
+      ) {
+        players.pop();
+      }
+      if (players.length !== currentData.metadata.players.length) {
+        currentData = {
+          ...currentData,
+          metadata: {
+            ...currentData.metadata,
+            players,
+          },
+        };
+        onUpdate(currentData);
+      }
+    }
+
+    if (validate(currentData)) {
       onNext();
     }
   };
@@ -253,10 +281,17 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
   const addPlayer = () => {
     const meta = data.metadata || { schoolData: {}, players: [] };
     if (meta.players.length >= 12) return;
+    const nextIdx = meta.players.length;
     onUpdate({
       ...data,
-      metadata: { ...meta, players: [...meta.players, { name: '', nisn: '' }] }
+      metadata: { ...meta, players: [...meta.players, { name: '', nisn: '', jerseyNumber: '', posisi: '' }] }
     });
+    setTimeout(() => {
+      const el = document.getElementById(`player-card-${nextIdx}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 150);
   };
 
   const removePlayer = (index: number) => {
@@ -303,7 +338,28 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         .from('registration_files')
         .getPublicUrl(fileName);
 
-      updatePlayer(idx, field, publicUrlData.publicUrl);
+      const latestData = dataRef.current;
+      const meta = latestData.metadata || { schoolData: {}, players: [] };
+      const currentPlayers = [...(meta.players || [])];
+
+      if (currentPlayers[idx]) {
+        currentPlayers[idx] = { ...currentPlayers[idx], [field]: publicUrlData.publicUrl };
+
+        // Automatically open the next player slot when KTS is uploaded on the last player (if < 12)
+        const isLastPlayer = idx === currentPlayers.length - 1;
+        if (mode === 'players' && field === 'studentCardUrl' && isLastPlayer && currentPlayers.length < 12) {
+          currentPlayers.push({ name: '', nisn: '', jerseyNumber: '', posisi: '' });
+          
+          setTimeout(() => {
+            const el = document.getElementById(`player-card-${currentPlayers.length - 1}`);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 200);
+        }
+
+        onUpdate({ ...latestData, metadata: { ...meta, players: currentPlayers } });
+      }
     } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       alert(err.message || "Gagal mengunggah file.");
     } finally {
@@ -997,7 +1053,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                 
                 <div className="space-y-4">
                 {data.metadata.players?.map((player: Record<string, string>, idx: number) => (
-                  <div key={idx} className="flex flex-col gap-4 items-start p-6 rounded-xl bg-white/5 border border-white/10 relative">
+                  <div key={idx} id={`player-card-${idx}`} className="flex flex-col gap-4 items-start p-6 rounded-xl bg-white/5 border border-white/10 relative">
                     {data.metadata.players.length > 1 && (
                       <button type="button" onClick={() => removePlayer(idx)} className="absolute top-4 right-4 h-10 w-10 flex items-center justify-center rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors">
                         <Trash2 size={18} />
