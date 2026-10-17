@@ -2,7 +2,7 @@ import { ParticipantData } from "@/lib/types/registration";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
 import React, { useState } from "react";
-import { AlertCircle, Plus, Trash2, UploadCloud, FileImage } from "lucide-react";
+import { AlertCircle, Plus, Trash2, UploadCloud, FileImage, CheckCircle2, UserPlus, X, Sparkles } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 interface StepParticipantDataProps {
@@ -16,41 +16,43 @@ interface StepParticipantDataProps {
 
 export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack, mode = 'default' }: StepParticipantDataProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [autoAddedNotice, setAutoAddedNotice] = useState<string | null>(null);
+  const [lastAddedIdx, setLastAddedIdx] = useState<number | null>(null);
 
-  const validate = () => {
+  const validate = (targetData: ParticipantData = data) => {
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
     if (mode === 'default') {
-      if (!data.fullName.trim()) {
+      if (!targetData.fullName.trim()) {
         newErrors.fullName = "Nama lengkap wajib diisi.";
         isValid = false;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!data.email.trim()) {
+      if (!targetData.email.trim()) {
         newErrors.email = "Email wajib diisi.";
         isValid = false;
-      } else if (!emailRegex.test(data.email)) {
+      } else if (!emailRegex.test(targetData.email)) {
         newErrors.email = "Format email tidak valid.";
         isValid = false;
       }
 
       const phoneRegex = /^[+0-9]{9,15}$/;
-      if (!data.whatsapp.trim()) {
+      if (!targetData.whatsapp.trim()) {
         newErrors.whatsapp = "Nomor WhatsApp wajib diisi.";
         isValid = false;
-      } else if (!phoneRegex.test(data.whatsapp.replace(/\s+/g, ""))) {
+      } else if (!phoneRegex.test(targetData.whatsapp.replace(/\s+/g, ""))) {
         newErrors.whatsapp = "Format nomor WhatsApp tidak valid (contoh: 0812...).";
         isValid = false;
       }
 
-      if (data.metadata?.institutionType === 'UPI YPTK Padang') {
-        if (!data.metadata?.jurusan?.trim()) { newErrors['metadata.jurusan'] = "Jurusan wajib diisi."; isValid = false; }
-        if (!data.metadata?.nobp?.trim()) { newErrors['metadata.nobp'] = "NoBP wajib diisi."; isValid = false; }
-        if (!data.metadata?.kelas?.trim()) { newErrors['metadata.kelas'] = "Kelas wajib diisi."; isValid = false; }
-      } else if (data.metadata?.institutionType === 'Lainnya') {
-        if (!data.institution.trim() || data.institution === 'UPI YPTK Padang') { newErrors.institution = "Asal Universitas/Sekolah wajib diisi."; isValid = false; }
+      if (targetData.metadata?.institutionType === 'UPI YPTK Padang') {
+        if (!targetData.metadata?.jurusan?.trim()) { newErrors['metadata.jurusan'] = "Jurusan wajib diisi."; isValid = false; }
+        if (!targetData.metadata?.nobp?.trim()) { newErrors['metadata.nobp'] = "NoBP wajib diisi."; isValid = false; }
+        if (!targetData.metadata?.kelas?.trim()) { newErrors['metadata.kelas'] = "Kelas wajib diisi."; isValid = false; }
+      } else if (targetData.metadata?.institutionType === 'Lainnya') {
+        if (!targetData.institution.trim() || targetData.institution === 'UPI YPTK Padang') { newErrors.institution = "Asal Universitas/Sekolah wajib diisi."; isValid = false; }
       } else {
         newErrors['metadata.institutionType'] = "Silakan pilih instansi.";
         isValid = false;
@@ -58,7 +60,7 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
     }
 
     if (eventSlug.startsWith('turnamen-futsal')) {
-      const meta = data.metadata || { schoolData: {}, players: [] };
+      const meta = targetData.metadata || { schoolData: {}, players: [] };
       const school = meta.schoolData;
       
       if (mode === 'school') {
@@ -220,7 +222,31 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
   };
 
   const handleNext = () => {
-    if (validate()) {
+    let currentData = data;
+    if (mode === 'players' && currentData.metadata?.players) {
+      const players = [...currentData.metadata.players];
+      while (
+        players.length > 1 &&
+        !players[players.length - 1].name?.trim() &&
+        !players[players.length - 1].nisn?.trim() &&
+        !players[players.length - 1].studentCardUrl &&
+        !players[players.length - 1].jerseyNumber?.trim()
+      ) {
+        players.pop();
+      }
+      if (players.length !== currentData.metadata.players.length) {
+        currentData = {
+          ...currentData,
+          metadata: {
+            ...currentData.metadata,
+            players,
+          },
+        };
+        onUpdate(currentData);
+      }
+    }
+
+    if (validate(currentData)) {
       onNext();
     }
   };
@@ -253,10 +279,18 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
   const addPlayer = () => {
     const meta = data.metadata || { schoolData: {}, players: [] };
     if (meta.players.length >= 12) return;
+    const nextIdx = meta.players.length;
     onUpdate({
       ...data,
-      metadata: { ...meta, players: [...meta.players, { name: '', nisn: '' }] }
+      metadata: { ...meta, players: [...meta.players, { name: '', nisn: '', jerseyNumber: '', posisi: '' }] }
     });
+    setLastAddedIdx(nextIdx);
+    setTimeout(() => {
+      const el = document.getElementById(`player-card-${nextIdx}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 150);
   };
 
   const removePlayer = (index: number) => {
@@ -303,7 +337,37 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
         .from('registration_files')
         .getPublicUrl(fileName);
 
-      updatePlayer(idx, field, publicUrlData.publicUrl);
+      const meta = data.metadata || { schoolData: {}, players: [] };
+      const currentPlayers = [...(meta.players || [])];
+
+      if (currentPlayers[idx]) {
+        currentPlayers[idx] = { ...currentPlayers[idx], [field]: publicUrlData.publicUrl };
+
+        // Auto-add next player if mode is 'players' (futsal), uploaded KTS/KTM (studentCardUrl),
+        // and this is the last player in the list, and quota < 12
+        const isLastPlayer = idx === currentPlayers.length - 1;
+        const shouldAutoAdd = mode === 'players' && field === 'studentCardUrl' && isLastPlayer && currentPlayers.length < 12;
+
+        if (shouldAutoAdd) {
+          currentPlayers.push({ name: '', nisn: '', jerseyNumber: '', posisi: '' });
+          const nextPlayerNum = currentPlayers.length;
+          setLastAddedIdx(nextPlayerNum - 1);
+          setAutoAddedNotice(`Berkas KTS Pemain ${idx + 1} berhasil diunggah! Form Pemain ${nextPlayerNum} otomatis dibuka di bawah.`);
+
+          setTimeout(() => {
+            const el = document.getElementById(`player-card-${nextPlayerNum - 1}`);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 250);
+
+          setTimeout(() => {
+            setAutoAddedNotice(null);
+          }, 6000);
+        }
+
+        onUpdate({ ...data, metadata: { ...meta, players: currentPlayers } });
+      }
     } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       alert(err.message || "Gagal mengunggah file.");
     } finally {
@@ -989,113 +1053,143 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
               {/* Card 2: Data Pemain */}
               <GlassCard variant="medium" className="p-6 md:p-8">
-                <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                  <h3 className="font-heading text-xl font-bold text-white">2. Data Pemain</h3>
-                  <span className="text-sm text-white/50">{data.metadata.players?.length || 0} / 12 Pemain</span>
-                </div>
-                {errors['players'] && <p className="text-sm text-status-warning mb-4"><AlertCircle size={14} className="inline mr-1"/>{errors['players']}</p>}
-                
-                <div className="space-y-4">
-                {data.metadata.players?.map((player: Record<string, string>, idx: number) => (
-                  <div key={idx} className="flex flex-col gap-4 items-start p-6 rounded-xl bg-white/5 border border-white/10 relative">
-                    {data.metadata.players.length > 1 && (
-                      <button type="button" onClick={() => removePlayer(idx)} className="absolute top-4 right-4 h-10 w-10 flex items-center justify-center rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors">
-                        <Trash2 size={18} />
+                <div className="flex flex-wrap justify-between items-center gap-3 mb-6 border-b border-white/10 pb-4">
+                  <div>
+                    <h3 className="font-heading text-xl font-bold text-white">2. Data Pemain</h3>
+                    <p className="text-xs text-white/60 mt-0.5">Minimal 1 pemain, maksimal 12 pemain (Pemain 1 adalah Kapten)</p>
+                  </div>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <span className="text-xs sm:text-sm font-medium px-3 py-1 rounded-full bg-white/10 text-white/80 border border-white/10">
+                      {data.metadata.players?.length || 0} / 12 Pemain
+                    </span>
+                    {data.metadata.players?.length < 12 && (
+                      <button
+                        type="button"
+                        onClick={addPlayer}
+                        className="px-3.5 py-1.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-1.5 hover:bg-amber-300 transition-all shadow-md shadow-amber-400/20 active:scale-95 cursor-pointer"
+                      >
+                        <Plus size={16} className="stroke-[2.5]" />
+                        <span>Tambah Pemain</span>
                       </button>
                     )}
-                    
-                    <h4 className="text-white font-semibold flex items-center gap-2">
-                      Pemain {idx + 1} {idx === 0 && <span className="text-xs bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded uppercase tracking-wider">Kapten</span>}
-                    </h4>
+                  </div>
+                </div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 w-full">
-                      <div className="flex-1 w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Nama Lengkap <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.name} onChange={(e) => updatePlayer(idx, 'name', e.target.value)} placeholder="Nama Lengkap" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                        {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
-                      </div>
-                      <div className="flex-1 w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'NIM / NoBP' : 'NISN'} <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.nisn || ''} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder={eventSlug === 'turnamen-futsal-mahasiswa' ? 'Contoh: 211011526...' : '00123...'} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                        {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
-                      </div>
+                {autoAddedNotice && (
+                  <div className="mb-6 p-4 rounded-xl bg-amber-500/20 border border-amber-400/50 text-amber-200 text-sm flex items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2 duration-300 shadow-lg shadow-amber-500/10">
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles size={18} className="text-amber-400 shrink-0" />
+                      <span className="font-medium">{autoAddedNotice}</span>
                     </div>
+                    <button type="button" onClick={() => setAutoAddedNotice(null)} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors">
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
 
-                    {eventSlug === 'turnamen-futsal-mahasiswa' && (
-                      <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Asal Perguruan Tinggi <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.university || ''} onChange={(e) => updatePlayer(idx, 'university', e.target.value)} placeholder="Contoh: Universitas Andalas" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                        {errors[`players.${idx}.university`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
-                      </div>
-                    )}
-
-                    {idx === 0 && (
-                      <div className="w-full sm:w-1/2 pr-0 sm:pr-2 space-y-2">
-                        <label className="block text-sm font-medium text-white/90">No. WhatsApp <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Untuk grup WA)</span></label>
-                        <input type="tel" value={player.whatsapp || ''} onChange={(e) => updatePlayer(idx, 'whatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                        {errors[`players.0.whatsapp`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.0.whatsapp`]}</p>}
-                      </div>
-                    )}
-
-                    <div className="flex flex-col sm:flex-row gap-4 w-full">
-                      {/* Posisi */}
-                      <div className="flex-1 w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Posisi <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
-                        <select value={player.posisi || ''} onChange={(e) => updatePlayer(idx, 'posisi', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
-                          <option value="">-- Pilih Posisi --</option>
-                          <option value="Penjaga Gawang">Penjaga Gawang</option>
-                          <option value="Anchor">Anchor</option>
-                          <option value="Flank">Flank</option>
-                          <option value="Pivot">Pivot</option>
-                        </select>
-                      </div>
-                      
-                      {/* Nomor Punggung */}
-                      <div className="flex-1 w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">Nomor Punggung <span className="text-status-warning">*</span></label>
-                        <input type="text" value={player.jerseyNumber || ''} onChange={(e) => updatePlayer(idx, 'jerseyNumber', e.target.value)} placeholder="Contoh: 10" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
-                        {errors[`players.${idx}.jerseyNumber`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
-                      </div>
-                    </div>
-
-                    <div className={`grid grid-cols-1 ${eventSlug === 'turnamen-futsal-mahasiswa' ? 'md:grid-cols-2' : ''} gap-4 w-full mt-4`}>
-                      {/* Upload Kartu Tanda Pelajar / KTM */}
-                      <div className="w-full space-y-2">
-                        <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lampiran Kartu Tanda Mahasiswa' : 'Kartu Tanda Pelajar ( / Surat Keterangan Dari Sekolah )'} <span className="text-status-warning">*</span></label>
-                        <div className="flex flex-col gap-2">
-                          <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                            <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
-                            {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
-                              <div className="flex items-center gap-2 text-brand-accent">
-                                <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-                                <span className="text-sm">Mengunggah...</span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center gap-2 text-white/80">
-                                <UploadCloud size={18} />
-                                <span className="text-sm">{player.studentCardUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KTM' : 'Ganti KTP/KTS/Surket') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KTM' : 'Unggah KTP/KTS/Surket')}</span>
-                              </div>
-                            )}
-                          </label>
-                          {player.studentCardUrl && (
-                            <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                              <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KTM' : 'Lihat KTP/KTS/Surket'}
-                            </a>
+                {errors['players'] && <p className="text-sm text-status-warning mb-4"><AlertCircle size={14} className="inline mr-1"/>{errors['players']}</p>}
+                
+                <div className="space-y-5">
+                {data.metadata.players?.map((player: Record<string, string>, idx: number) => {
+                  const isNewlyAdded = lastAddedIdx === idx;
+                  return (
+                    <div
+                      key={idx}
+                      id={`player-card-${idx}`}
+                      className={`flex flex-col gap-4 items-start p-6 rounded-2xl bg-white/5 border transition-all duration-300 relative ${
+                        isNewlyAdded ? 'border-amber-400/80 ring-2 ring-amber-400/30 shadow-lg shadow-amber-400/10' : 'border-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full border-b border-white/10 pb-3">
+                        <h4 className="text-white font-semibold flex items-center gap-2 flex-wrap">
+                          <span>Pemain {idx + 1}</span>
+                          {idx === 0 && <span className="text-xs bg-brand-accent/20 text-brand-accent px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">Kapten</span>}
+                          {isNewlyAdded && (
+                            <span className="text-xs bg-amber-400/25 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded-full font-medium inline-flex items-center gap-1">
+                              <Sparkles size={11} /> Baru Ditambahkan
+                            </span>
                           )}
-                        </div>
-                        {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
+                        </h4>
+                        {data.metadata.players.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removePlayer(idx)}
+                            className="h-8 px-3 flex items-center gap-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-colors text-xs font-semibold cursor-pointer"
+                            title={`Hapus Pemain ${idx + 1}`}
+                          >
+                            <Trash2 size={14} />
+                            <span>Hapus</span>
+                          </button>
+                        )}
                       </div>
 
-                      {/* Upload Akta Kelahiran / KRS */}
+                      <div className="flex flex-col sm:flex-row gap-4 w-full">
+                        <div className="flex-1 w-full space-y-2">
+                          <label className="block text-sm font-medium text-white/90">Nama Lengkap <span className="text-status-warning">*</span></label>
+                          <input type="text" value={player.name} onChange={(e) => updatePlayer(idx, 'name', e.target.value)} placeholder="Nama Lengkap" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                          {errors[`players.${idx}.name`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                        </div>
+                        <div className="flex-1 w-full space-y-2">
+                          <label className="block text-sm font-medium text-white/90">{eventSlug === 'turnamen-futsal-mahasiswa' ? 'NIM / NoBP' : 'NISN'} <span className="text-status-warning">*</span></label>
+                          <input type="text" value={player.nisn || ''} onChange={(e) => updatePlayer(idx, 'nisn', e.target.value)} placeholder={eventSlug === 'turnamen-futsal-mahasiswa' ? 'Contoh: 211011526...' : '00123...'} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                          {errors[`players.${idx}.nisn`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                        </div>
+                      </div>
+
                       {eventSlug === 'turnamen-futsal-mahasiswa' && (
                         <div className="w-full space-y-2">
-                          <label className="block text-sm font-medium text-white/90">
-                            Lampiran Kartu Rencana Studi (KRS) <span className="text-status-warning">*</span>
-                          </label>
+                          <label className="block text-sm font-medium text-white/90">Asal Perguruan Tinggi <span className="text-status-warning">*</span></label>
+                          <input type="text" value={player.university || ''} onChange={(e) => updatePlayer(idx, 'university', e.target.value)} placeholder="Contoh: Universitas Andalas" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                          {errors[`players.${idx}.university`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                        </div>
+                      )}
+
+                      {idx === 0 && (
+                        <div className="w-full sm:w-1/2 pr-0 sm:pr-2 space-y-2">
+                          <label className="block text-sm font-medium text-white/90">No. WhatsApp <span className="text-status-warning">*</span> <span className="text-xs text-white/50 font-normal">(Untuk grup WA)</span></label>
+                          <input type="tel" value={player.whatsapp || ''} onChange={(e) => updatePlayer(idx, 'whatsapp', e.target.value)} placeholder="0812..." className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                          {errors[`players.0.whatsapp`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>{errors[`players.0.whatsapp`]}</p>}
+                        </div>
+                      )}
+
+                      <div className="flex flex-col sm:flex-row gap-4 w-full">
+                        {/* Posisi */}
+                        <div className="flex-1 w-full space-y-2">
+                          <label className="block text-sm font-medium text-white/90">Posisi <span className="text-xs text-white/50 font-normal">(Opsional)</span></label>
+                          <select value={player.posisi || ''} onChange={(e) => updatePlayer(idx, 'posisi', e.target.value)} className="w-full h-12 px-4 rounded-xl bg-[#1e293b] border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent">
+                            <option value="">-- Pilih Posisi --</option>
+                            <option value="Penjaga Gawang">Penjaga Gawang</option>
+                            <option value="Anchor">Anchor</option>
+                            <option value="Flank">Flank</option>
+                            <option value="Pivot">Pivot</option>
+                          </select>
+                        </div>
+                        
+                        {/* Nomor Punggung */}
+                        <div className="flex-1 w-full space-y-2">
+                          <label className="block text-sm font-medium text-white/90">Nomor Punggung <span className="text-status-warning">*</span></label>
+                          <input type="text" value={player.jerseyNumber || ''} onChange={(e) => updatePlayer(idx, 'jerseyNumber', e.target.value)} placeholder="Contoh: 10" className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white focus:border-brand-accent focus:ring-1 focus:ring-brand-accent" />
+                          {errors[`players.${idx}.jerseyNumber`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diisi</p>}
+                        </div>
+                      </div>
+
+                      <div className={`grid grid-cols-1 ${eventSlug === 'turnamen-futsal-mahasiswa' ? 'md:grid-cols-2' : ''} gap-4 w-full mt-4`}>
+                        {/* Upload Kartu Tanda Pelajar / KTM */}
+                        <div className="w-full space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="block text-sm font-medium text-white/90">
+                              {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lampiran Kartu Tanda Mahasiswa' : 'Kartu Tanda Pelajar ( / Surat Keterangan Dari Sekolah )'} <span className="text-status-warning">*</span>
+                            </label>
+                            {idx === (data.metadata.players?.length || 0) - 1 && (data.metadata.players?.length || 0) < 12 && (
+                              <span className="text-xs text-amber-300 font-medium hidden sm:inline-flex items-center gap-1">
+                                <Sparkles size={12} /> Auto-buka form pemain {idx + 2}
+                              </span>
+                            )}
+                          </div>
                           <div className="flex flex-col gap-2">
-                            <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
-                              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
-                              {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
+                            <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.studentCardUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                              <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'studentCardUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl'} />
+                              {uploadingState?.idx === idx && uploadingState?.field === 'studentCardUrl' ? (
                                 <div className="flex items-center gap-2 text-brand-accent">
                                   <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
                                   <span className="text-sm">Mengunggah...</span>
@@ -1103,30 +1197,94 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
                               ) : (
                                 <div className="flex items-center gap-2 text-white/80">
                                   <UploadCloud size={18} />
-                                  <span className="text-sm">{player.birthCertificateUrl ? 'Ganti KRS' : 'Unggah KRS'}</span>
+                                  <span className="text-sm">{player.studentCardUrl ? (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Ganti KTM' : 'Ganti KTP/KTS/Surket') : (eventSlug === 'turnamen-futsal-mahasiswa' ? 'Unggah KTM' : 'Unggah KTP/KTS/Surket')}</span>
                                 </div>
                               )}
                             </label>
-                            {player.birthCertificateUrl && (
-                              <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
-                                <FileImage size={16} /> Lihat KRS
+                            {player.studentCardUrl && (
+                              <a href={player.studentCardUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                                <FileImage size={16} /> {eventSlug === 'turnamen-futsal-mahasiswa' ? 'Lihat KTM' : 'Lihat KTP/KTS/Surket'}
                               </a>
                             )}
                           </div>
-                          {errors[`players.${idx}.birthCertificateUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
+                          {errors[`players.${idx}.studentCardUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
 
-              {data.metadata.players?.length < 12 && (
-                <Button type="button" variant="ghost" onClick={addPlayer} className="w-full mt-6 border-dashed border-white/30 text-white/70 hover:text-white hover:border-white">
-                  <Plus size={18} className="mr-2" />
-                  Tambah Pemain
-                </Button>
-              )}
+                        {/* Upload Akta Kelahiran / KRS */}
+                        {eventSlug === 'turnamen-futsal-mahasiswa' && (
+                          <div className="w-full space-y-2">
+                            <label className="block text-sm font-medium text-white/90">
+                              Lampiran Kartu Rencana Studi (KRS) <span className="text-status-warning">*</span>
+                            </label>
+                            <div className="flex flex-col gap-2">
+                              <label className={`relative flex items-center justify-center px-4 py-3 border border-white/20 border-dashed rounded-xl cursor-pointer transition-colors ${player.birthCertificateUrl ? 'bg-brand-primary/10 border-brand-primary/50' : 'bg-white/5 hover:bg-white/10'}`}>
+                                <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => handleFileUpload(idx, 'birthCertificateUrl', e)} disabled={uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl'} />
+                                {uploadingState?.idx === idx && uploadingState?.field === 'birthCertificateUrl' ? (
+                                  <div className="flex items-center gap-2 text-brand-accent">
+                                    <div className="w-4 h-4 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+                                    <span className="text-sm">Mengunggah...</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-2 text-white/80">
+                                    <UploadCloud size={18} />
+                                    <span className="text-sm">{player.birthCertificateUrl ? 'Ganti KRS' : 'Unggah KRS'}</span>
+                                  </div>
+                                )}
+                              </label>
+                              {player.birthCertificateUrl && (
+                                <a href={player.birthCertificateUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 text-sm text-brand-primary hover:underline bg-white/5 py-2 rounded-lg">
+                                  <FileImage size={16} /> Lihat KRS
+                                </a>
+                              )}
+                            </div>
+                            {errors[`players.${idx}.birthCertificateUrl`] && <p className="text-sm text-status-warning"><AlertCircle size={14} className="inline mr-1"/>Wajib diunggah</p>}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+                </div>
+
+                {/* PROMINENT TAMBAH PEMAIN BUTTON */}
+                {data.metadata.players?.length < 12 ? (
+                  <div className="mt-8 pt-4 border-t border-white/10">
+                    <button
+                      type="button"
+                      onClick={addPlayer}
+                      className="group relative w-full p-4 sm:p-5 rounded-2xl border-2 border-dashed border-amber-400/80 hover:border-amber-300 bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-amber-500/5 hover:from-amber-500/30 hover:to-amber-500/15 text-white transition-all duration-300 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/25 flex flex-col sm:flex-row items-center justify-between gap-4 text-left cursor-pointer active:scale-[0.99]"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shadow-md shadow-amber-400/30 group-hover:scale-110 transition-transform shrink-0">
+                          <Plus size={26} className="stroke-[3]" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-bold text-base sm:text-lg text-amber-300 group-hover:text-amber-200">
+                              + Tambah Pemain Berikutnya
+                            </span>
+                            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                              Pemain {(data.metadata.players?.length || 0) + 1} dari 12
+                            </span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-white/70 mt-1">
+                            Klik di sini untuk menambah form pemain baru, atau form berikutnya otomatis terbuka setelah mengunggah KTS.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="w-full sm:w-auto flex justify-end">
+                        <span className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-sm shadow-md hover:bg-amber-300 transition-colors text-center inline-flex items-center justify-center gap-2 group-hover:shadow-amber-400/50">
+                          <UserPlus size={16} /> Tambah Pemain
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-8 p-4 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-sm font-medium text-center flex items-center justify-center gap-2">
+                    <CheckCircle2 size={18} /> Kuota maksimal 12 pemain telah ditambahkan.
+                  </div>
+                )}
               </GlassCard>
             </div>
           )}
