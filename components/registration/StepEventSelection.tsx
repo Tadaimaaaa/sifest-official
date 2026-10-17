@@ -39,7 +39,7 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {events.map((event) => {
           const isSelected = selectedEventSlug === event.slug;
-          const isFull = event.isQuotaFull || event.status === 'Closed' || event.slug.startsWith('open-bazaar');
+          const isFull = event.isQuotaFull || event.status === 'Closed';
           return (
             <button
               key={event.id}

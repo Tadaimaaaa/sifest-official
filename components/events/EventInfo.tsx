@@ -109,12 +109,13 @@ export function EventInfo({ event }: { event: EventData }) {
                 <p className="text-sm text-white/50 mb-1">Status Pendaftaran</p>
                 <div className={cn(
                   "inline-flex mt-1 items-center px-3 py-1 rounded-full text-xs font-semibold border",
-                  (event.isQuotaFull || event.status === "Closed" || event.slug.startsWith("open-bazaar"))
+                  (event.isQuotaFull || event.status === "Closed")
                     ? "bg-red-500/20 text-red-400 border-red-500/30"
                     : "bg-status-success/20 text-status-success border-status-success/30"
                 )}>
-                  {event.isQuotaFull || event.status === "Closed" || event.slug.startsWith("open-bazaar") ? (
+                  {event.isQuotaFull || event.status === "Closed" ? (
                     "Kuota Habis"
+
                   ) : event.status === "Open" && event.registrationCloseDate ? (
                     <RegistrationCountdown 
                       startDate={event.registrationStartDate || "2026-09-01T00:00:00+07:00"} 

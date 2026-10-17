@@ -51,7 +51,7 @@ export function EventRegistrationButton({
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [isPending, setIsPending] = useState(false);
 
-  const isQuotaFull = propIsQuotaFull || status === "Closed" || slug.startsWith("open-bazaar");
+  const isQuotaFull = propIsQuotaFull || status === "Closed";
   const isEligible = !isQuotaFull && isWave2CountdownEvent(slug, category);
 
   useEffect(() => {
