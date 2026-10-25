@@ -16,6 +16,7 @@ import { UploadCloud, CheckCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { RegistrationCountdown } from "@/components/events/RegistrationCountdown";
 import { Button } from "@/components/ui/Button";
+import { REGISTRATION_CLOSE_TIME } from "@/components/events/EventRegistrationButton";
 
 interface RegistrationFlowProps {
   initialEventSlug?: string;
@@ -38,6 +39,16 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [successResult, setSuccessResult] = useState<{ code: string; id: string } | null>(null);
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    const checkClosed = () => {
+      setIsClosed(Date.now() >= REGISTRATION_CLOSE_TIME);
+    };
+    checkClosed();
+    const interval = setInterval(checkClosed, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Persist draft and step to sessionStorage (NOT successResult - causes stale state issues)
   useEffect(() => {
@@ -273,7 +284,34 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
     return lp === "gratis" || lp === "free" || lp === "0";
   };
 
-  // If successfully registered, logic continues below in currentStep === steps.length
+  // Jika pendaftaran telah resmi ditutup tepat jam 00:00 WIB
+  if (isClosed && !successResult) {
+    return (
+      <div className="w-full relative z-10 pt-32 pb-24">
+        <Container>
+          <div className="max-w-xl mx-auto text-center space-y-6 glass-medium p-10 rounded-[2rem] border border-red-500/30 animate-in fade-in zoom-in duration-500 shadow-[0_0_30px_rgba(239,68,68,0.15)]">
+            <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <AlertCircle className="w-10 h-10 text-red-400" />
+            </div>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-2">
+              Pendaftaran Telah Ditutup
+            </h2>
+            <p className="text-white/80 leading-relaxed mb-6">
+              Pendaftaran untuk seluruh kegiatan SI FEST 2026 telah resmi ditutup pada pukul 00:00 WIB. Terima kasih atas antusiasme dan partisipasi seluruh peserta!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button onClick={() => window.location.href = '/events'} variant="glass" className="w-full sm:w-auto">
+                Lihat Acara
+              </Button>
+              <Button onClick={() => window.location.href = '/cetak-tiket'} variant="primary" className="w-full sm:w-auto">
+                Cek / Cetak Tiket
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full relative z-10 pt-32 pb-24">

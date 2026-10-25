@@ -10,6 +10,12 @@ import { getAllEvents } from "@/lib/events";
  */
 export async function registerParticipant(draft: RegistrationDraft): Promise<RegistrationResult> {
   try {
+    // 0. Check Registration Deadline (Tepat jam 00:00 WIB, 26 Oktober 2026)
+    const REGISTRATION_CLOSE_TIME = new Date("2026-10-26T00:00:00+07:00").getTime();
+    if (Date.now() >= REGISTRATION_CLOSE_TIME) {
+      return { success: false, error: "Pendaftaran seluruh acara SI FEST 2026 telah resmi ditutup." };
+    }
+
     // 1. Basic Field Validation
     if (!draft.eventSlug) {
       return { success: false, error: "Acara belum dipilih." };
