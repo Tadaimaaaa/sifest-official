@@ -16,7 +16,7 @@ import { UploadCloud, CheckCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { RegistrationCountdown } from "@/components/events/RegistrationCountdown";
 import { Button } from "@/components/ui/Button";
-import { REGISTRATION_CLOSE_TIME } from "@/components/events/EventRegistrationButton";
+import { REGISTRATION_CLOSE_TIME, isFutsalSlug } from "@/components/events/EventRegistrationButton";
 
 interface RegistrationFlowProps {
   initialEventSlug?: string;
@@ -285,7 +285,11 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   };
 
   // Jika pendaftaran telah resmi ditutup tepat jam 00:00 WIB
-  if (isClosed && !successResult) {
+  // Namun turnamen futsal dibuka kembali oleh panitia
+  const isCurrentEventFutsal = isFutsalSlug(draft.eventSlug);
+  const shouldBlockFlow = isClosed && !successResult && draft.eventSlug && !isCurrentEventFutsal;
+
+  if (shouldBlockFlow) {
     return (
       <div className="w-full relative z-10 pt-32 pb-24">
         <Container>
@@ -297,14 +301,14 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
               Pendaftaran Telah Ditutup
             </h2>
             <p className="text-white/80 leading-relaxed mb-6">
-              Pendaftaran untuk seluruh kegiatan SI FEST 2026 telah resmi ditutup pada pukul 00:00 WIB. Terima kasih atas antusiasme dan partisipasi seluruh peserta!
+              Mohon maaf, pendaftaran untuk {selectedEvent?.title || "acara ini"} telah resmi ditutup. Saat ini pendaftaran yang dibuka kembali adalah <span className="text-brand-accent font-semibold">Turnamen Futsal</span>.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={() => window.location.href = '/events'} variant="glass" className="w-full sm:w-auto">
-                Lihat Acara
+              <Button onClick={() => window.location.href = '/events/turnamen-futsal'} variant="primary" className="w-full sm:w-auto shadow-lg shadow-brand-accent/20">
+                Daftar Turnamen Futsal
               </Button>
-              <Button onClick={() => window.location.href = '/cetak-tiket'} variant="primary" className="w-full sm:w-auto">
-                Cek / Cetak Tiket
+              <Button onClick={() => window.location.href = '/events'} variant="glass" className="w-full sm:w-auto">
+                Lihat Acara Lainnya
               </Button>
             </div>
           </div>

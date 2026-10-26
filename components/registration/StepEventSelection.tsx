@@ -4,6 +4,7 @@ import { CheckCircle2, Trophy, GraduationCap, Gamepad2, BookOpen, Store } from "
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { isRegistrationClosed } from "@/components/events/EventRegistrationButton";
 
 interface StepEventSelectionProps {
   events: EventData[];
@@ -25,7 +26,11 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
 
   const handleContinue = () => {
     if (selectedEventSlug) {
-      router.push(`/events/${selectedEventSlug}`);
+      if (selectedEventSlug.startsWith('turnamen-futsal')) {
+        onNext();
+      } else {
+        router.push(`/events/${selectedEventSlug}`);
+      }
     }
   };
 
@@ -39,7 +44,8 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {events.map((event) => {
           const isSelected = selectedEventSlug === event.slug;
-          const isFull = event.isQuotaFull || event.status === 'Closed';
+          const isClosed = isRegistrationClosed(event.slug);
+          const isFull = event.isQuotaFull || event.status === 'Closed' || isClosed;
           return (
             <button
               key={event.id}
@@ -71,7 +77,7 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
                     </span>
                     {isFull ? (
                       <span className="text-[11px] font-semibold text-red-400 bg-red-500/20 px-2.5 py-0.5 rounded-full border border-red-500/30">
-                        Kuota Habis
+                        {isClosed ? "Ditutup" : "Kuota Habis"}
                       </span>
                     ) : isSelected ? (
                       <CheckCircle2 size={20} className="text-brand-accent" />

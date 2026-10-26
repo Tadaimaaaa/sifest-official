@@ -18,11 +18,17 @@ interface EventRegistrationButtonProps {
 // Batas Akhir Penutupan Pendaftaran: Tepat Jam 00:00 WIB (26 Oktober 2026)
 export const REGISTRATION_CLOSE_TIME = new Date("2026-10-26T00:00:00+07:00").getTime();
 
+export function isFutsalSlug(slug?: string): boolean {
+  if (!slug) return false;
+  return slug.startsWith("turnamen-futsal") || slug.toLowerCase().includes("futsal");
+}
+
 export function isWave2CountdownEvent(slug?: string, category?: string): boolean {
   return false;
 }
 
-export function isRegistrationClosed(): boolean {
+export function isRegistrationClosed(slug?: string): boolean {
+  if (isFutsalSlug(slug)) return false;
   return Date.now() >= REGISTRATION_CLOSE_TIME;
 }
 
@@ -36,17 +42,22 @@ export function EventRegistrationButton({
   isQuotaFull: propIsQuotaFull,
 }: EventRegistrationButtonProps) {
   const [mounted, setMounted] = useState(false);
+  const isFutsal = isFutsalSlug(slug);
   const [isClosed, setIsClosed] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const checkClosed = () => {
-      setIsClosed(Date.now() >= REGISTRATION_CLOSE_TIME);
+      if (isFutsal) {
+        setIsClosed(false);
+      } else {
+        setIsClosed(Date.now() >= REGISTRATION_CLOSE_TIME);
+      }
     };
     checkClosed();
     const timer = setInterval(checkClosed, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isFutsal]);
 
   const defaultHref = variant === "hero" ? `/registration?event=${slug}` : `/events/${slug}`;
   const targetHref = href || defaultHref;
