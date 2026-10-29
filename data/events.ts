@@ -137,7 +137,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     slug: "turnamen-futsal-mahasiswa",
     title: "Turnamen Futsal Mahasiswa",
     category: "Sport",
-    status: "Open",
+    status: "Closed",
     shortDescription: "Ajang kompetisi olahraga futsal bergengsi kategori Mahasiswa.",
     description: "Tunjukkan bakat dan sportivitas tim Anda dalam Turnamen Futsal SI FEST 2026. Kompetisi ini terbuka untuk kalangan mahasiswa di Sumatera Barat.",
     icon: "Trophy",

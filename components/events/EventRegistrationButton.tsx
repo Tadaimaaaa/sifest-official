@@ -20,6 +20,7 @@ export const REGISTRATION_CLOSE_TIME = new Date("2026-10-26T00:00:00+07:00").get
 
 export function isFutsalSlug(slug?: string): boolean {
   if (!slug) return false;
+  if (slug === 'turnamen-futsal-mahasiswa' || slug === 'turnamen-futsal-umum') return false;
   return slug.startsWith("turnamen-futsal") || slug.toLowerCase().includes("futsal");
 }
 
@@ -28,6 +29,7 @@ export function isWave2CountdownEvent(slug?: string, category?: string): boolean
 }
 
 export function isRegistrationClosed(slug?: string): boolean {
+  if (slug === 'turnamen-futsal-mahasiswa' || slug === 'turnamen-futsal-umum') return true;
   if (isFutsalSlug(slug)) return false;
   return Date.now() >= REGISTRATION_CLOSE_TIME;
 }
@@ -48,7 +50,9 @@ export function EventRegistrationButton({
   useEffect(() => {
     setMounted(true);
     const checkClosed = () => {
-      if (isFutsal) {
+      if (isRegistrationClosed(slug)) {
+        setIsClosed(true);
+      } else if (isFutsal) {
         setIsClosed(false);
       } else {
         setIsClosed(Date.now() >= REGISTRATION_CLOSE_TIME);
@@ -57,7 +61,7 @@ export function EventRegistrationButton({
     checkClosed();
     const timer = setInterval(checkClosed, 1000);
     return () => clearInterval(timer);
-  }, [isFutsal]);
+  }, [slug, isFutsal]);
 
   const defaultHref = variant === "hero" ? `/registration?event=${slug}` : `/events/${slug}`;
   const targetHref = href || defaultHref;

@@ -44,8 +44,8 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {events.map((event) => {
           const isSelected = selectedEventSlug === event.slug;
-          const isClosed = isRegistrationClosed(event.slug);
-          const isFull = event.isQuotaFull || event.status === 'Closed' || isClosed;
+          const isClosed = isRegistrationClosed(event.slug) || event.status === 'Closed';
+          const isFull = event.isQuotaFull || isClosed;
           return (
             <button
               key={event.id}
