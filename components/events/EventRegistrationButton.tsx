@@ -29,6 +29,7 @@ export function isWave2CountdownEvent(slug?: string, category?: string): boolean
 }
 
 export function isRegistrationClosed(slug?: string): boolean {
+  if (slug === 'turnamen-esport-mlbb') return false; // Mobile Legends dibuka kembali
   if (slug === 'turnamen-futsal-mahasiswa' || slug === 'turnamen-futsal-umum') return true;
   if (isFutsalSlug(slug)) return false;
   return Date.now() >= REGISTRATION_CLOSE_TIME;
@@ -50,7 +51,9 @@ export function EventRegistrationButton({
   useEffect(() => {
     setMounted(true);
     const checkClosed = () => {
-      if (isRegistrationClosed(slug)) {
+      if (slug === 'turnamen-esport-mlbb') {
+        setIsClosed(false);
+      } else if (isRegistrationClosed(slug)) {
         setIsClosed(true);
       } else if (isFutsal) {
         setIsClosed(false);

@@ -26,7 +26,7 @@ export function StepEventSelection({ events, selectedEventSlug, onSelect, onNext
 
   const handleContinue = () => {
     if (selectedEventSlug) {
-      if (selectedEventSlug.startsWith('turnamen-futsal')) {
+      if (selectedEventSlug.startsWith('turnamen-futsal') || selectedEventSlug === 'turnamen-esport-mlbb') {
         onNext();
       } else {
         router.push(`/events/${selectedEventSlug}`);
