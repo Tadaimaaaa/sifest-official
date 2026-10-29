@@ -11,8 +11,11 @@ import { getAllEvents } from "@/lib/events";
 export async function registerParticipant(draft: RegistrationDraft): Promise<RegistrationResult> {
   try {
     // 0. Check Registration Deadline (Tepat jam 00:00 WIB, 26 Oktober 2026)
-    // Kecuali turnamen futsal SLTA dan Mobile Legends yang masih dibuka oleh panitia
-    const isAllowedOpen = draft.eventSlug === 'turnamen-futsal-slta' || draft.eventSlug === 'turnamen-esport-mlbb';
+    // Kecuali turnamen futsal SLTA, Mobile Legends, dan Bazaar UMUM yang masih dibuka oleh panitia
+    const isAllowedOpen = 
+      draft.eventSlug === 'turnamen-futsal-slta' || 
+      draft.eventSlug === 'turnamen-esport-mlbb' || 
+      draft.eventSlug === 'open-bazaar-umum';
     const REGISTRATION_CLOSE_TIME = new Date("2026-10-26T00:00:00+07:00").getTime();
     if (!isAllowedOpen && Date.now() >= REGISTRATION_CLOSE_TIME) {
       return { success: false, error: "Pendaftaran untuk acara ini telah resmi ditutup." };
