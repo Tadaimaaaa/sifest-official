@@ -515,6 +515,16 @@ export function StepParticipantData({ data, eventSlug, onUpdate, onNext, onBack,
 
       {mode === 'bazaar' && (
         <GlassCard variant="medium" className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1 md:col-span-2 p-4 rounded-xl bg-brand-accent/10 border border-brand-accent/30 text-white/90 text-sm flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-brand-accent shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-brand-accent mb-0.5">Prioritas Pemilihan Stand (First Come, First Served)</p>
+              <p className="text-white/80 text-xs sm:text-sm">
+                Penentuan letak dan posisi stand menerapkan sistem <em>First Come, First Served</em>. Tenant yang mendaftar dan menyelesaikan registrasi lebih awal berhak memilih letak stand terdepan dan paling strategis.
+              </p>
+            </div>
+          </div>
+
           <div className="space-y-2">
             <label htmlFor="bazaarInstitution" className="block text-sm font-medium text-white/90">Nama Usaha/Brand <span className="text-status-warning">*</span></label>
             <input
