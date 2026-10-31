@@ -393,7 +393,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ],
     requirements: [
       "Pendaftaran tenant terbuka khusus untuk mahasiswa aktif",
-      "Penentuan letak dan posisi stand menerapkan sistem First Come, First Served (tenant yang mendaftar dan menyelesaikan registrasi lebih awal berhak memilih letak stand terdepan dan paling strategis)",
+      "Penentuan posisi stand menggunakan sistem First Come, First Served (tenant yang mendaftar lebih cepat akan mendapatkan posisi stand paling depan)",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
       "Dilarang menjual produk yang melanggar norma, hukum, atau berbahaya",
       "Mematuhi seluruh tata tertib yang ditetapkan oleh panitia SI FEST"
@@ -445,7 +445,7 @@ export const OFFICIAL_EVENTS: EventData[] = [
     ],
     requirements: [
       "Pendaftaran tenant terbuka untuk pelaku UMKM umum",
-      "Penentuan letak dan posisi stand menerapkan sistem First Come, First Served (tenant yang mendaftar dan menyelesaikan registrasi lebih awal berhak memilih letak stand terdepan dan paling strategis)",
+      "Penentuan posisi stand menggunakan sistem First Come, First Served (tenant yang mendaftar lebih cepat akan mendapatkan posisi stand paling depan)",
       "Setiap tenant wajib menjaga kebersihan area masing-masing",
       "Dilarang menjual produk yang melanggar norma, hukum, atau berbahaya",
       "Mematuhi seluruh tata tertib yang ditetapkan oleh panitia SI FEST"
