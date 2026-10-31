@@ -96,10 +96,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 350.000 (Gel 1) / Rp 370.000 (Gel 2)",
     registrationStartDate: "2026-09-01T00:00:00+07:00",
-    registrationCloseDate: "2026-10-31T23:59:59+07:00",
+    registrationCloseDate: "2026-11-05T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-10-31T23:59:59+07:00" }
+      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-11-05T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -146,10 +146,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "Lap. Futsal UPI \"YPTK\" Padang",
     price: "Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
     registrationStartDate: "2026-09-01T00:00:00+07:00",
-    registrationCloseDate: "2026-10-31T23:59:59+07:00",
+    registrationCloseDate: "2026-11-05T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-10-31T23:59:59+07:00" }
+      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-11-05T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari maksimal 12 pemain dan 2 official",
@@ -211,10 +211,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "Lantai 2 UPI Exhibition Hall",
     price: "Rp 50.000 (Gel 1) / Rp 70.000 (Gel 2)",
     registrationStartDate: "2026-09-01T00:00:00+07:00",
-    registrationCloseDate: "2026-10-31T23:59:59+07:00",
+    registrationCloseDate: "2026-11-05T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-10-31T23:59:59+07:00" }
+      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-11-05T23:59:59+07:00" }
     ],
     requirements: [
       "Satu tim terdiri dari 5 pemain utama dan maksimal 2 pemain cadangan.",
@@ -437,10 +437,10 @@ export const OFFICIAL_EVENTS: EventData[] = [
     location: "Halaman depan UPI Exhibition Hall",
     price: "Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
     registrationStartDate: "2026-09-01T00:00:00+07:00",
-    registrationCloseDate: "2026-10-31T23:59:59+07:00",
+    registrationCloseDate: "2026-11-05T23:59:59+07:00",
     registrationPhases: [
       { name: "Gelombang 1", startDate: "2026-09-01T00:00:00+07:00", endDate: "2026-10-14T23:59:59+07:00" },
-      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-10-31T23:59:59+07:00" }
+      { name: "Gelombang 2", startDate: "2026-10-15T21:30:00+07:00", endDate: "2026-11-05T23:59:59+07:00" }
     ],
     requirements: [
       "Pendaftaran tenant terbuka untuk pelaku UMKM umum",
@@ -487,5 +487,6 @@ export const OFFICIAL_EVENTS: EventData[] = [
     time: "08.00 - 17.30 WIB",
     location: "Halaman depan UPI Exhibition Hall",
     price: "Mahasiswa: Rp 250.000 (Gel 1) / Rp 270.000 (Gel 2)\nUmum: Rp 300.000 (Gel 1) / Rp 320.000 (Gel 2)",
+    registrationCloseDate: "2026-11-05T23:59:59+07:00",
   },
 ];

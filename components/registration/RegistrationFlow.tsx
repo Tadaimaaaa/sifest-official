@@ -285,9 +285,14 @@ export function RegistrationFlow({ initialEventSlug, events }: RegistrationFlowP
   };
 
   // Jika pendaftaran telah resmi ditutup tepat jam 00:00 WIB
-  // Namun turnamen futsal dibuka kembali oleh panitia
+  // Namun turnamen futsal, MLBB, dan Bazaar UMUM dibuka kembali oleh panitia
   const isCurrentEventFutsal = isFutsalSlug(draft.eventSlug);
-  const shouldBlockFlow = isClosed && !successResult && draft.eventSlug && !isCurrentEventFutsal;
+  const isAllowedRegistration = 
+    isCurrentEventFutsal || 
+    draft.eventSlug === 'turnamen-esport-mlbb' || 
+    draft.eventSlug === 'open-bazaar-umum' || 
+    draft.eventSlug === 'open-bazaar';
+  const shouldBlockFlow = isClosed && !successResult && draft.eventSlug && !isAllowedRegistration;
 
   if (shouldBlockFlow) {
     return (
