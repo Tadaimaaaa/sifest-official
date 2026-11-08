@@ -1,9 +1,10 @@
 "use client";
 
 import { Badge } from "@/components/ui/Badge";
+import { Sparkle } from "@/components/ui/Sparkle";
 import React, { useEffect, useState } from "react";
 
-export function Countdown({ targetDate }: { targetDate: string }) {
+export function Countdown({ targetDate }: { targetDate?: string }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -11,36 +12,51 @@ export function Countdown({ targetDate }: { targetDate: string }) {
     seconds: 0,
   });
   const [isMounted, setIsMounted] = useState(false);
+  const [isExpired, setIsExpired] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setIsMounted(true), 0);
+    setIsMounted(true);
+    if (!targetDate) {
+      setIsExpired(true);
+      return;
+    }
+
     const target = new Date(targetDate).getTime();
-    
-    const interval = setInterval(() => {
+    const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = target - now;
 
-      if (distance < 0) {
-        clearInterval(interval);
+      if (distance <= 0) {
+        setIsExpired(true);
         return;
       }
 
+      setIsExpired(false);
       setTimeLeft({
         days: Math.floor(distance / (1000 * 60 * 60 * 24)),
         hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
         seconds: Math.floor((distance % (1000 * 60)) / 1000),
       });
-    }, 1000);
+    };
 
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  if (!isMounted) {
-    // Initial server render to prevent hydration mismatch
+  // Jika countdown waktu sudah berakhir / saat ini: Tampilkan "See You 2027!"
+  if (!isMounted || isExpired) {
     return (
-      <Badge variant="glass" className="animate-float mb-6 inline-flex px-6 py-3">
-        <span className="font-medium tracking-widest text-white/90">02—06 NOVEMBER 2026</span>
+      <Badge
+        variant="glass"
+        className="animate-float mb-6 inline-flex items-center gap-3 px-6 py-3 shadow-[0_0_30px_rgba(245,183,22,0.25)] border-brand-accent/40 bg-white/5 backdrop-blur-md"
+      >
+        <Sparkle size={16} className="text-brand-accent animate-pulse-glow" />
+        <span className="font-heading text-lg sm:text-2xl font-bold tracking-wider text-brand-accent text-glow uppercase">
+          See You 2027!
+        </span>
+        <Sparkle size={16} className="text-brand-accent animate-pulse-glow" />
       </Badge>
     );
   }
